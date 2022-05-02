@@ -1,0 +1,58 @@
+{
+	"files.autoGuessEncoding": true, // emoji
+	"editor.wordWrap": "on", // markdown
+	"editor.quickSuggestions": true, // markdown
+	"editor.snippetSuggestions": "top",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.fontFamily": "'Migu 1C', Consolas, 'Courier New', monospace, 'Segoe UI Emoji'",
+	"markdown-pdf.displayHeaderFooter": false,
+	"vim.easymotion": true,
+	"vim.sneak": true,
+	"vim.incsearch": true,
+	"vim.useSystemClipboard": true,
+	"vim.useCtrlKeys": true,
+	"vim.hlsearch": true,
+	"vim.insertModeKeyBindings": [
+	  {
+	    "before": ["j", "j"],
+	    "after": ["<Esc>"]
+	  }
+	],
+	"vim.normalModeKeyBindingsNonRecursive": [
+	  {
+	    "before": ["<leader>", "d"],
+	    "after": ["d", "d"]
+	  },
+	  {
+	    "before": ["<C-n>"],
+	    "commands": [":nohl"]
+	  }
+	],
+	"vim.leader": "<space>",
+	"vim.handleKeys": {
+	  "<C-a>": false,
+	  "<C-f>": false
+	},
+	"workbench.colorCustomizations": {
+	  "activityBar.activeBackground": "#fbed80",
+	  "activityBar.activeBorder": "#06b9a5",
+	  "activityBar.background": "#fbed80",
+	  "activityBar.foreground": "#15202b",
+	  "activityBar.inactiveForeground": "#15202b99",
+	  "activityBarBadge.background": "#06b9a5",
+	  "activityBarBadge.foreground": "#15202b",
+	  "sash.hoverBorder": "#fbed80",
+	  "statusBar.background": "#f9e64f",
+	  "statusBar.foreground": "#15202b",
+	  "statusBarItem.hoverBackground": "#f7df1e",
+	  "statusBarItem.remoteBackground": "#f9e64f",
+	  "statusBarItem.remoteForeground": "#15202b",
+	  "titleBar.activeBackground": "#f9e64f",
+	  "titleBar.activeForeground": "#15202b",
+	  "titleBar.inactiveBackground": "#f9e64f99",
+	  "titleBar.inactiveForeground": "#15202b99"
+	},
+	"peacock.remoteColor": "#f9e64f",
+	"editor.formatOnSave": true
+      }
+      
