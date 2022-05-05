@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
+    "pre-commit": "lint-staged",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -21,7 +22,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ]
   },
