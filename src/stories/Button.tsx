@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./button.module.scss";
+import styles from "src/stories/button.module.scss";
 
 interface ButtonProps {
   /**

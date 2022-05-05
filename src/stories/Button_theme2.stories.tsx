@@ -1,16 +1,16 @@
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "../styles/theme";
+import theme2 from "../styles/theme2";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button, ButtonProps } from "@mui/material";
 
 export default {
-  title: "Example/Button",
+  title: "Theme2/Button",
   component: Button,
   decorators: [
     (Story) => {
       return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme2}>
           <CssBaseline />
           <Story />
         </ThemeProvider>
