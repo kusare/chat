@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -13,6 +15,16 @@
     "test:ci": "jest --ci",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -46,7 +58,9 @@
     "eslint-config-next": "latest",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-storybook": "^0.5.11",
+    "husky": "^7.0.4",
     "jest": "27.4.5",
+    "lint-staged": "^12.4.1",
     "prettier": "^2.6.2",
     "sass": "^1.51.0",
     "storybook-addon-next": "^1.6.2",
