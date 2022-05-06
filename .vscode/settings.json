@@ -3,7 +3,6 @@
   "editor.wordWrap": "on", // markdown
   "editor.quickSuggestions": true, // markdown
   "editor.snippetSuggestions": "top",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'Migu 1C', Consolas, 'Courier New', monospace, 'Segoe UI Emoji'",
   "markdown-pdf.displayHeaderFooter": false,
   "vim.easymotion": true,
@@ -53,5 +52,24 @@
     "titleBar.inactiveForeground": "#15202b99"
   },
   "peacock.remoteColor": "#f9e64f",
-  "editor.formatOnSave": true
+  // デフォルトのフォーマッタを prettier に設定
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // ファイル保存時、prettier による自動フォーマット
+  "editor.formatOnSave": true,
+  // ファイル保存時、ESLint, Stylelint による自動フォーマット
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  // 追記
+  // css, scss ファイルは Stylelint でフォーマットするため、Pretteir によるフォーマットを回避
+  "[css]": {
+    "editor.formatOnSave": false
+  },
+  "[scss]": {
+    "editor.formatOnSave": false
+  },
+  // VS Code の CSS, SCSS の Lint オフ
+  // Stylelint とのバッティング回避
+  "css.validate": false,
+  "scss.validate": false
 }
