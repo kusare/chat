@@ -1,4 +1,4 @@
-import { db } from "src/firebase/db";
+import { db } from "firebase/db";
 import {
   Firestore,
   collection,

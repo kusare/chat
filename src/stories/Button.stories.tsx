@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "../styles/theme";
+import theme from "styles/theme";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button, ButtonProps } from "@mui/material";
 

@@ -1,4 +1,4 @@
-import { app } from "src/firebase/app";
+import { app } from "firebase/app";
 import {
   getFirestore,
   // connectFirestoreEmulator
