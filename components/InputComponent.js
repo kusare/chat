@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { nameState } from "../atoms/name";
+import { nameState } from "atoms/name";
 
 export default function InputComponent() {
   const [name, setName] = useRecoilState(nameState);

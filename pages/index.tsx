@@ -3,8 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "styles/Home.module.css";
 import { Stack, Button } from "@mui/material";
-import InputComponent from "src/components/InputComponent";
-import LengthComponent from "src/components/LengthComponent";
+import InputComponent from "components/InputComponent";
+import LengthComponent from "components/LengthComponent";
 
 const Home: NextPage = () => {
   return (
