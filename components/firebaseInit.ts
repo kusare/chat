@@ -1,9 +1,4 @@
-import {
-  getApps,
-  getApp,
-  initializeApp,
-  FirebaseApp,
-} from "node_modules/firebase/app";
+import { getApps, getApp, initializeApp, FirebaseApp } from "firebase/app";
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {

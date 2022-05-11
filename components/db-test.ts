@@ -1,9 +1,5 @@
-import { db } from "firebase/db";
-import {
-  Firestore,
-  collection,
-  getDocs,
-} from "node_modules/firebase/firestore";
+import { db } from "../components/firestore";
+import { Firestore, collection, getDocs } from "firebase/firestore";
 
 async function getCities(db: Firestore) {
   const citiesCol = collection(db, "cities");
