@@ -8,6 +8,19 @@ import {
   signOut,
   User,
 } from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 // export type UserState = User | null;
@@ -26,6 +39,12 @@ export const userNameState = atom<string>({
   key: "userNameState", // unique ID (with respect to other atoms/selectors)
   default: "NO NAME", // default value (aka initial value)
 });
+
+export const msgState = atom<string>({
+  key: "msgState", // unique ID (with respect to other atoms/selectors)
+  default: "NO MSG", // default value (aka initial value)
+});
+
 /**
 ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗
 ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║╚══███╔╝██╔════╝
@@ -87,6 +106,30 @@ export const getUserName = (): string => {
 };
 
 /**
+███████╗███████╗████████╗
+██╔════╝██╔════╝╚══██╔══╝
+███████╗█████╗     ██║   
+╚════██║██╔══╝     ██║   
+███████║███████╗   ██║   
+╚══════╝╚══════╝   ╚═╝   
+ */
+
+// Saves a new message to Cloud Firestore.
+export const setMsg = async (msgText: any) => {
+  // Add a new message entry to the Firebase database.
+  try {
+    await addDoc(collection(getFirestore(), "messages"), {
+      name: getUserName(),
+      text: msgText,
+      profilePicUrl: getProfilePicUrl(),
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Error writing new message to Firebase Database", error);
+  }
+};
+
+/**
 ██╗   ██╗████████╗██╗██╗     ██╗████████╗██╗   ██╗
 ██║   ██║╚══██╔══╝██║██║     ██║╚══██╔══╝╚██╗ ██╔╝
 ██║   ██║   ██║   ██║██║     ██║   ██║    ╚████╔╝ 
@@ -106,6 +149,13 @@ function addSizeToGoogleProfilePic(url: string): string {
     return url + "?sz=150";
   }
   return url;
+}
+
+/**
+ * Returns true if a user is signed-in.
+ */
+function isUserSignedIn() {
+  return !!getAuth().currentUser;
 }
 
 /**

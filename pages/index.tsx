@@ -10,6 +10,7 @@ import {
   signOutUser,
   ProfilePicUrl,
   UserName,
+  setMsg,
 } from "../components/firebase-index";
 
 const Home: NextPage = () => {
@@ -26,17 +27,13 @@ const Home: NextPage = () => {
         <UserName></UserName>
         <InputComponent />
         <LengthComponent />
-        <Button onClick={signIn}>Sign in</Button>
-        <Button onClick={signOutUser}>Sign out</Button>
         <Stack spacing={2} direction="row">
-          <Button variant="text">Text</Button>
-          <Button variant="contained">Contained</Button>
-          <Button variant="outlined">Outlined</Button>
+          <Button onClick={signIn}>Sign in</Button>
+          <Button onClick={signOutUser}>Sign out</Button>
         </Stack>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
+        <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>
+          setMsg Test
+        </Button>
         <p className={styles.description}>
           Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
