@@ -11,6 +11,7 @@ import {
   ProfilePicUrl,
   UserName,
   setMsg,
+  Msgs,
 } from "../components/firebase-index";
 
 const Home: NextPage = () => {
@@ -23,6 +24,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+        <Msgs></Msgs>
         <ProfilePicUrl></ProfilePicUrl>
         <UserName></UserName>
         <InputComponent />
@@ -31,9 +33,7 @@ const Home: NextPage = () => {
           <Button onClick={signIn}>Sign in</Button>
           <Button onClick={signOutUser}>Sign out</Button>
         </Stack>
-        <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>
-          setMsg Test
-        </Button>
+        <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>Set Msg</Button>
         <p className={styles.description}>
           Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>

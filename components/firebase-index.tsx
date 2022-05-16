@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   signOut,
   User,
+  Unsubscribe,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -16,12 +17,14 @@ import {
   orderBy,
   limit,
   onSnapshot,
+  getDocs,
   setDoc,
   updateDoc,
   doc,
   serverTimestamp,
 } from "firebase/firestore";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import React, { useState, useEffect } from "react";
 
 // export type UserState = User | null;
 
@@ -40,9 +43,38 @@ export const userNameState = atom<string>({
   default: "NO NAME", // default value (aka initial value)
 });
 
-export const msgState = atom<string>({
-  key: "msgState", // unique ID (with respect to other atoms/selectors)
-  default: "NO MSG", // default value (aka initial value)
+export type Msg = {
+  id: string;
+  timestamp: string;
+  name: string;
+  text: string;
+  profilePicUrl: string;
+  imageUrl: string;
+};
+export type MsgState = Msg | null;
+export const msgState = atom<MsgState>({
+  key: "msgState",
+  default: {
+    id: "",
+    timestamp: "",
+    name: "",
+    text: "",
+    profilePicUrl: "",
+    imageUrl: "",
+  },
+});
+export const msgsState = atom<MsgState[]>({
+  key: "msgsState",
+  default: [
+    {
+      id: "",
+      timestamp: "",
+      name: "",
+      text: "",
+      profilePicUrl: "",
+      imageUrl: "",
+    },
+  ],
 });
 
 /**
@@ -106,27 +138,39 @@ export const getUserName = (): string => {
 };
 
 /**
-███████╗███████╗████████╗
-██╔════╝██╔════╝╚══██╔══╝
-███████╗█████╗     ██║   
-╚════██║██╔══╝     ██║   
-███████║███████╗   ██║   
-╚══════╝╚══════╝   ╚═╝   
+ * Loads chat messages history and listens for upcoming ones.
  */
+export const useMsgs = () => {
+  const setMsgs = useSetRecoilState(msgsState);
+  const msgs = useRecoilValue(msgsState);
 
-// Saves a new message to Cloud Firestore.
-export const setMsg = async (msgText: any) => {
-  // Add a new message entry to the Firebase database.
-  try {
-    await addDoc(collection(getFirestore(), "messages"), {
-      name: getUserName(),
-      text: msgText,
-      profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
+  useEffect(() => {
+    // Create the query to load the last 12 messages and listen for new ones.
+    const recentMessagesQuery = query(
+      collection(getFirestore(), "messages"),
+      orderBy("timestamp", "desc"),
+      limit(12)
+    );
+    // Start listening to the query.
+    const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
+      let addedMsgs: Msg[] = [];
+      snapshot.docs.map((change) => {
+        const message = change.data();
+        addedMsgs.push({
+          id: change.id,
+          timestamp: message.timestamp,
+          name: message.name,
+          text: message.text,
+          profilePicUrl: message.profilePicUrl,
+          imageUrl: message.imageUrl,
+        });
+      }, []);
+      setMsgs(addedMsgs);
+      return unsub;
     });
-  } catch (error) {
-    console.error("Error writing new message to Firebase Database", error);
-  }
+  }, []);
+
+  return msgs;
 };
 
 /**
@@ -202,4 +246,42 @@ export const UserName: React.FC = () => {
     setUserNameState(name);
   });
   return <div>{userName.toString()}</div>;
+};
+
+/**
+ * messages
+ */
+export const Msgs: React.FC = () => {
+  const msgs = useMsgs();
+  return (
+    <>
+      {msgs.map((msg, index) => (
+        <div key={index}>{msg?.text.toString()}</div>
+      ))}
+    </>
+  );
+};
+
+/**
+███████╗███████╗████████╗
+██╔════╝██╔════╝╚══██╔══╝
+███████╗█████╗     ██║   
+╚════██║██╔══╝     ██║   
+███████║███████╗   ██║   
+╚══════╝╚══════╝   ╚═╝   
+ */
+
+// Saves a new message to Cloud Firestore.
+export const setMsg = async (msgText: any) => {
+  // Add a new message entry to the Firebase database.
+  try {
+    await addDoc(collection(getFirestore(), "messages"), {
+      name: getUserName(),
+      text: msgText,
+      profilePicUrl: getProfilePicUrl(),
+      timestamp: serverTimestamp(),
+    });
+  } catch (error) {
+    console.error("Error writing new message to Firebase Database", error);
+  }
 };
