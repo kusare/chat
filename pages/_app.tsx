@@ -1,7 +1,7 @@
-import "styles/globals.css";
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material";
-import theme from "styles/theme";
+import theme from "../styles/theme";
 import { RecoilRoot } from "recoil";
 
 function MyApp({ Component, pageProps }: AppProps) {
