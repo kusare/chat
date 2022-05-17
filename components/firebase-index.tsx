@@ -23,8 +23,14 @@ import {
   doc,
   serverTimestamp,
 } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // export type UserState = User | null;
 
@@ -143,13 +149,14 @@ export const getUserName = (): string => {
 export const useMsgs = () => {
   const setMsgs = useSetRecoilState(msgsState);
   const msgs = useRecoilValue(msgsState);
+  const LIMIT = 24;
 
   useEffect(() => {
     // Create the query to load the last 12 messages and listen for new ones.
     const recentMessagesQuery = query(
       collection(getFirestore(), "messages"),
       orderBy("timestamp", "desc"),
-      limit(12)
+      limit(LIMIT)
     );
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
@@ -168,6 +175,7 @@ export const useMsgs = () => {
       setMsgs(addedMsgs);
       return unsub;
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return msgs;
@@ -256,7 +264,13 @@ export const Msgs: React.FC = () => {
   return (
     <>
       {msgs.map((msg, index) => (
-        <div key={index}>{msg?.text.toString()}</div>
+        <>
+          {msg?.text && <div key={index}>{msg?.text}</div>}
+          {msg?.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={index} src={msg?.imageUrl} alt="no image" />
+          )}
+        </>
       ))}
     </>
   );
@@ -283,5 +297,44 @@ export const setMsg = async (msgText: any) => {
     });
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
+  }
+};
+
+// Saves a new message containing an image in Firebase.
+// This first saves the image in Firebase storage.
+export const setImgMsg = async (event: any) => {
+  event.preventDefault();
+  let file = event.target.files[0];
+
+  let LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
+  try {
+    // 1 - We add a message with a loading icon that will get updated with the shared image.
+    const messageRef = await addDoc(collection(getFirestore(), "messages"), {
+      name: getUserName(),
+      imageUrl: LOADING_IMAGE_URL,
+      profilePicUrl: getProfilePicUrl(),
+      timestamp: serverTimestamp(),
+    });
+
+    // 2 - Upload the image to Cloud Storage.
+    const filePath = `${getAuth().currentUser?.uid}/${messageRef.id}/${
+      file.name
+    }`;
+    const newImageRef = ref(getStorage(), filePath);
+    const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+    // 3 - Generate a public URL for the file.
+    const publicImageUrl = await getDownloadURL(newImageRef);
+
+    // 4 - Update the chat message placeholder with the image's URL.
+    await updateDoc(messageRef, {
+      imageUrl: publicImageUrl,
+      storageUri: fileSnapshot.metadata.fullPath,
+    });
+  } catch (error) {
+    console.error(
+      "There was an error uploading a file to Cloud Storage:",
+      error
+    );
   }
 };

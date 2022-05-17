@@ -12,6 +12,7 @@ import {
   UserName,
   setMsg,
   Msgs,
+  setImgMsg,
 } from "../components/firebase-index";
 
 const Home: NextPage = () => {
@@ -34,6 +35,7 @@ const Home: NextPage = () => {
           <Button onClick={signOutUser}>Sign out</Button>
         </Stack>
         <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>Set Msg</Button>
+        <input type="file" onChange={setImgMsg} />
         <p className={styles.description}>
           Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
