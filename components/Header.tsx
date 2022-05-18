@@ -11,7 +11,6 @@ import {
   ProfilePic,
   UserName,
   setMsg,
-  Msgs,
   setImgMsg,
 } from "../components/firebase-index";
 
