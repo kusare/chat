@@ -306,7 +306,7 @@ export const Msg: React.FC<{ msg: MsgState }> = (props) => {
     setTime(
       dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
     );
-  }, []);
+  }, [props.msg?.timestamp]);
 
   if (!props.msg) return <></>;
 
