@@ -259,30 +259,70 @@ export const UserName: React.FC = () => {
 /**
  * messages
  */
-export const Msgs: React.FC = () => {
-  const msgs = useMsgs();
+// export const Msgs: React.FC = () => {
+//   const msgs = useMsgs();
+
+//   return (
+//     <>
+//       {msgs.map((msg, index) => (
+//         <>
+//           {msg && (
+//             <>
+//               {msg?.timestamp && (
+//                 <span key={index.toString() + "timestamp"}>
+//                   {dayjs(msg?.timestamp?.seconds).format(
+//                     "YYYY/MM/DD ddd HH:mm:ss"
+//                   )}
+//                 </span>
+//               )}
+//               {msg?.name && (
+//                 <div key={index.toString() + "name"}>{msg?.name}</div>
+//               )}
+//               <ProfilePic key={index.toString() + "ProfilePic"}></ProfilePic>
+//               <div key={index.toString() + "text"}>{msg?.text}</div>
+//               {msg?.imageUrl && (
+//                 // eslint-disable-next-line @next/next/no-img-element
+//                 <img
+//                   src={msg?.imageUrl}
+//                   alt="no image"
+//                   key={index.toString() + "img"}
+//                 />
+//               )}
+//             </>
+//           )}
+//         </>
+//       ))}
+//     </>
+//   );
+// };
+
+/**
+ * message
+ */
+export const Msg: React.FC<{ msg: MsgState }> = (props) => {
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    setTime(
+      dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
+    );
+  }, []);
+
+  if (!props.msg) return <></>;
+
   return (
     <>
-      {msgs.map((msg, index) => (
-        <>
-          {msg && (
-            <>
-              <span>
-                {dayjs
-                  .unix(msg?.timestamp?.seconds)
-                  .format("YYYY/MM/DD ddd HH:mm:ss")}
-              </span>
-              <div>{msg?.name}</div>
-              <ProfilePic></ProfilePic>
-              {msg?.text && <div key={index}>{msg?.text}</div>}
-              {msg?.imageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img key={index} src={msg?.imageUrl} alt="no image" />
-              )}
-            </>
-          )}
-        </>
-      ))}
+      {props.msg.timestamp && <time dateTime={time}>{time}</time>}
+      {props.msg.name && <div>{props.msg.name}</div>}
+      {props.msg.profilePicUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={props.msg.profilePicUrl} alt="profilePic" />
+      )}
+      <div>{props.msg.text}</div>
+      {props.msg.imageUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={props.msg.imageUrl} alt="no image" />
+      )}
     </>
   );
 };

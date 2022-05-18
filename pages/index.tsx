@@ -9,7 +9,8 @@ import {
   ProfilePic,
   UserName,
   setMsg,
-  Msgs,
+  Msg,
+  useMsgs,
   setImgMsg,
 } from "../components/firebase-index";
 import Header from "../components/Header";
@@ -44,7 +45,9 @@ const Home: NextPage = () => {
           <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>Set Msg</Button>
           <Input type="file" onChange={setImgMsg} />
         </Stack>
-        <Msgs></Msgs>
+        {useMsgs().map((msg, index) => (
+          <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
+        ))}
       </Grid>
       <footer className={styles.footer}>
         <a
