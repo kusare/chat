@@ -22,6 +22,7 @@ import {
   updateDoc,
   doc,
   serverTimestamp,
+  Timestamp,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -32,13 +33,9 @@ import {
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import React, { useState, useEffect, useRef } from "react";
 import Avatar from "@mui/material/Avatar";
-
-// export type UserState = User | null;
-
-// export const userState = atom<UserState>({
-//   key: "userState", // unique ID (with respect to other atoms/selectors)
-//   default: null, // default value (aka initial value)
-// });
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { timeStamp } from "console";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -52,7 +49,7 @@ export const userNameState = atom<string>({
 
 export type Msg = {
   id: string;
-  timestamp: string;
+  timestamp: Timestamp;
   name: string;
   text: string;
   profilePicUrl: string;
@@ -63,7 +60,7 @@ export const msgState = atom<MsgState>({
   key: "msgState",
   default: {
     id: "",
-    timestamp: "",
+    timestamp: Timestamp.fromDate(new Date()),
     name: "",
     text: "",
     profilePicUrl: "",
@@ -75,7 +72,7 @@ export const msgsState = atom<MsgState[]>({
   default: [
     {
       id: "",
-      timestamp: "",
+      timestamp: Timestamp.fromDate(new Date()),
       name: "",
       text: "",
       profilePicUrl: "",
@@ -91,6 +88,11 @@ export const msgsState = atom<MsgState[]>({
 ██║██║╚██╗██║██║   ██║   ██║██╔══██║██║     ██║ ███╔╝  ██╔══╝  
 ██║██║ ╚████║██║   ██║   ██║██║  ██║███████╗██║███████╗███████╗
  */
+
+/**
+ * dayjs.extend(relativeTime);
+ */
+dayjs.extend(relativeTime);
 
 /**
  * Firebase Initialize
@@ -263,12 +265,21 @@ export const Msgs: React.FC = () => {
     <>
       {msgs.map((msg, index) => (
         <>
-          <div>{msg?.name}</div>
-          <ProfilePic></ProfilePic>
-          {msg?.text && <div key={index}>{msg?.text}</div>}
-          {msg?.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img key={index} src={msg?.imageUrl} alt="no image" />
+          {msg && (
+            <>
+              <span>
+                {dayjs
+                  .unix(msg?.timestamp?.seconds)
+                  .format("YYYY/MM/DD ddd HH:mm:ss")}
+              </span>
+              <div>{msg?.name}</div>
+              <ProfilePic></ProfilePic>
+              {msg?.text && <div key={index}>{msg?.text}</div>}
+              {msg?.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={index} src={msg?.imageUrl} alt="no image" />
+              )}
+            </>
           )}
         </>
       ))}
