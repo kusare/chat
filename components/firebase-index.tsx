@@ -263,6 +263,8 @@ export const Msgs: React.FC = () => {
     <>
       {msgs.map((msg, index) => (
         <>
+          <div>{msg?.name}</div>
+          <ProfilePic></ProfilePic>
           {msg?.text && <div key={index}>{msg?.text}</div>}
           {msg?.imageUrl && (
             // eslint-disable-next-line @next/next/no-img-element
