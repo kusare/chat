@@ -31,6 +31,7 @@ import {
 } from "firebase/storage";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import React, { useState, useEffect, useRef } from "react";
+import Avatar from "@mui/material/Avatar";
 
 // export type UserState = User | null;
 
@@ -222,23 +223,20 @@ function isUserSignedIn() {
 /**
  * ProfilePicUrl
  */
-export const ProfilePicUrl: React.FC = () => {
+export const ProfilePic: React.FC = () => {
   const setProfilePicUrlState = useSetRecoilState(profilePicUrlState);
   const profilePicUrl = useRecoilValue(profilePicUrlState);
   const auth = getAuth(firebaseApp);
+
   onAuthStateChanged(auth, (user) => {
     const url: string = getProfilePicUrl();
-    const addedUrl = "url(" + addSizeToGoogleProfilePic(url) + ")";
+    const addedUrl = addSizeToGoogleProfilePic(url);
     setProfilePicUrlState(addedUrl);
   });
   return (
-    <div
-      style={{
-        backgroundImage: profilePicUrl,
-        width: "100px",
-        height: "100px",
-      }}
-    ></div>
+    <div>
+      <Avatar alt="Remy Sharp" src={profilePicUrl} />
+    </div>
   );
 };
 
