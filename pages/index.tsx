@@ -16,6 +16,7 @@ import {
 import Header from "../components/Header";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
 
 const sections = [
   { title: "Technology", url: "#" },
@@ -25,6 +26,7 @@ const sections = [
 ];
 
 const Home: NextPage = () => {
+  const [text, setText] = useState("コメント");
   return (
     <div className={styles.container}>
       <Head>
@@ -42,9 +44,14 @@ const Home: NextPage = () => {
         style={{ minHeight: "100vh" }}
       >
         <Stack spacing={2} direction="row">
-          <Button onClick={() => setMsg("testgaw;eil4ktj;qi")}>Set Msg</Button>
-          <Input type="file" onChange={setImgMsg} />
+          <Input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <Button onClick={() => setMsg(text)}>Set Msg</Button>
         </Stack>
+        <Input type="file" onChange={setImgMsg} />
         {useMsgs().map((msg, index) => (
           <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
         ))}
