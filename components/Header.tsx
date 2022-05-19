@@ -47,6 +47,9 @@ export default function Header(props: HeaderProps) {
         </Button>
         <ProfilePic></ProfilePic>
         <UserName></UserName>
+        <a href="https://github.com/kusare/chat" target="_self">
+          Github
+        </a>
       </Toolbar>
       <Toolbar
         component="nav"
