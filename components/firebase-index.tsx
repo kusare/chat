@@ -32,11 +32,11 @@ import {
 } from "firebase/storage";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import React, { useState, useEffect, useRef } from "react";
-import Avatar from "@mui/material/Avatar";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { timeStamp } from "console";
-import { Box, Stack, Button, TextField } from "@mui/material";
+import { Box, Stack, Button, TextField, Avatar } from "@mui/material";
+import { css } from "@emotion/react";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -316,8 +316,11 @@ export const Msg: React.FC<{ msg: MsgState }> = (props) => {
       <Stack spacing={2} direction="row">
         <Box>
           {props.msg.profilePicUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={props.msg.profilePicUrl} alt="profilePic" />
+            <Avatar
+              alt="profilePic"
+              src={props.msg.profilePicUrl}
+              sx={{ width: 48, height: 48 }}
+            />
           )}
         </Box>
 
@@ -332,12 +335,20 @@ export const Msg: React.FC<{ msg: MsgState }> = (props) => {
             maxRows={4}
             value={props.msg.text}
           />
-          {props.msg.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={props.msg.imageUrl} alt="no image" />
-          )}
         </Box>
       </Stack>
+      <div>
+        {props.msg.imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={props.msg.imageUrl}
+            alt="no image"
+            css={css(`
+          max-width: 100%;
+        `)}
+          />
+        )}
+      </div>
     </>
   );
 };
