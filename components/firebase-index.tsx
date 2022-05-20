@@ -36,6 +36,7 @@ import Avatar from "@mui/material/Avatar";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { timeStamp } from "console";
+import { Box, Stack, Button, TextField } from "@mui/material";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -312,17 +313,31 @@ export const Msg: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
-      {props.msg.timestamp && <time dateTime={time}>{time}</time>}
-      {props.msg.name && <div>{props.msg.name}</div>}
-      {props.msg.profilePicUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={props.msg.profilePicUrl} alt="profilePic" />
-      )}
-      <div>{props.msg.text}</div>
-      {props.msg.imageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={props.msg.imageUrl} alt="no image" />
-      )}
+      <Stack spacing={2} direction="row">
+        <Box>
+          {props.msg.profilePicUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={props.msg.profilePicUrl} alt="profilePic" />
+          )}
+        </Box>
+
+        <Box>
+          <Stack spacing={2} direction="row">
+            {props.msg.name && <div>{props.msg.name}</div>}
+            {props.msg.timestamp && <time dateTime={time}>{time}</time>}
+          </Stack>
+          <TextField
+            multiline
+            placeholder="No Comment"
+            maxRows={4}
+            value={props.msg.text}
+          />
+          {props.msg.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={props.msg.imageUrl} alt="no image" />
+          )}
+        </Box>
+      </Stack>
     </>
   );
 };

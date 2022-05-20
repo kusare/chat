@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { Stack, Button } from "@mui/material";
+import { Box, Stack, Button, TextField } from "@mui/material";
 import {
   signIn,
   signOutUser,
@@ -18,17 +18,19 @@ import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import generatedCSS from "../components/cssGenerate";
-import { css } from "@emotion/react";
 
 const sections = [
-  { title: "Chat", url: "#" },
-  { title: "🎨Theme", url: "#" },
+  { title: "Chat", url: "" },
+  { title: "Timer", url: "" },
+  { title: "🎨Theme", url: "theme" },
   { title: "🔧Setting", url: "#" },
 ];
 
 const Home: NextPage = () => {
   const [text, setText] = useState("コメント");
-  const [sheet, setSheet] = useState(`color: black; background-color: red`);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -37,13 +39,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header title="Hamu House" sections={sections}></Header>
-      <div
-        css={css(`
-          ${sheet}
-        `)}
-      >
-        {sheet}
-      </div>
+
       <Grid
         container
         spacing={0}
@@ -52,19 +48,20 @@ const Home: NextPage = () => {
         justifyContent="center"
         style={{ minHeight: "100vh" }}
       >
-        <Stack spacing={2} direction="row">
-          <Input
-            type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />{" "}
-          <Input
-            type="text"
-            value={sheet}
-            onChange={(e) => setSheet(e.target.value)}
-          />
-          <Button onClick={() => setMsg(text)}>Set Msg</Button>
-        </Stack>
+        <Box>
+          <Stack spacing={2} direction="row">
+            <TextField
+              label="CSS"
+              multiline
+              placeholder="Placeholder"
+              maxRows={4}
+              value={text}
+              rows={4}
+              onChange={handleChange}
+            />
+            <Button onClick={() => setMsg(text)}>Set Msg</Button>
+          </Stack>
+        </Box>
         <Input type="file" onChange={setImgMsg} />
         {useMsgs().map((msg, index) => (
           <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
