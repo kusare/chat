@@ -33,6 +33,11 @@
     ]
   },
   "dependencies": {
+    "@codemirror/closebrackets": "^0.19.2",
+    "@codemirror/commands": "^0.20.0",
+    "@codemirror/gutter": "^0.19.9",
+    "@codemirror/state": "^0.20.0",
+    "@codemirror/view": "^0.20.5",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",

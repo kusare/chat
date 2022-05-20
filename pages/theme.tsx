@@ -22,6 +22,7 @@ import {
   serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
+import { AsciiDocEditor } from "../components/codeMirror";
 
 const Page: NextPage = () => {
   const [sheet, setSheet] = useState(`color: black; background-color: red`);
@@ -49,6 +50,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>Theme</h1>
+      <AsciiDocEditor defaultValue="aaS" />
       <ToggleButtonGroup
         color="primary"
         value={alignment}
