@@ -81,9 +81,7 @@ const Page: NextPage = () => {
             label="Sample"
             multiline
             placeholder="Placeholder"
-            maxRows={4}
             value={lorem}
-            rows={4}
             css={css(`
           ${sheet}
         `)}
@@ -92,7 +90,6 @@ const Page: NextPage = () => {
             label="CSS"
             multiline
             placeholder="Placeholder"
-            maxRows={4}
             value={sheet}
             rows={4}
             onChange={handleChange}
@@ -103,9 +100,7 @@ const Page: NextPage = () => {
             label="Sample"
             multiline
             placeholder="Placeholder"
-            maxRows={4}
             value={lorem}
-            rows={4}
             css={css(`
           ${sheet}
         `)}
@@ -114,9 +109,7 @@ const Page: NextPage = () => {
             label="CSS"
             multiline
             placeholder="Placeholder"
-            maxRows={4}
             value={sheet}
-            rows={4}
             onChange={handleChange}
           />
         </Stack>

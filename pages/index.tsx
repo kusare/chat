@@ -54,7 +54,6 @@ const Home: NextPage = () => {
               label="CSS"
               multiline
               placeholder="Placeholder"
-              maxRows={4}
               value={text}
               rows={4}
               onChange={handleChange}
