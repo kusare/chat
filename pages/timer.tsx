@@ -57,8 +57,9 @@ const Page: NextPage = () => {
         exclusive
         onChange={mouseChange}
       >
-        <ToggleButton value="global">Global</ToggleButton>
-        <ToggleButton value="message">Message</ToggleButton>
+        <ToggleButton value="web">Web</ToggleButton>
+        <ToggleButton value="android">Android</ToggleButton>
+        <ToggleButton value="ios">iOS</ToggleButton>
       </ToggleButtonGroup>
       <Box
         component="form"
