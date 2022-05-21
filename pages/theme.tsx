@@ -27,12 +27,13 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import { PixiComponent, Stage, Text } from "@inlet/react-pixi";
-import { Graphics, TextStyle } from "pixi.js";
+import { Graphics, TextStyle, filters } from "pixi.js";
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
+import PastelFilter from "../components/PastelFilter";
 
 const Page: NextPage = () => {
   /**
@@ -113,17 +114,42 @@ const Page: NextPage = () => {
     },
   });
 
+  interface TapiocaProps {
+    x: number;
+    y: number;
+    size: number;
+    count: number;
+    gap: number;
+  }
+
+  const Tapioca = PixiComponent<TapiocaProps, Graphics>("Tapioca", {
+    create: () => new Graphics(),
+    applyProps: (ins, _, props) => {
+      const { x, y, size, count, gap } = props;
+      ins.beginFill(0xaa8833);
+      ins.x = x;
+      Array(count)
+        .fill(0)
+        .forEach((v, i) => {
+          ins.drawCircle(x + (size * 2 + gap) * i, y, size);
+        });
+      ins.endFill();
+      ins.filters = [new PastelFilter()];
+    },
+  });
+
   const width = 500;
   const height = 300;
 
   const stageOptions = {
     antialias: true,
     autoDensity: true,
-    // backgroundAlpha: 0,
+    backgroundAlpha: 0,
   };
 
   const Pixi = () => (
     <Stage width={width} height={height} options={stageOptions}>
+      <Tapioca x={50} y={50} size={10} count={10} gap={5}></Tapioca>
       <Rectangle x={1} y={1} width={100} height={100} color={0xff0000} />
       <Text
         text="Hello World"
