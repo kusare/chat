@@ -258,46 +258,6 @@ export const UserName: React.FC = () => {
 };
 
 /**
- * messages
- */
-// export const Msgs: React.FC = () => {
-//   const msgs = useMsgs();
-
-//   return (
-//     <>
-//       {msgs.map((msg, index) => (
-//         <>
-//           {msg && (
-//             <>
-//               {msg?.timestamp && (
-//                 <span key={index.toString() + "timestamp"}>
-//                   {dayjs(msg?.timestamp?.seconds).format(
-//                     "YYYY/MM/DD ddd HH:mm:ss"
-//                   )}
-//                 </span>
-//               )}
-//               {msg?.name && (
-//                 <div key={index.toString() + "name"}>{msg?.name}</div>
-//               )}
-//               <ProfilePic key={index.toString() + "ProfilePic"}></ProfilePic>
-//               <div key={index.toString() + "text"}>{msg?.text}</div>
-//               {msg?.imageUrl && (
-//                 // eslint-disable-next-line @next/next/no-img-element
-//                 <img
-//                   src={msg?.imageUrl}
-//                   alt="no image"
-//                   key={index.toString() + "img"}
-//                 />
-//               )}
-//             </>
-//           )}
-//         </>
-//       ))}
-//     </>
-//   );
-// };
-
-/**
  * message
  */
 export const Msg: React.FC<{ msg: MsgState }> = (props) => {

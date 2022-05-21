@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material";
 import theme from "../styles/theme";
 import { RecoilRoot } from "recoil";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
@@ -13,5 +13,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </RecoilRoot>
   );
 }
-
-export default MyApp;
