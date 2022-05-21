@@ -25,6 +25,39 @@ import {
 import { AsciiDocEditor } from "../components/codeMirror";
 
 const Page: NextPage = () => {
+  // DOM Event not to be confused with React.MouseEvent
+  const onScroll = (e: any) => {
+    console.log(e.wheelDelta);
+  };
+  let start = { x: 0, y: 0 };
+  function onTouchStart(e: any) {
+    start.x = e.touches[0].pageX;
+    start.y = e.touches[0].pageY;
+  }
+  const onTouch = (e: any) => {
+    let offset = { x: 0, y: 0 };
+    offset.x = start.x - e.touches[0].pageX;
+    offset.y = start.y - e.touches[0].pageY;
+    console.log(e);
+    console.log(offset);
+  };
+
+  /**
+   * css to background
+   * https://thewebdev.info/2021/09/25/how-to-set-html-body-element-styles-from-within-a-react-component/
+   *
+   */
+  useEffect(() => {
+    document.body.style.backgroundColor = "pink";
+
+    window.addEventListener("onscroll", onScroll);
+    window.addEventListener("touchstart", onTouchStart);
+    window.addEventListener("touchmove", onTouch);
+    // return () => {
+    //   document.body.style.backgroundColor = "white";
+    // };
+  }, []);
+
   const [sheet, setSheet] = useState(`color: black; background-color: red`);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSheet(event.target.value);
@@ -36,7 +69,7 @@ const Page: NextPage = () => {
     timestamp: Timestamp.fromDate(new Date()),
     name: "",
     text: lorem,
-    profilePicUrl: "",
+    profilePicUrl: "/images/profile_placeholder.png",
     imageUrl: "",
   };
   const [alignment, setAlignment] = React.useState("web");
@@ -76,39 +109,13 @@ const Page: NextPage = () => {
           >
             <Msg msg={sampleMsg} />
           </div>
+
           <TextField
-            label="Sample"
-            multiline
-            placeholder="Placeholder"
-            value={lorem}
-            css={css(`
-          ${sheet}
-        `)}
-          />
-          <TextField
-            label="CSS"
+            label="Message CSS"
             multiline
             placeholder="Placeholder"
             value={sheet}
             rows={4}
-            onChange={handleChange}
-          />
-        </Stack>
-        <Stack spacing={2} direction="row">
-          <TextField
-            label="Sample"
-            multiline
-            placeholder="Placeholder"
-            value={lorem}
-            css={css(`
-          ${sheet}
-        `)}
-          />
-          <TextField
-            label="CSS"
-            multiline
-            placeholder="Placeholder"
-            value={sheet}
             onChange={handleChange}
           />
         </Stack>
