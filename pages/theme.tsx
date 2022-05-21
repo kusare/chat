@@ -30,6 +30,9 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import { PixiComponent, Stage, Text } from "@inlet/react-pixi";
 import { Graphics, TextStyle } from "pixi.js";
+import * as THREE from "three";
+import { createRoot } from "react-dom/client";
+import { Canvas, useFrame } from "@react-three/fiber";
 
 const Page: NextPage = () => {
   /**
@@ -151,6 +154,47 @@ const Page: NextPage = () => {
   );
 
   /**
+████████╗██╗  ██╗██████╗ ███████╗███████╗
+╚══██╔══╝██║  ██║██╔══██╗██╔════╝██╔════╝
+   ██║   ███████║██████╔╝█████╗  █████╗  
+   ██║   ██╔══██║██╔══██╗██╔══╝  ██╔══╝  
+   ██║   ██║  ██║██║  ██║███████╗███████╗
+   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝
+                                         
+ */
+
+  const TBox = (props: JSX.IntrinsicElements["mesh"]) => {
+    const ref = useRef<THREE.Mesh>(null!);
+    const [hovered, hover] = useState(false);
+    const [clicked, click] = useState(false);
+    useFrame((state, delta) => (ref.current.rotation.x += 0.01));
+    return (
+      <mesh
+        {...props}
+        ref={ref}
+        scale={clicked ? 1.5 : 1}
+        onClick={(event) => click(!clicked)}
+        onPointerOver={(event) => hover(true)}
+        onPointerOut={(event) => hover(false)}
+      >
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+      </mesh>
+    );
+  };
+
+  const Three = () => {
+    return (
+      <Canvas>
+        <ambientLight />
+        <pointLight position={[10, 10, 10]} />
+        <TBox position={[-1.2, 0, 0]} />
+        <TBox position={[1.2, 0, 0]} />
+      </Canvas>
+    );
+  };
+
+  /**
 ██████╗  ██████╗ ███╗   ███╗
 ██╔══██╗██╔═══██╗████╗ ████║
 ██║  ██║██║   ██║██╔████╔██║
@@ -228,6 +272,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>Theme</h1>
+      <Three></Three>
       <Pixi></Pixi>
       <FontDrum></FontDrum>
       <AsciiDocEditor defaultValue="aaS" />
