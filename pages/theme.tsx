@@ -23,8 +23,74 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { AsciiDocEditor } from "../components/codeMirror";
+// import Hammer from "hammerjs";
+import Hammer from "react-hammerjs";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
 
 const Page: NextPage = () => {
+  /**
+██╗  ██╗ █████╗ ███╗   ███╗███╗   ███╗███████╗██████╗ 
+██║  ██║██╔══██╗████╗ ████║████╗ ████║██╔════╝██╔══██╗
+███████║███████║██╔████╔██║██╔████╔██║█████╗  ██████╔╝
+██╔══██║██╔══██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝  ██╔══██╗
+██║  ██║██║  ██║██║ ╚═╝ ██║██║ ╚═╝ ██║███████╗██║  ██║
+╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝
+                                                      
+ */
+
+  /**
+   * ProfilePicUrl
+   */
+  const FontDrum: React.FC = () => {
+    const [select, setSelect] = useState(10);
+
+    const handleTap = (e: any) => {
+      console.log("tap", e);
+      setSelect(20);
+    };
+
+    const handleSwipe = (e: any) => {
+      console.log("swipe", e);
+      setSelect(30);
+    };
+
+    return (
+      <Hammer onTap={handleTap} onSwipe={handleSwipe}>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl fullWidth>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+              font-family?
+            </InputLabel>
+            <NativeSelect
+              defaultValue={10}
+              inputProps={{
+                name: "age",
+                id: "uncontrolled-native",
+              }}
+              value={select}
+            >
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </NativeSelect>
+          </FormControl>
+        </Box>
+      </Hammer>
+    );
+  };
+
+  /**
+██████╗  ██████╗ ███╗   ███╗
+██╔══██╗██╔═══██╗████╗ ████║
+██║  ██║██║   ██║██╔████╔██║
+██║  ██║██║   ██║██║╚██╔╝██║
+██████╔╝╚██████╔╝██║ ╚═╝ ██║
+╚═════╝  ╚═════╝ ╚═╝     ╚═╝
+                            
+ */
+
   // DOM Event not to be confused with React.MouseEvent
   const onScroll = (e: any) => {
     console.log(e.wheelDelta);
@@ -51,12 +117,22 @@ const Page: NextPage = () => {
     document.body.style.backgroundColor = "pink";
 
     window.addEventListener("onscroll", onScroll);
-    window.addEventListener("touchstart", onTouchStart);
-    window.addEventListener("touchmove", onTouch);
+    // window.addEventListener("touchstart", onTouchStart);
+    // window.addEventListener("touchmove", onTouch);
     // return () => {
     //   document.body.style.backgroundColor = "white";
     // };
   }, []);
+
+  /**
+███████╗██╗  ██╗███████╗███████╗████████╗
+██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
+███████╗███████║█████╗  █████╗     ██║   
+╚════██║██╔══██║██╔══╝  ██╔══╝     ██║   
+███████║██║  ██║███████╗███████╗   ██║   
+╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
+                                         
+ */
 
   const [sheet, setSheet] = useState(`color: black; background-color: red`);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,6 +159,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>Theme</h1>
+      <FontDrum></FontDrum>
       <AsciiDocEditor defaultValue="aaS" />
       <ToggleButtonGroup
         color="primary"
