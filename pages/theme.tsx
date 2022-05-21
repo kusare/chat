@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import React, { useState, useEffect, useRef } from "react";
 import { css } from "@emotion/react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -23,7 +22,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { AsciiDocEditor } from "../components/codeMirror";
-// import Hammer from "hammerjs";
 import Hammer from "react-hammerjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
@@ -33,6 +31,8 @@ import { Graphics, TextStyle } from "pixi.js";
 import * as THREE from "three";
 import { createRoot } from "react-dom/client";
 import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { Physics, usePlane, useBox } from "@react-three/cannon";
 
 const Page: NextPage = () => {
   /**
@@ -163,6 +163,12 @@ const Page: NextPage = () => {
                                          
  */
 
+  const threeCss = css`
+    width: 100vw;
+    height: 100vh;
+    background-color: #272727;
+  `;
+
   const TBox = (props: JSX.IntrinsicElements["mesh"]) => {
     const ref = useRef<THREE.Mesh>(null!);
     const [hovered, hover] = useState(false);
@@ -176,21 +182,143 @@ const Page: NextPage = () => {
         onClick={(event) => click(!clicked)}
         onPointerOver={(event) => hover(true)}
         onPointerOut={(event) => hover(false)}
+        castShadow
+        receiveShadow
       >
-        <boxGeometry args={[1, 1, 1]} />
+        <cylinderGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
       </mesh>
     );
   };
 
+  /**
+   *
+   */
+  function Box1(props: any) {
+    const mesh = useRef<THREE.Mesh>(null!);
+    const [hovered, setHover] = useState(false);
+    useFrame(
+      (state) => (mesh.current.position.y = Math.sin(state.clock.elapsedTime))
+    );
+    return (
+      <mesh
+        {...props}
+        ref={mesh}
+        onClick={(e) => props.setActive(!props.active)}
+        onPointerOver={(e) => setHover(true)}
+        onPointerOut={(e) => setHover(false)}
+      >
+        <boxBufferGeometry />
+        <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+      </mesh>
+    );
+  }
+
+  function Box2(props: any) {
+    const mesh = useRef<THREE.Mesh>(null!);
+    const [hovered, setHover] = useState(false);
+    useFrame(
+      (state) => (mesh.current.position.y = Math.sin(state.clock.elapsedTime))
+    );
+    return (
+      <group {...props}>
+        <mesh
+          {...props}
+          ref={mesh}
+          onClick={(e) => props.setActive(!props.active)}
+          onPointerOver={(e) => setHover(true)}
+          onPointerOut={(e) => setHover(false)}
+        >
+          <boxBufferGeometry />
+          <meshStandardMaterial color={hovered ? "green" : "blue"} />
+        </mesh>
+      </group>
+    );
+  }
+
+  function Switcher() {
+    const [active, setActive] = useState(false);
+    return (
+      <>
+        {active && (
+          <Box1 active={active} setActive={setActive} position={[-0.5, 0, 0]} />
+        )}
+        {!active && (
+          <Box2 active={active} setActive={setActive} position={[0.25, 0, 0]} />
+        )}
+      </>
+    );
+  }
+
   const Three = () => {
     return (
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <TBox position={[-1.2, 0, 0]} />
-        <TBox position={[1.2, 0, 0]} />
-      </Canvas>
+      <div css={threeCss}>
+        <Canvas>
+          <ambientLight intensity={0.5} />
+          <spotLight
+            intensity={0.6}
+            position={[30, 30, 50]}
+            angle={0.2}
+            penumbra={1}
+            castShadow
+          />
+          <TBox position={[-1.2, 0, 0]} />
+          <TBox position={[1.2, 0, 0]} />
+          <Switcher />
+        </Canvas>
+      </div>
+    );
+  };
+
+  /**
+ ██████╗ █████╗ ███╗   ██╗███╗   ██╗ ██████╗ ███╗   ██╗
+██╔════╝██╔══██╗████╗  ██║████╗  ██║██╔═══██╗████╗  ██║
+██║     ███████║██╔██╗ ██║██╔██╗ ██║██║   ██║██╔██╗ ██║
+██║     ██╔══██║██║╚██╗██║██║╚██╗██║██║   ██║██║╚██╗██║
+╚██████╗██║  ██║██║ ╚████║██║ ╚████║╚██████╔╝██║ ╚████║
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═══╝
+ */
+
+  /**
+   *
+   */
+  function Plane(props: any) {
+    const altRef = useRef();
+    const [ref] = usePlane(() => ({
+      rotation: [-Math.PI / 2, 0, 0],
+      ...props,
+    }));
+    return (
+      // TODO
+      // @ts-ignoree
+      <mesh ref={ref}>
+        <planeGeometry args={[100, 100]} />
+      </mesh>
+    );
+  }
+
+  function Cube(props: any) {
+    const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }));
+    return (
+      // TODO
+      // @ts-ignoree
+      <mesh ref={ref}>
+        <boxGeometry />
+      </mesh>
+    );
+  }
+
+  const Cannon = () => {
+    return (
+      <>
+        <Canvas>
+          <Physics>
+            <Plane />
+            <Cube />
+          </Physics>
+        </Canvas>
+        ,
+      </>
     );
   };
 
@@ -272,6 +400,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>Theme</h1>
+      <Cannon></Cannon>
       <Three></Three>
       <Pixi></Pixi>
       <FontDrum></FontDrum>
