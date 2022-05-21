@@ -28,6 +28,8 @@ import Hammer from "react-hammerjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
+import { PixiComponent, Stage, Text } from "@inlet/react-pixi";
+import { Graphics, TextStyle } from "pixi.js";
 
 const Page: NextPage = () => {
   /**
@@ -64,7 +66,6 @@ const Page: NextPage = () => {
               font-family?
             </InputLabel>
             <NativeSelect
-              defaultValue={10}
               inputProps={{
                 name: "age",
                 id: "uncontrolled-native",
@@ -80,6 +81,74 @@ const Page: NextPage = () => {
       </Hammer>
     );
   };
+
+  /**
+██████╗ ██╗██╗  ██╗██╗
+██╔══██╗██║╚██╗██╔╝██║
+██████╔╝██║ ╚███╔╝ ██║
+██╔═══╝ ██║ ██╔██╗ ██║
+██║     ██║██╔╝ ██╗██║
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝
+                      
+ */
+
+  interface RectangleProps {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    color: number;
+  }
+
+  const Rectangle = PixiComponent<RectangleProps, Graphics>("Rectangle", {
+    create: () => new Graphics(),
+    applyProps: (ins, _, props) => {
+      ins.x = props.x;
+      ins.beginFill(props.color);
+      ins.drawRect(props.x, props.y, props.width, props.height);
+      ins.endFill();
+    },
+  });
+
+  const width = 500;
+  const height = 300;
+
+  const stageOptions = {
+    antialias: true,
+    autoDensity: true,
+    // backgroundAlpha: 0,
+  };
+
+  const Pixi = () => (
+    <Stage width={width} height={height} options={stageOptions}>
+      <Rectangle x={1} y={1} width={100} height={100} color={0xff0000} />
+      <Text
+        text="Hello World"
+        anchor={0}
+        x={1}
+        y={1}
+        style={
+          new TextStyle({
+            align: "center",
+            fontFamily: '"Source Sans Pro", Helvetica, sans-serif',
+            fontSize: 50,
+            fontWeight: "400",
+            fill: ["#ffffff", "#00ff99"], // gradient
+            stroke: "#01d27e",
+            strokeThickness: 5,
+            letterSpacing: 20,
+            dropShadow: true,
+            dropShadowColor: "#ccced2",
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+            wordWrap: true,
+            wordWrapWidth: 440,
+          })
+        }
+      />
+    </Stage>
+  );
 
   /**
 ██████╗  ██████╗ ███╗   ███╗
@@ -159,6 +228,7 @@ const Page: NextPage = () => {
   return (
     <>
       <h1>Theme</h1>
+      <Pixi></Pixi>
       <FontDrum></FontDrum>
       <AsciiDocEditor defaultValue="aaS" />
       <ToggleButtonGroup
