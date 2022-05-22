@@ -4,22 +4,23 @@ import { MsgState, Msg } from "../types";
 
 export const cssTextState = atom({
   key: "cssTextState",
-  default: "color: black; background-color: #8AA058;",
+  // default: "color: black; background-color: #8AA058;",
+  default: "",
 });
 
 export const cssMsgState = atom<MsgState>({
-  key: "msgState",
+  key: "cssMsgState",
   default: {
     id: "",
     timestamp: Timestamp.fromDate(new Date()),
     name: "",
-    text: "color: black; background-color: #8AA058;",
+    text: "",
     profilePicUrl: "",
     imageUrl: "",
   },
 });
 export const cssMsgsState = atom<MsgState[]>({
-  key: "msgsState",
+  key: "cssMsgsState",
   default: [
     {
       id: "",

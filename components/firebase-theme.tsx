@@ -33,7 +33,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { cssMsgsState } from "../atoms/cssMsgStates";
+import { cssMsgsState, cssMsgState, cssTextState } from "../atoms/cssMsgStates";
 import { MsgState, Msg } from "../types";
 
 /**
@@ -103,6 +103,26 @@ export const useCssMsgs = () => {
 };
 
 /**
+ ██████╗ ██████╗ ███╗   ███╗██████╗  ██████╗ ███╗   ██╗███████╗███╗   ██╗████████╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔═══██╗████╗  ██║██╔════╝████╗  ██║╚══██╔══╝
+██║     ██║   ██║██╔████╔██║██████╔╝██║   ██║██╔██╗ ██║█████╗  ██╔██╗ ██║   ██║   
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██║   ██║██║╚██╗██║██╔══╝  ██║╚██╗██║   ██║   
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ╚██████╔╝██║ ╚████║███████╗██║ ╚████║   ██║   
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
+                                                                                  
+ */
+
+/**
+ ██████╗ ██████╗ ███╗   ███╗██████╗      ██████╗ ███████╗████████╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗    ██╔════╝ ██╔════╝╚══██╔══╝
+██║     ██║   ██║██╔████╔██║██████╔╝    ██║  ███╗█████╗     ██║   
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝     ██║   ██║██╔══╝     ██║   
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║         ╚██████╔╝███████╗   ██║   
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝          ╚═════╝ ╚══════╝   ╚═╝   
+                                                                  
+ */
+
+/**
  * message
  */
 export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
@@ -118,7 +138,6 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
-      BG CSS
       <Stack spacing={2} direction="row">
         <Box>
           {props.msg.profilePicUrl && (
@@ -155,6 +174,30 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
           />
         )}
       </div>
+    </>
+  );
+};
+
+/**
+ ██████╗ ██████╗ ███╗   ███╗██████╗     ███████╗███████╗████████╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗    ██╔════╝██╔════╝╚══██╔══╝
+██║     ██║   ██║██╔████╔██║██████╔╝    ███████╗█████╗     ██║   
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝     ╚════██║██╔══╝     ██║   
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║         ███████║███████╗   ██║   
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝         ╚══════╝╚══════╝   ╚═╝   
+                                                                 
+ */
+
+/**
+ *
+ */
+export const SetCssTextToAtomBtn = (msg: any) => {
+  // const setMsg = useSetRecoilState(cssMsgState);
+  const setCssTextState = useSetRecoilState(cssTextState);
+  return (
+    <>
+      {/* TODO msg.msg.text */}
+      <Button onClick={() => setCssTextState(msg.msg.text)}>Set</Button>
     </>
   );
 };

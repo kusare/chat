@@ -47,9 +47,14 @@ import {
 import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
-import { CssMsg, useCssMsgs, setCssMsg } from "../components/firebase-theme";
+import {
+  CssMsg,
+  useCssMsgs,
+  setCssMsg,
+  SetCssTextToAtomBtn,
+} from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssTextState } from "../atoms/cssMsgStates";
+import { cssTextState, cssMsgState } from "../atoms/cssMsgStates";
 
 const Page: NextPage = () => {
   /**
@@ -62,10 +67,13 @@ const Page: NextPage = () => {
                                                     
  */
 
-  const setTextMsg = useSetRecoilState(cssTextState);
+  // const setMsgState = useSetRecoilState(cssMsgState);
+  const setCssTextState = useSetRecoilState(cssTextState);
+  // const msgState = useRecoilValue(cssMsgState);
   const cssText = useRecoilValue(cssTextState);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMsg(event.target.value);
+    // setMsgState(event.target.value);
+    setCssTextState(event.target.value);
   };
 
   return (
@@ -96,7 +104,6 @@ const Page: NextPage = () => {
         <Box>
           <Stack spacing={2} direction="row">
             <TextField
-              label="Background CSS"
               multiline
               value={cssText}
               rows={4}
@@ -107,7 +114,17 @@ const Page: NextPage = () => {
         </Box>
         <Input type="file" onChange={setImgMsg} />
         {useCssMsgs().map((msg, index) => (
-          <CssMsg key={msg?.id + index.toString()} msg={msg}></CssMsg>
+          <div key={index.toString() + "div"}>
+            <CssMsg
+              // TODO msg?.id.toString() cannot delete
+              key={msg?.id.toString() + index.toString() + "msg"}
+              msg={msg}
+            ></CssMsg>
+            <SetCssTextToAtomBtn
+              key={msg?.id.toString() + index.toString() + "css"}
+              msg={msg}
+            />
+          </div>
         ))}
       </Grid>
     </>
