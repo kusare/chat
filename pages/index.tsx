@@ -51,7 +51,7 @@ const Home: NextPage = () => {
         <Box>
           <Stack spacing={2} direction="row">
             <TextField
-              label="CSS"
+              label="Comment"
               multiline
               placeholder="Placeholder"
               value={text}
