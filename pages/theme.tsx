@@ -47,6 +47,11 @@ import {
 import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
+import {
+  BackgroundCss,
+  useCssMsgs,
+  setCss,
+} from "../components/firebase-theme";
 
 const sections = [
   { title: "Chat", url: "/" },
@@ -105,12 +110,15 @@ const Page: NextPage = () => {
               rows={4}
               onChange={handleChange}
             />
-            <Button onClick={() => setMsg(text)}>Set Msg</Button>
+            <Button onClick={() => setCss(text)}>Set Msg</Button>
           </Stack>
         </Box>
         <Input type="file" onChange={setImgMsg} />
-        {useMsgs().map((msg, index) => (
-          <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
+        {useCssMsgs().map((msg, index) => (
+          <BackgroundCss
+            key={msg?.id + index.toString()}
+            msg={msg}
+          ></BackgroundCss>
         ))}
       </Grid>
     </>
