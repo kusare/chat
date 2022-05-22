@@ -21,7 +21,7 @@ import generatedCSS from "../components/cssGenerate";
 
 const sections = [
   { title: "Chat", url: "" },
-  { title: "Timer", url: "timer" },
+  { title: "test", url: "test" },
   { title: "🎨Theme", url: "theme" },
   { title: "🔧Setting", url: "setting" },
 ];
