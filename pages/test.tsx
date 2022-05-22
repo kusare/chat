@@ -35,7 +35,9 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
 import PastelFilter from "../components/PastelFilter";
 import { useSelector, useDispatch } from "react-redux";
-import { decrease, increase } from "../redux/counterSlice";
+import { decrease, increase, selectCount } from "../redux/counterSlice";
+import userSlice from "../redux/counterSlice";
+
 const Page: NextPage = () => {
   /**
 ██╗  ██╗ █████╗ ███╗   ███╗███╗   ███╗███████╗██████╗ 
@@ -435,13 +437,13 @@ const Page: NextPage = () => {
 
   // TODO
   // @ts-ignoree
-  const count = useSelector((state) => state.counter.count);
+  const count = useSelector(selectCount);
   const dispatch = useDispatch();
 
   return (
     <>
-      <h1>Theme</h1>
-      <h1>Count: {count}</h1>
+      <h1>Test</h1>
+      <h2>Redux-Persist-Count: {count}</h2>
       <button onClick={() => dispatch(increase())}>Up</button>
       <button onClick={() => dispatch(decrease())}>Down</button>
       <Cannon></Cannon>
