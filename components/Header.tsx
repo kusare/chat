@@ -14,16 +14,19 @@ import {
   setImgMsg,
 } from "../components/firebase-index";
 
+const sections = [
+  { title: "Chat", url: "/" },
+  { title: "test", url: "test" },
+  { title: "🎨Theme", url: "theme" },
+  { title: "🔧Setting", url: "setting" },
+];
+
 interface HeaderProps {
-  sections: ReadonlyArray<{
-    title: string;
-    url: string;
-  }>;
   title: string;
 }
 
 export default function Header(props: HeaderProps) {
-  const { sections, title } = props;
+  const { title } = props;
 
   return (
     <React.Fragment>
