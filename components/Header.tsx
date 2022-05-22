@@ -16,7 +16,7 @@ import {
 
 const sections = [
   { title: "Chat", url: "/" },
-  { title: "test", url: "test" },
+  { title: "Test", url: "test" },
   { title: "🎨Theme", url: "theme" },
   { title: "🔧Setting", url: "setting" },
 ];
