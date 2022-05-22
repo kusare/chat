@@ -34,7 +34,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Physics, usePlane, useBox } from "@react-three/cannon";
 import PastelFilter from "../components/PastelFilter";
-
+import { useSelector, useDispatch } from "react-redux";
+import { decrease, increase } from "../redux/counterSlice";
 const Page: NextPage = () => {
   /**
 ██╗  ██╗ █████╗ ███╗   ███╗███╗   ███╗███████╗██████╗ 
@@ -422,9 +423,27 @@ const Page: NextPage = () => {
     setAlignment(newAlignment);
   };
 
+  /**
+██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
+██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
+██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
+██╔══██╗██╔══╝     ██║   ██║   ██║██╔══██╗██║╚██╗██║
+██║  ██║███████╗   ██║   ╚██████╔╝██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
+                                                    
+ */
+
+  // TODO
+  // @ts-ignoree
+  const count = useSelector((state) => state.counter.count);
+  const dispatch = useDispatch();
+
   return (
     <>
       <h1>Theme</h1>
+      <h1>Count: {count}</h1>
+      <button onClick={() => dispatch(increase())}>Up</button>
+      <button onClick={() => dispatch(decrease())}>Down</button>
       <Cannon></Cannon>
       <Three></Three>
       <Pixi></Pixi>
