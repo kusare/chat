@@ -47,18 +47,9 @@ import {
 import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
-import {
-  BackgroundCss,
-  useCssMsgs,
-  setCss,
-} from "../components/firebase-theme";
-
-const sections = [
-  { title: "Chat", url: "/" },
-  { title: "test", url: "test" },
-  { title: "🎨Theme", url: "theme" },
-  { title: "🔧Setting", url: "setting" },
-];
+import { CssMsg, useCssMsgs, setCssMsg } from "../components/firebase-theme";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import { cssTextState } from "../atoms/cssMsgStates";
 
 const Page: NextPage = () => {
   /**
@@ -71,9 +62,10 @@ const Page: NextPage = () => {
                                                     
  */
 
-  const [text, setText] = useState("color: black; background-color: #8AA058;");
+  const setTextMsg = useSetRecoilState(cssTextState);
+  const cssText = useRecoilValue(cssTextState);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
+    setTextMsg(event.target.value);
   };
 
   return (
@@ -81,7 +73,7 @@ const Page: NextPage = () => {
       <Global
         styles={css`
           body {
-            ${text}
+            ${cssText}
           }
         `}
       />
@@ -106,19 +98,16 @@ const Page: NextPage = () => {
             <TextField
               label="Background CSS"
               multiline
-              value={text}
+              value={cssText}
               rows={4}
               onChange={handleChange}
             />
-            <Button onClick={() => setCss(text)}>Set Msg</Button>
+            <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
           </Stack>
         </Box>
         <Input type="file" onChange={setImgMsg} />
         {useCssMsgs().map((msg, index) => (
-          <BackgroundCss
-            key={msg?.id + index.toString()}
-            msg={msg}
-          ></BackgroundCss>
+          <CssMsg key={msg?.id + index.toString()} msg={msg}></CssMsg>
         ))}
       </Grid>
     </>

@@ -33,51 +33,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-
-/**
- ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗     
-██╔════╝ ██║     ██╔═══██╗██╔══██╗██╔══██╗██║     
-██║  ███╗██║     ██║   ██║██████╔╝███████║██║     
-██║   ██║██║     ██║   ██║██╔══██╗██╔══██║██║     
-╚██████╔╝███████╗╚██████╔╝██████╔╝██║  ██║███████╗
- ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
-                                                  
- */
-
-export type Msg = {
-  id: string;
-  timestamp: Timestamp;
-  name: string;
-  text: string;
-  profilePicUrl: string;
-  imageUrl: string;
-};
-export type MsgState = Msg | null;
-
-export const msgState = atom<MsgState>({
-  key: "msgState",
-  default: {
-    id: "",
-    timestamp: Timestamp.fromDate(new Date()),
-    name: "",
-    text: "",
-    profilePicUrl: "",
-    imageUrl: "",
-  },
-});
-export const msgsState = atom<MsgState[]>({
-  key: "msgsState",
-  default: [
-    {
-      id: "",
-      timestamp: Timestamp.fromDate(new Date()),
-      name: "",
-      text: "",
-      profilePicUrl: "",
-      imageUrl: "",
-    },
-  ],
-});
+import { cssMsgsState } from "../atoms/cssMsgStates";
+import { MsgState, Msg } from "../types";
 
 /**
  ██████╗ ███████╗████████╗
@@ -111,8 +68,8 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 export const useCssMsgs = () => {
-  const setMsgs = useSetRecoilState(msgsState);
-  const msgs = useRecoilValue(msgsState);
+  const setMsgs = useSetRecoilState(cssMsgsState);
+  const msgs = useRecoilValue(cssMsgsState);
   const LIMIT = 24;
 
   useEffect(() => {
@@ -148,7 +105,7 @@ export const useCssMsgs = () => {
 /**
  * message
  */
-export const BackgroundCss: React.FC<{ msg: MsgState }> = (props) => {
+export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -212,7 +169,7 @@ export const BackgroundCss: React.FC<{ msg: MsgState }> = (props) => {
  */
 
 // Saves a new message to Cloud Firestore.
-export const setCss = async (msgText: any) => {
+export const setCssMsg = async (msgText: any) => {
   // Add a new message entry to the Firebase database.
   try {
     await addDoc(collection(getFirestore(), "cssMsgs"), {
