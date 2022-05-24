@@ -444,8 +444,8 @@ const Page: NextPage = () => {
     <>
       <h1>Test</h1>
       <h2>Redux-Persist-Count: {count}</h2>
-      <button onClick={() => dispatch(increase())}>Up</button>
-      <button onClick={() => dispatch(decrease())}>Down</button>
+      <button onClick={() => dispatch(increase(1))}>Up</button>
+      <button onClick={() => dispatch(decrease(1))}>Down</button>
       <Cannon></Cannon>
       <Three></Three>
       <Pixi></Pixi>
