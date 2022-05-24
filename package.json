@@ -57,6 +57,7 @@
     "glslify-loader": "^2.0.0",
     "localforage": "^1.10.0",
     "next": "latest",
+    "next-pwa": "^5.5.2",
     "pixi.js": "^6.3.2",
     "raw-loader": "^4.0.2",
     "react": "latest",
