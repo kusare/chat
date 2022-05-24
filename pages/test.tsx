@@ -36,7 +36,6 @@ import { Physics, usePlane, useBox } from "@react-three/cannon";
 import PastelFilter from "../components/PastelFilter";
 import { useSelector, useDispatch } from "react-redux";
 import { decrease, increase, selectCount } from "../redux/counterSlice";
-import userSlice from "../redux/counterSlice";
 
 const Page: NextPage = () => {
   /**
