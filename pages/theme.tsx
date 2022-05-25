@@ -2,48 +2,10 @@ import { NextPage } from "next";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Stack, Button } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  getDocs,
-  setDoc,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  Timestamp,
-} from "firebase/firestore";
-import { AsciiDocEditor } from "../components/codeMirror";
-import Hammer from "react-hammerjs";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import NativeSelect from "@mui/material/NativeSelect";
-import { PixiComponent, Stage, Text } from "@inlet/react-pixi";
-import { Graphics, TextStyle, filters } from "pixi.js";
-import * as THREE from "three";
-import { createRoot } from "react-dom/client";
-import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Physics, usePlane, useBox } from "@react-three/cannon";
-import PastelFilter from "../components/PastelFilter";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
-import {
-  signIn,
-  signOutUser,
-  ProfilePic,
-  UserName,
-  setMsg,
-  Msg,
-  useMsgs,
-  setImgMsg,
-} from "../components/firebase-index";
+import { setImgMsg } from "../components/firebase-index";
 import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
@@ -102,17 +64,15 @@ const Page: NextPage = () => {
           justifyContent="center"
           style={{ minHeight: "100vh" }}
         >
-          <Box>
-            <Stack spacing={2} direction="row">
-              <TextField
-                multiline
-                value={cssText}
-                rows={4}
-                onChange={handleChange}
-              />
-              <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-            </Stack>
-          </Box>
+          <Stack spacing={2} direction="row">
+            <TextField
+              multiline
+              value={cssText}
+              rows={4}
+              onChange={handleChange}
+            />
+            <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+          </Stack>
           <Input type="file" onChange={setImgMsg} />
           {useCssMsgs().map((msg, index) => (
             <div key={index.toString() + "div"}>
@@ -129,17 +89,15 @@ const Page: NextPage = () => {
           ))}
         </Grid>
         <Grid item>
-          <Box>
-            <Stack spacing={2} direction="row">
-              <TextField
-                multiline
-                value={cssText}
-                rows={4}
-                onChange={handleChange}
-              />
-              <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-            </Stack>
-          </Box>
+          <Stack spacing={2} direction="row">
+            <TextField
+              multiline
+              value={cssText}
+              rows={4}
+              onChange={handleChange}
+            />
+            <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+          </Stack>
           <Input type="file" onChange={setImgMsg} />
           {useCssMsgs().map((msg, index) => (
             <div key={index.toString() + "div"}>
