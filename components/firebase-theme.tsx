@@ -56,6 +56,8 @@ import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
+import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import PowerIcon from "@mui/icons-material/Power";
 
 /**
  ██████╗ ███████╗████████╗
@@ -166,27 +168,6 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
                                 
  */
 
-  interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-  }
-
-  const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
-
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   //  💅CSS to Return
   const cssText = useRecoilValue(cssTextState);
 
@@ -214,66 +195,7 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
-      {/* 
- ██████╗ █████╗ ██████╗ ██████╗ 
-██╔════╝██╔══██╗██╔══██╗██╔══██╗
-██║     ███████║██████╔╝██║  ██║
-██║     ██╔══██║██╔══██╗██║  ██║
-╚██████╗██║  ██║██║  ██║██████╔╝
- ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ 
-                                
- */}
-
       <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          //😭プロフィールの画像
-          action={
-            <div>
-              <IconButton
-                aria-label="avater"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-              >
-                <Avatar
-                  sx={{ bgcolor: red[500] }}
-                  aria-label="recipe"
-                  alt="profilePic"
-                  src={props.msg.profilePicUrl}
-                ></Avatar>
-              </IconButton>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
-            </div>
-          }
-          //📛プロフィールの名前
-          title={props.msg.name}
-          //⌚アップした時間
-          subheader={time}
-        />
-        {/* 🖼アップした画像 */}
-        {props.msg.imageUrl && (
-          <CardMedia
-            component="img"
-            height="50"
-            sx={{ width: 50 }}
-            image={props.msg.imageUrl}
-            alt="Paella dish"
-          />
-        )}
-
         {/* 💅CSS Sheet` */}
         <CardContent
           css={css`
@@ -286,38 +208,61 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
             {props.msg.text}
           </Typography>
         </CardContent>
+        {/* 🖼アップした画像 */}
+        {props.msg.imageUrl && (
+          <CardMedia
+            component="img"
+            height="50"
+            sx={{ width: 50 }}
+            image={props.msg.imageUrl}
+            alt="Paella dish"
+          />
+        )}
+        {/* bottom line */}
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="flower">
-            <FilterVintageIcon />
-          </IconButton>
-          <IconButton aria-label="star">
-            <Badge color="secondary" badgeContent={99}>
-              <StarIcon />
-            </Badge>
-          </IconButton>
+          {/* 😭avater */}
+          <div>
+            <IconButton
+              aria-label="avater"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <Avatar
+                sx={{ bgcolor: red[500] }}
+                aria-label="recipe"
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+              ></Avatar>
+            </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+          </div>
+          {/* 📛profile name */}
+          <Typography variant="body2" color="text.secondary">
+            {props.msg.name}
+          </Typography>
+          {/* ⌚time */}
+          <Typography variant="body2" color="text.secondary">
+            {time}
+          </Typography>
+          {/* 🖊 Edit */}
           <IconButton aria-label="edit">
             <EditIcon />
           </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          {/* 💅CSS Sheet` */}
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              {props.msg.text}
-            </Typography>
-          </CardContent>
-        </Collapse>
       </Card>
     </>
   );
