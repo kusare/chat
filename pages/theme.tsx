@@ -92,40 +92,69 @@ const Page: NextPage = () => {
       </Head>
       <Header title="Hamu House"></Header>
       <h1>Theme</h1>
-
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: "100vh" }}
-      >
-        <Box>
-          <Stack spacing={2} direction="row">
-            <TextField
-              multiline
-              value={cssText}
-              rows={4}
-              onChange={handleChange}
-            />
-            <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-          </Stack>
-        </Box>
-        <Input type="file" onChange={setImgMsg} />
-        {useCssMsgs().map((msg, index) => (
-          <div key={index.toString() + "div"}>
-            <CssMsg
-              // TODO msg?.id.toString() cannot delete
-              key={msg?.id.toString() + index.toString() + "msg"}
-              msg={msg}
-            ></CssMsg>
-            <SetCssTextToAtomBtn
-              key={msg?.id.toString() + index.toString() + "css"}
-              msg={msg}
-            />
-          </div>
-        ))}
+      <Grid direction="row" justifyContent="center" container>
+        <Grid
+          xs={6}
+          item
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <Box>
+            <Stack spacing={2} direction="row">
+              <TextField
+                multiline
+                value={cssText}
+                rows={4}
+                onChange={handleChange}
+              />
+              <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+            </Stack>
+          </Box>
+          <Input type="file" onChange={setImgMsg} />
+          {useCssMsgs().map((msg, index) => (
+            <div key={index.toString() + "div"}>
+              <CssMsg
+                // TODO msg?.id.toString() cannot delete
+                key={msg?.id.toString() + index.toString() + "msg"}
+                msg={msg}
+              ></CssMsg>
+              <SetCssTextToAtomBtn
+                key={msg?.id.toString() + index.toString() + "css"}
+                msg={msg}
+              />
+            </div>
+          ))}
+        </Grid>
+        <Grid item>
+          <Box>
+            <Stack spacing={2} direction="row">
+              <TextField
+                multiline
+                value={cssText}
+                rows={4}
+                onChange={handleChange}
+              />
+              <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+            </Stack>
+          </Box>
+          <Input type="file" onChange={setImgMsg} />
+          {useCssMsgs().map((msg, index) => (
+            <div key={index.toString() + "div"}>
+              <CssMsg
+                // TODO msg?.id.toString() cannot delete
+                key={msg?.id.toString() + index.toString() + "msg"}
+                msg={msg}
+              ></CssMsg>
+              <SetCssTextToAtomBtn
+                key={msg?.id.toString() + index.toString() + "css"}
+                msg={msg}
+              />
+            </div>
+          ))}
+        </Grid>
       </Grid>
     </>
   );
