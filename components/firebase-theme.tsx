@@ -228,14 +228,14 @@ export const setCssMsg = async (msgText: any) => {
 
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
-export const setImgMsg = async (event: any) => {
+export const setCssImg = async (event: any, id: string) => {
   event.preventDefault();
   let file = event.target.files[0];
 
   let LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
   try {
     // 1 - We add a message with a loading icon that will get updated with the shared image.
-    const messageRef = await addDoc(collection(getFirestore(), "messages"), {
+    const messageRef = await addDoc(collection(getFirestore(), id), {
       name: getUserName(),
       imageUrl: LOADING_IMAGE_URL,
       profilePicUrl: getProfilePicUrl(),

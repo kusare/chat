@@ -5,7 +5,6 @@ import { Stack, Button } from "@mui/material";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
-import { setImgMsg } from "../components/firebase-index";
 import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
@@ -13,6 +12,7 @@ import {
   CssMsg,
   useCssMsgs,
   setCssMsg,
+  setCssImg,
   SetCssTextToAtomBtn,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
@@ -55,25 +55,21 @@ const Page: NextPage = () => {
       <Header title="Hamu House"></Header>
       <h1>Theme</h1>
       <Grid direction="row" justifyContent="center" container>
+        {/* ███████╗██╗   ██╗███╗   ███╗███╗   ███╗ █████╗ ██████╗ ██╗   ██╗
+            ██╔════╝██║   ██║████╗ ████║████╗ ████║██╔══██╗██╔══██╗╚██╗ ██╔╝
+            ███████╗██║   ██║██╔████╔██║██╔████╔██║███████║██████╔╝ ╚████╔╝ 
+            ╚════██║██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██╔══██╗  ╚██╔╝  
+            ███████║╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║  ██║   ██║   
+            ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+                                                                 */}
         <Grid
-          xs={6}
           item
-          spacing={0}
-          direction="column"
           alignItems="center"
           justifyContent="center"
           style={{ minHeight: "100vh" }}
         >
-          <Stack spacing={2} direction="row">
-            <TextField
-              multiline
-              value={cssText}
-              rows={4}
-              onChange={handleChange}
-            />
-            <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-          </Stack>
-          <Input type="file" onChange={setImgMsg} />
+          <h2>Summary</h2>
+
           {useCssMsgs().map((msg, index) => (
             <div key={index.toString() + "div"}>
               <CssMsg
@@ -88,7 +84,22 @@ const Page: NextPage = () => {
             </div>
           ))}
         </Grid>
-        <Grid item>
+
+        {/* ███████╗██╗  ██╗███████╗███████╗████████╗
+            ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
+            ███████╗███████║█████╗  █████╗     ██║   
+            ╚════██║██╔══██║██╔══╝  ██╔══╝     ██║   
+            ███████║██║  ██║███████╗███████╗   ██║   
+            ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
+ */}
+
+        <Grid
+          item
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "100vh" }}
+        >
+          <h2>Sheet</h2>
           <Stack spacing={2} direction="row">
             <TextField
               multiline
@@ -98,7 +109,31 @@ const Page: NextPage = () => {
             />
             <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
           </Stack>
-          <Input type="file" onChange={setImgMsg} />
+          {useCssMsgs().map((msg, index) => (
+            <div key={index.toString() + "div"}>
+              <CssMsg
+                // TODO msg?.id.toString() cannot delete
+                key={msg?.id.toString() + index.toString() + "msg"}
+                msg={msg}
+              ></CssMsg>
+              <SetCssTextToAtomBtn
+                key={msg?.id.toString() + index.toString() + "css"}
+                msg={msg}
+              />
+            </div>
+          ))}
+        </Grid>
+
+        {/* ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
+            ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
+            ██║██╔████╔██║███████║██║  ███╗█████╗  
+            ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
+            ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
+            ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+                                        */}
+        <Grid item>
+          <h2>Image</h2>
+          <Input type="file" onChange={(e) => setCssImg(e, "cssMsgs")} />
           {useCssMsgs().map((msg, index) => (
             <div key={index.toString() + "div"}>
               <CssMsg
