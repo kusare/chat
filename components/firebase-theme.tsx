@@ -53,6 +53,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StarIcon from "@mui/icons-material/Star";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 /**
  ██████╗ ███████╗████████╗
@@ -187,6 +189,16 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
   //  💅CSS to Return
   // const cssText = useRecoilValue(cssTextState);
 
+  // 😭avater
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
@@ -211,25 +223,39 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
                                 
  */}
 
-      <Card
-        sx={{ maxWidth: 345 }}
-        // css={css`
-        //   * {
-        //     ${cssText}
-        //   }
-        // `}
-      >
+      <Card sx={{ maxWidth: 345 }}>
         <CardHeader
           //😭プロフィールの画像
           action={
-            <Avatar
-              sx={{ bgcolor: red[500] }}
-              aria-label="recipe"
-              alt="profilePic"
-              src={props.msg.profilePicUrl}
-            >
-              <MoreVertIcon />
-            </Avatar>
+            <div>
+              <IconButton
+                aria-label="avater"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                <Avatar
+                  sx={{ bgcolor: red[500] }}
+                  aria-label="recipe"
+                  alt="profilePic"
+                  src={props.msg.profilePicUrl}
+                ></Avatar>
+              </IconButton>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </div>
           }
           //📛プロフィールの名前
           title={props.msg.name}
