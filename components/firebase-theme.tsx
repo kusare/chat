@@ -65,6 +65,9 @@ import PowerIcon from "@mui/icons-material/Power";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 import { State } from "pixi.js";
+// TODO
+// @ts-ignoree
+import { toCSS, toJSON } from "cssjson";
 
 /**
  ██████╗ ███████╗████████╗
@@ -226,6 +229,11 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
 
+  // CSS to Json
+  const cssJson = toJSON(props?.msg?.text);
+  const json = cssJson.attributes;
+  console.log("json", cssJson.attributes);
+
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
@@ -332,7 +340,9 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   {props.msg.text}
                 </Typography>
-                <button>test</button>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  {json.color}
+                </Typography>
               </Box>
             </Modal>
           </div>
