@@ -101,7 +101,7 @@ const Page: NextPage = () => {
             ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
         <Grid item>
-          <h2>Image</h2>
+          <h2>Image for CSS</h2>
           {useCssMsgs("cssImgMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
               <GetCssImg

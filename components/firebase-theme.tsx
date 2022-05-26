@@ -332,6 +332,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   {props.msg.text}
                 </Typography>
+                <button>test</button>
               </Box>
             </Modal>
           </div>
