@@ -42,12 +42,6 @@ export default function Header(props: HeaderProps) {
           {title}
         </Typography>
 
-        <Button variant="outlined" size="small" onClick={signIn}>
-          Sign in
-        </Button>
-        <Button variant="outlined" size="small" onClick={signOutUser}>
-          Sign out
-        </Button>
         <ProfilePic></ProfilePic>
       </Toolbar>
       <Toolbar

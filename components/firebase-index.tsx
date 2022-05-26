@@ -228,6 +228,16 @@ function isUserSignedIn() {
  */
 
 /**
+██████╗ ██████╗  ██████╗ ███████╗██╗██╗     ███████╗    ██████╗ ██╗ ██████╗
+██╔══██╗██╔══██╗██╔═══██╗██╔════╝██║██║     ██╔════╝    ██╔══██╗██║██╔════╝
+██████╔╝██████╔╝██║   ██║█████╗  ██║██║     █████╗      ██████╔╝██║██║     
+██╔═══╝ ██╔══██╗██║   ██║██╔══╝  ██║██║     ██╔══╝      ██╔═══╝ ██║██║     
+██║     ██║  ██║╚██████╔╝██║     ██║███████╗███████╗    ██║     ██║╚██████╗
+╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚══════╝    ╚═╝     ╚═╝ ╚═════╝
+                                                                           
+ */
+
+/**
  * ProfilePicUrl
  */
 export const ProfilePic: React.FC = () => {
@@ -276,9 +286,22 @@ export const ProfilePic: React.FC = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem
+            onClick={() => {
+              signIn();
+              handleClose();
+            }}
+          >
+            Sign in
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              signOutUser();
+              handleClose();
+            }}
+          >
+            Sign out
+          </MenuItem>
         </Menu>
       </div>
       {/* <Avatar alt="Remy Sharp" src={profilePicUrl} /> */}
