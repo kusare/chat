@@ -49,10 +49,6 @@ export default function Header(props: HeaderProps) {
           Sign out
         </Button>
         <ProfilePic></ProfilePic>
-        <UserName></UserName>
-        <a href="https://github.com/kusare/chat" target="_self">
-          Github
-        </a>
       </Toolbar>
       <Toolbar
         component="nav"

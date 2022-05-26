@@ -21,6 +21,8 @@ import generatedCSS from "../components/cssGenerate";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssTextState } from "../atoms/cssMsgStates";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
 const Home: NextPage = () => {
   const [text, setText] = useState("コメント");
@@ -82,6 +84,12 @@ const Home: NextPage = () => {
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
+
+        <IconButton aria-label="edit">
+          <a href="https://github.com/kusare/chat" target="_self">
+            <GitHubIcon />
+          </a>
+        </IconButton>
       </footer>
     </div>
   );
