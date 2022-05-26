@@ -10,9 +10,9 @@ import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
 import {
   GetCssMsg,
+  GetCssImg,
   useCssMsgs,
   setCssMsg,
-  setCssImg,
   SetCssTextToAtomBtn,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
@@ -104,11 +104,11 @@ const Page: NextPage = () => {
           <h2>Image</h2>
           {useCssMsgs("cssImgMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
-              <GetCssMsg
+              <GetCssImg
                 // TODO msg?.id.toString() cannot delete
                 key={msg?.id.toString() + index.toString() + "msg"}
                 msg={msg}
-              ></GetCssMsg>
+              ></GetCssImg>
             </div>
           ))}
         </Grid>
