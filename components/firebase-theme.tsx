@@ -64,6 +64,7 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import PowerIcon from "@mui/icons-material/Power";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
+import { State } from "pixi.js";
 
 /**
  ██████╗ ███████╗████████╗
@@ -106,15 +107,17 @@ export const getUserName = (): string => {
 /**
  * Loads chat messages history and listens for upcoming ones.
  */
-export const useCssMsgs = () => {
-  const setMsgs = useSetRecoilState(cssMsgsState);
-  const msgs = useRecoilValue(cssMsgsState);
+export const useCssMsgs = (id: string) => {
+  const [msgs, setMsgs] = useState<MsgState[]>([]);
+  // const setMsgs = useSetRecoilState(cssMsgsState);
+  // const msgs = useRecoilValue(cssMsgsState);
   const LIMIT = 24;
 
   useEffect(() => {
     // Create the query to load the last 12 messages and listen for new ones.
     const recentMessagesQuery = query(
-      collection(getFirestore(), "cssMsgs"),
+      // collection(getFirestore(), "cssMsgs"),
+      collection(getFirestore(), id),
       orderBy("timestamp", "desc"),
       limit(LIMIT)
     );
@@ -140,54 +143,6 @@ export const useCssMsgs = () => {
 
   return msgs;
 };
-
-/**
-██╗   ██╗███████╗███████╗     ██████╗███████╗███████╗    ██╗███╗   ███╗ █████╗  ██████╗ ███████╗███████╗
-██║   ██║██╔════╝██╔════╝    ██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝██╔════╝
-██║   ██║███████╗█████╗      ██║     ███████╗███████╗    ██║██╔████╔██║███████║██║  ███╗█████╗  ███████╗
-██║   ██║╚════██║██╔══╝      ██║     ╚════██║╚════██║    ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  ╚════██║
-╚██████╔╝███████║███████╗    ╚██████╗███████║███████║    ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗███████║
- ╚═════╝ ╚══════╝╚══════╝     ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝
-                                                                                                        
- */
-
-/**
- * Loads chat messages history and listens for upcoming ones.
- */
-// export const useCssImages = () => {
-//   const setImgs = useSetRecoilState(cssMsgsState);
-//   const msgs = useRecoilValue(cssMsgsState);
-//   const LIMIT = 24;
-
-//   useEffect(() => {
-//     // Create the query to load the last 12 messages and listen for new ones.
-//     const recentMessagesQuery = query(
-//       collection(getFirestore(), "cssMsgs"),
-//       orderBy("timestamp", "desc"),
-//       limit(LIMIT)
-//     );
-//     // Start listening to the query.
-//     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
-//       let addedMsgs: Msg[] = [];
-//       snapshot.docs.map((change) => {
-//         const message = change.data();
-//         addedMsgs.push({
-//           id: change.id,
-//           timestamp: message.timestamp,
-//           name: message.name,
-//           text: message.text,
-//           profilePicUrl: message.profilePicUrl,
-//           imageUrl: message.imageUrl,
-//         });
-//       }, []);
-//       setMsgs(addedMsgs);
-//       return unsub;
-//     });
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, []);
-
-//   return msgs;
-// };
 
 /**
  ██████╗ ██████╗ ███╗   ███╗██████╗  ██████╗ ███╗   ██╗███████╗███╗   ██╗████████╗
