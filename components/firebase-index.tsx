@@ -286,22 +286,26 @@ export const ProfilePic: React.FC = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem
-            onClick={() => {
-              signIn();
-              handleClose();
-            }}
-          >
-            Sign in
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              signOutUser();
-              handleClose();
-            }}
-          >
-            Sign out
-          </MenuItem>
+          {!isUserSignedIn() && (
+            <MenuItem
+              onClick={() => {
+                signIn();
+                handleClose();
+              }}
+            >
+              Sign in
+            </MenuItem>
+          )}
+          {isUserSignedIn() && (
+            <MenuItem
+              onClick={() => {
+                signOutUser();
+                handleClose();
+              }}
+            >
+              Sign out
+            </MenuItem>
+          )}
         </Menu>
       </div>
       {/* <Avatar alt="Remy Sharp" src={profilePicUrl} /> */}
