@@ -20,7 +20,7 @@ import React, { useState, useEffect, useRef } from "react";
 import generatedCSS from "../components/cssGenerate";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssTextState } from "../atoms/cssMsgStates";
+import { cssTextState } from "../recoil/cssMsgStates";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 

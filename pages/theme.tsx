@@ -16,7 +16,7 @@ import {
   SetCssTextToAtomBtn,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssTextState, cssMsgState } from "../atoms/cssMsgStates";
+import { cssTextState, cssMsgState } from "../recoil/cssMsgStates";
 
 const Page: NextPage = () => {
   /**
@@ -133,8 +133,8 @@ const Page: NextPage = () => {
                                         */}
         <Grid item>
           <h2>Image</h2>
-          <Input type="file" onChange={(e) => setCssImg(e, "cssMsgs")} />
-          {useCssMsgs().map((msg, index) => (
+          <Input type="file" onChange={(e) => setCssImg(e, "cssImage")} />
+          {/* {useCssMsgs().map((msg, index) => (
             <div key={index.toString() + "div"}>
               <CssMsg
                 // TODO msg?.id.toString() cannot delete
@@ -146,7 +146,7 @@ const Page: NextPage = () => {
                 msg={msg}
               />
             </div>
-          ))}
+          ))} */}
         </Grid>
       </Grid>
     </>
