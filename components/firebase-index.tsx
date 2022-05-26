@@ -37,6 +37,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { timeStamp } from "console";
 import { Box, Stack, Button, TextField, Avatar } from "@mui/material";
 import { css } from "@emotion/react";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -236,9 +240,48 @@ export const ProfilePic: React.FC = () => {
     const addedUrl = addSizeToGoogleProfilePic(url);
     setProfilePicUrlState(addedUrl);
   });
+
+  // 😭avater
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div>
-      <Avatar alt="Remy Sharp" src={profilePicUrl} />
+      {/* 😭avater */}
+      <div>
+        <IconButton
+          aria-label="avater"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <Avatar
+            aria-label="recipe"
+            alt="profilePic"
+            src={profilePicUrl}
+          ></Avatar>
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      </div>
+      {/* <Avatar alt="Remy Sharp" src={profilePicUrl} /> */}
     </div>
   );
 };
