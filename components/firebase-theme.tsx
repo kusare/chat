@@ -68,6 +68,7 @@ import { State } from "pixi.js";
 // TODO
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
+import { SketchPicker } from "react-color";
 
 /**
  ██████╗ ███████╗████████╗
@@ -234,6 +235,10 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const json = cssJson.attributes;
   console.log("json", cssJson.attributes);
 
+  // 🎨color picker
+  const [color, setColor] = useState();
+  const handleChangeColor = (color: any) => setColor(color);
+
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
@@ -343,6 +348,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   {json.color}
                 </Typography>
+                <SketchPicker color={color} onChange={handleChangeColor} />
               </Box>
             </Modal>
           </div>
