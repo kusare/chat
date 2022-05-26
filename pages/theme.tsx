@@ -9,7 +9,7 @@ import Head from "next/head";
 import Header from "../components/Header";
 import { Global, css } from "@emotion/react";
 import {
-  CssMsg,
+  GetCssMsg,
   useCssMsgs,
   setCssMsg,
   setCssImg,
@@ -72,11 +72,11 @@ const Page: NextPage = () => {
 
           {useCssMsgs("cssMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
-              <CssMsg
+              <GetCssMsg
                 // TODO msg?.id.toString() cannot delete
                 key={msg?.id.toString() + index.toString() + "msg"}
                 msg={msg}
-              ></CssMsg>
+              ></GetCssMsg>
               <SetCssTextToAtomBtn
                 key={msg?.id.toString() + index.toString() + "css"}
                 msg={msg}
@@ -111,11 +111,11 @@ const Page: NextPage = () => {
           </Stack>
           {useCssMsgs("cssMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
-              <CssMsg
+              <GetCssMsg
                 // TODO msg?.id.toString() cannot delete
                 key={msg?.id.toString() + index.toString() + "msg"}
                 msg={msg}
-              ></CssMsg>
+              ></GetCssMsg>
               <SetCssTextToAtomBtn
                 key={msg?.id.toString() + index.toString() + "css"}
                 msg={msg}
@@ -133,18 +133,13 @@ const Page: NextPage = () => {
                                         */}
         <Grid item>
           <h2>Image</h2>
-          <Input type="file" onChange={(e) => setCssImg(e, "cssImgs")} />
-          {useCssMsgs("cssImgs").map((msg, index) => (
+          {useCssMsgs("cssImgMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
-              <CssMsg
+              <GetCssMsg
                 // TODO msg?.id.toString() cannot delete
                 key={msg?.id.toString() + index.toString() + "msg"}
                 msg={msg}
-              ></CssMsg>
-              <SetCssTextToAtomBtn
-                key={msg?.id.toString() + index.toString() + "css"}
-                msg={msg}
-              />
+              ></GetCssMsg>
             </div>
           ))}
         </Grid>
