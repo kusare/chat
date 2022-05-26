@@ -55,36 +55,6 @@ const Page: NextPage = () => {
       <Header title="Hamu House"></Header>
       <h1>Theme</h1>
       <Grid direction="row" justifyContent="center" container>
-        {/* ███████╗██╗   ██╗███╗   ███╗███╗   ███╗ █████╗ ██████╗ ██╗   ██╗
-            ██╔════╝██║   ██║████╗ ████║████╗ ████║██╔══██╗██╔══██╗╚██╗ ██╔╝
-            ███████╗██║   ██║██╔████╔██║██╔████╔██║███████║██████╔╝ ╚████╔╝ 
-            ╚════██║██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══██║██╔══██╗  ╚██╔╝  
-            ███████║╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║██║  ██║██║  ██║   ██║   
-            ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
-                                                                 */}
-        <Grid
-          item
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <h2>Summary</h2>
-
-          {useCssMsgs("cssMsgs").map((msg, index) => (
-            <div key={index.toString() + "div"}>
-              <GetCssMsg
-                // TODO msg?.id.toString() cannot delete
-                key={msg?.id.toString() + index.toString() + "msg"}
-                msg={msg}
-              ></GetCssMsg>
-              <SetCssTextToAtomBtn
-                key={msg?.id.toString() + index.toString() + "css"}
-                msg={msg}
-              />
-            </div>
-          ))}
-        </Grid>
-
         {/* ███████╗██╗  ██╗███████╗███████╗████████╗
             ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
             ███████╗███████║█████╗  █████╗     ██║   
@@ -92,7 +62,6 @@ const Page: NextPage = () => {
             ███████║██║  ██║███████╗███████╗   ██║   
             ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
  */}
-
         <Grid
           item
           alignItems="center"

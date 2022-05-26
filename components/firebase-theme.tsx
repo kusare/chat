@@ -109,9 +109,18 @@ export const getUserName = (): string => {
  */
 export const useCssMsgs = (id: string) => {
   const [msgs, setMsgs] = useState<MsgState[]>([]);
-  // const setMsgs = useSetRecoilState(cssMsgsState);
-  // const msgs = useRecoilValue(cssMsgsState);
-  const LIMIT = 24;
+  /**
+██╗     ██╗███╗   ███╗██╗████████╗
+██║     ██║████╗ ████║██║╚══██╔══╝
+██║     ██║██╔████╔██║██║   ██║   
+██║     ██║██║╚██╔╝██║██║   ██║   
+███████╗██║██║ ╚═╝ ██║██║   ██║   
+╚══════╝╚═╝╚═╝     ╚═╝╚═╝   ╚═╝   
+                                  
+ */
+  // ロードするメッセージの数
+  // Number of messages to load
+  const LIMIT = 6;
 
   useEffect(() => {
     // Create the query to load the last 12 messages and listen for new ones.
