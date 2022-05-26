@@ -169,6 +169,7 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
   }, [props.msg?.timestamp]);
 
   //  💅CSS to Return
+  // 全体のCSS設定にする予定
   const cssText = useRecoilValue(cssTextState);
 
   // 😭avater
@@ -222,19 +223,11 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
           `}
         >
           <Typography variant="body2" color="text.secondary">
-            {props.msg.text}
+            {
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
+            }
           </Typography>
         </CardContent>
-        {/* 🖼アップした画像 */}
-        {props.msg.imageUrl && (
-          <CardMedia
-            component="img"
-            height="50"
-            sx={{ width: 50 }}
-            image={props.msg.imageUrl}
-            alt="Paella dish"
-          />
-        )}
         {/* bottom line */}
         <CardActions disableSpacing>
           {/* 😭avater */}
@@ -280,6 +273,14 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
             <IconButton aria-label="edit" onClick={handleOpenEdit}>
               <EditIcon />
             </IconButton>
+
+            {/* ███╗   ███╗ ██████╗ ██████╗  █████╗ ██╗     
+                ████╗ ████║██╔═══██╗██╔══██╗██╔══██╗██║     
+                ██╔████╔██║██║   ██║██║  ██║███████║██║     
+                ██║╚██╔╝██║██║   ██║██║  ██║██╔══██║██║     
+                ██║ ╚═╝ ██║╚██████╔╝██████╔╝██║  ██║███████╗
+                ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+                                             */}
             <Modal
               open={openEdit}
               onClose={handleCloseEdit}
@@ -287,12 +288,18 @@ export const CssMsg: React.FC<{ msg: MsgState }> = (props) => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
-                </Typography>
+                {/* 🖼アップした画像 */}
+                {props.msg.imageUrl && (
+                  <CardMedia
+                    component="img"
+                    height="50"
+                    sx={{ width: 50 }}
+                    image={props.msg.imageUrl}
+                    alt="Paella dish"
+                  />
+                )}
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor
-                  ligula.
+                  {props.msg.text}
                 </Typography>
               </Box>
             </Modal>
