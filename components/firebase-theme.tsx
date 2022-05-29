@@ -231,13 +231,12 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   // CSS to Json
-  const cssJson = toJSON(props?.msg?.text);
-  const json = cssJson.attributes;
-  console.log("json", cssJson.attributes);
+  const cssJson = toJSON(props?.msg?.text).attributes;
+  console.log("cssJson background", cssJson.background);
 
   // 🎨color picker
-  const [color, setColor] = useState();
-  const handleChangeColor = (color: any) => setColor(color);
+  const [colorPicked, setColorPicked] = useState(cssJson.background);
+  const handleColorPicked = (color: any) => setColorPicked(color.hex);
 
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
@@ -346,9 +345,12 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                   {props.msg.text}
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  {json.color}
+                  {colorPicked}
                 </Typography>
-                <SketchPicker color={color} onChange={handleChangeColor} />
+                <SketchPicker
+                  color={colorPicked}
+                  onChange={handleColorPicked}
+                />
               </Box>
             </Modal>
           </div>
