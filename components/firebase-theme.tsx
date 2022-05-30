@@ -67,7 +67,7 @@ import { Input } from "@mui/material";
 import { State } from "pixi.js";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
-import { SketchPicker } from "react-color";
+import { SketchPicker, ColorResult } from "react-color";
 
 /**
  ██████╗ ███████╗████████╗
@@ -243,13 +243,20 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   );
   // console.log("cssEdited", cssEdited);
 
-  // 🎨 color picker
+  // 🎨 COLOR PICKER
+  // Alpha値を16進数に変換する処理
+  const decimalToHex = (alpha: number) =>
+    alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
+
   // for colorPicker setting (background-color)
   const [colorPicked, setColorPicked] = useState(cssJson.background);
+  ``;
   // when color picked
-  const handleColorPicked = (color: any) => {
+  const handleColorPicked = (color: ColorResult) => {
+    // "ff0500" + "80"の形式になるように
+    const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
     // JSONのCSSに追加
-    cssJson.background = color.hex;
+    cssJson.background = hexCode;
     setCssJson(cssJson);
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     setCssEdited(
@@ -258,7 +265,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
       })
     );
     // ColorPickerの設定を更新
-    setColorPicked(color.hex);
+    setColorPicked(hexCode);
   };
 
   /**
@@ -371,9 +378,6 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                 >
                   {cssEdited}
                 </p>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  {colorPicked}
-                </Typography>
                 <SketchPicker
                   color={colorPicked}
                   onChange={handleColorPicked}
