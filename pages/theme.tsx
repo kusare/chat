@@ -46,7 +46,6 @@ const Page: NextPage = () => {
 
   // for colorPicker setting (background-color)
   const [colorPicked, setColorPicked] = useState(cssJson.background);
-  ``;
   // when color picked
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
@@ -62,6 +61,21 @@ const Page: NextPage = () => {
     );
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
+    // 全体のCSS設定を更新
+    setCssTextState(cssEdited);
+  };
+
+  // 背景画像を設定するテスト関数予定地
+  const chgBg = () => {
+    // JSONのCSSに追加
+    cssJson.background = `url('https://firebasestorage.googleapis.com/v0/b/chat-831ad.appspot.com/o/fbSu5m6Qy2ZJLe9Nx5eK3ngYVw83%2FCxFU8wHkoosuaiphxd9v%2Fanimal_okojo_summer.png?alt=media&token=5d678777-3251-48f3-ad09-928de972868b')`;
+    setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
     // 全体のCSS設定を更新
     setCssTextState(cssEdited);
   };
@@ -114,8 +128,13 @@ const Page: NextPage = () => {
               onChange={handleChange}
             />
             <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-            <SketchPicker color={colorPicked} onChange={handleColorPicked} />
           </Stack>
+          <h3>background</h3>
+          <h4>background-image</h4>
+          <button onClick={chgBg}>test</button>
+          <h4>background-color</h4>
+          <SketchPicker color={colorPicked} onChange={handleColorPicked} />
+
           {useCssMsgs("cssMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
               <GetCssMsg
