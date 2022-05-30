@@ -210,6 +210,26 @@ const Page: NextPage = () => {
   };
 
   /**
+ ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ 
+██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔════╝     ████╗ ████║██╔════╝██╔════╝ 
+██║     ███████╗███████╗    ██║██╔████╔██║██║  ███╗    ██╔████╔██║███████╗██║  ███╗
+██║     ╚════██║╚════██║    ██║██║╚██╔╝██║██║   ██║    ██║╚██╔╝██║╚════██║██║   ██║
+╚██████╗███████║███████║    ██║██║ ╚═╝ ██║╚██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
+ ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
+                                                                                   
+ */
+
+  const cssMsg = useCssMsgs("cssImgMsgs").map((msg, index) => (
+    <div key={index.toString() + "div"}>
+      <GetCssImg
+        // msg?.id.toString() cannot delete
+        key={msg?.id.toString() + index.toString() + "msg"}
+        msg={msg}
+      ></GetCssImg>
+    </div>
+  ));
+
+  /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
 ██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
@@ -385,6 +405,24 @@ const Page: NextPage = () => {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
+          {/* 
+              ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
+              ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
+                 ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
+                 ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
+                 ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
+                 ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝ 
+             */}
+          <ToggleButtonGroup
+            color="primary"
+            value={alignment}
+            exclusive
+            onChange={handleToggle}
+          >
+            <ToggleButton value="background">Background</ToggleButton>
+            <ToggleButton value="topbar">TopBar</ToggleButton>
+            <ToggleButton value="message">Message</ToggleButton>
+          </ToggleButtonGroup>
           <Grid container direction="row">
             {/* ███████╗██╗  ██╗███████╗███████╗████████╗
                 ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
@@ -394,35 +432,19 @@ const Page: NextPage = () => {
                 ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
              */}
             <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
-              <h2>Overall Style</h2>
-              <Stack spacing={2} direction="row">
-                <TextField
-                  multiline
-                  value={cssText}
-                  rows={4}
-                  onChange={handleChange}
-                />
-                <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-              </Stack>
+              <h2>Sheet</h2>
+              {alignment === "background" && (
+                <Stack spacing={2} direction="row">
+                  <TextField
+                    multiline
+                    value={cssText}
+                    rows={4}
+                    onChange={handleChange}
+                  />
+                  <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+                </Stack>
+              )}
 
-              {/* 
-              ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
-              ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
-                 ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
-                 ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
-                 ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
-                 ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝ 
-             */}
-              <ToggleButtonGroup
-                color="primary"
-                value={alignment}
-                exclusive
-                onChange={handleToggle}
-              >
-                <ToggleButton value="background">Background</ToggleButton>
-                <ToggleButton value="topbar">TopBar</ToggleButton>
-                <ToggleButton value="message">Message</ToggleButton>
-              </ToggleButtonGroup>
               <h3>background</h3>
               {/* 
               ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
@@ -433,27 +455,32 @@ const Page: NextPage = () => {
               ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
               <h4>Image</h4>
-              <Grid item>
-                <Input
-                  type="file"
-                  onChange={(e) => setCssImg(e, "cssImgMsgs")}
-                />
-                {useCssMsgs("cssImgMsgs").map((msg, index) => (
-                  <div key={index.toString() + "div"}>
-                    <GetCssImg
-                      // msg?.id.toString() cannot delete
-                      key={msg?.id.toString() + index.toString() + "msg"}
-                      msg={msg}
-                    ></GetCssImg>
-                  </div>
-                ))}
-                <h4>Color</h4>
-                <SketchPicker
-                  color={colorPicked}
-                  onChange={handleColorPicked}
-                />
-              </Grid>
+              {alignment === "background" && (
+                <Grid item>
+                  <Input
+                    type="file"
+                    onChange={(e) => setCssImg(e, "cssImgMsgs")}
+                  />
+
+                  {/* 
+               ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ 
+              ██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔════╝     ████╗ ████║██╔════╝██╔════╝ 
+              ██║     ███████╗███████╗    ██║██╔████╔██║██║  ███╗    ██╔████╔██║███████╗██║  ███╗
+              ██║     ╚════██║╚════██║    ██║██║╚██╔╝██║██║   ██║    ██║╚██╔╝██║╚════██║██║   ██║
+              ╚██████╗███████║███████║    ██║██║ ╚═╝ ██║╚██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
+              ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
+                                                                                   
+                  */}
+                  {cssMsg}
+                  <h4>Color</h4>
+                  <SketchPicker
+                    color={colorPicked}
+                    onChange={handleColorPicked}
+                  />
+                </Grid>
+              )}
             </Grid>
+
             <Grid item xs={12} md={6} alignItems="center">
               {useCssMsgs("cssMsgs").map((msg, index) => (
                 <div key={index.toString() + "div"}>
