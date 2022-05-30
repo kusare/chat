@@ -65,7 +65,6 @@ import PowerIcon from "@mui/icons-material/Power";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 import { State } from "pixi.js";
-// TODO
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
 import { SketchPicker } from "react-color";
@@ -230,13 +229,37 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
 
-  // CSS to Json
-  const cssJson = toJSON(props?.msg?.text).attributes;
-  console.log("cssJson background", cssJson.background);
+  // (props) CSS to Json
+  const [cssJson, setCssJson] = useState(toJSON(props?.msg?.text).attributes);
+  // console.log("props", props?.msg?.text);
+  // console.log("cssJson background", cssJson.background);
+  // console.log("cssJson ", cssJson);
 
-  // 🎨color picker
+  // (css) Json to CSS
+  const [cssEdited, setCssEdited] = useState(
+    toCSS({
+      attributes: { ...cssJson },
+    })
+  );
+  // console.log("cssEdited", cssEdited);
+
+  // 🎨 color picker
+  // for colorPicker setting (background-color)
   const [colorPicked, setColorPicked] = useState(cssJson.background);
-  const handleColorPicked = (color: any) => setColorPicked(color.hex);
+  // when color picked
+  const handleColorPicked = (color: any) => {
+    // JSONのCSSに追加
+    cssJson.background = color.hex;
+    setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // ColorPickerの設定を更新
+    setColorPicked(color.hex);
+  };
 
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
@@ -341,9 +364,13 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
                     alt="Paella dish"
                   />
                 )}
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  {props.msg.text}
-                </Typography>
+                <p
+                  css={css`
+                    ${cssEdited}
+                  `}
+                >
+                  {cssEdited}
+                </p>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   {colorPicked}
                 </Typography>
@@ -359,7 +386,6 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
     </>
   );
 };
-
 /**
  ██████╗ ███████╗████████╗     ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗ 
 ██╔════╝ ██╔════╝╚══██╔══╝    ██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔════╝ 
