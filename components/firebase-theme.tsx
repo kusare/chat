@@ -490,7 +490,7 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
             alt="Paella dish"
           />
         )}
-        {/* aa */}
+        {/* SET to whole css style` */}
         <button onClick={chgBg}>SET</button>
       </Card>
     </>

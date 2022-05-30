@@ -131,7 +131,24 @@ const Page: NextPage = () => {
           </Stack>
           <h3>background</h3>
           <h4>background-image</h4>
-          <button onClick={chgBg}>test</button>
+          {/* ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
+              ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
+              ██║██╔████╔██║███████║██║  ███╗█████╗  
+              ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
+              ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
+              ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+                                        */}
+          <Grid item>
+            {useCssMsgs("cssImgMsgs").map((msg, index) => (
+              <div key={index.toString() + "div"}>
+                <GetCssImg
+                  // TODO msg?.id.toString() cannot delete
+                  key={msg?.id.toString() + index.toString() + "msg"}
+                  msg={msg}
+                ></GetCssImg>
+              </div>
+            ))}
+          </Grid>
           <h4>background-color</h4>
           <SketchPicker color={colorPicked} onChange={handleColorPicked} />
 
@@ -146,26 +163,6 @@ const Page: NextPage = () => {
                 key={msg?.id.toString() + index.toString() + "css"}
                 msg={msg}
               />
-            </div>
-          ))}
-        </Grid>
-
-        {/* ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
-            ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
-            ██║██╔████╔██║███████║██║  ███╗█████╗  
-            ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
-            ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
-            ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-                                        */}
-        <Grid item>
-          <h2>Image for CSS</h2>
-          {useCssMsgs("cssImgMsgs").map((msg, index) => (
-            <div key={index.toString() + "div"}>
-              <GetCssImg
-                // TODO msg?.id.toString() cannot delete
-                key={msg?.id.toString() + index.toString() + "msg"}
-                msg={msg}
-              ></GetCssImg>
             </div>
           ))}
         </Grid>
