@@ -17,8 +17,55 @@ import {
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssTextState, cssMsgState } from "../recoil/cssMsgStates";
+import { SketchPicker, ColorResult } from "react-color";
+// @ts-ignoree
+import { toCSS, toJSON } from "cssjson";
 
 const Page: NextPage = () => {
+  // 全体のCSS設定はcssTextStateから
+  const setCssTextState = useSetRecoilState(cssTextState);
+  const cssText = useRecoilValue(cssTextState);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssTextState(event.target.value);
+  };
+
+  // (props) CSS to Json
+  const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
+
+  // (css) Json to CSS
+  const [cssEdited, setCssEdited] = useState(
+    toCSS({
+      attributes: { ...cssJson },
+    })
+  );
+
+  // 🎨 COLOR PICKER
+  // Alpha値を16進数に変換する処理
+  const decimalToHex = (alpha: number) =>
+    alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
+
+  // for colorPicker setting (background-color)
+  const [colorPicked, setColorPicked] = useState(cssJson.background);
+  ``;
+  // when color picked
+  const handleColorPicked = (color: ColorResult) => {
+    // "ff0500" + "80"の形式になるように
+    const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
+    // JSONのCSSに追加
+    cssJson.background = hexCode;
+    setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // ColorPickerの設定を更新
+    setColorPicked(hexCode);
+    // 全体のCSS設定を更新
+    setCssTextState(cssEdited);
+  };
+
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
@@ -28,16 +75,6 @@ const Page: NextPage = () => {
 ╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
                                                     
  */
-
-  // const setMsgState = useSetRecoilState(cssMsgState);
-  const setCssTextState = useSetRecoilState(cssTextState);
-  // const msgState = useRecoilValue(cssMsgState);
-  const cssText = useRecoilValue(cssTextState);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setMsgState(event.target.value);
-    setCssTextState(event.target.value);
-  };
-
   return (
     <>
       <Global
@@ -77,6 +114,7 @@ const Page: NextPage = () => {
               onChange={handleChange}
             />
             <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+            <SketchPicker color={colorPicked} onChange={handleColorPicked} />
           </Stack>
           {useCssMsgs("cssMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>

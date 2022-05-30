@@ -231,9 +231,6 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(props?.msg?.text).attributes);
-  // console.log("props", props?.msg?.text);
-  // console.log("cssJson background", cssJson.background);
-  // console.log("cssJson ", cssJson);
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -241,7 +238,6 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
       attributes: { ...cssJson },
     })
   );
-  // console.log("cssEdited", cssEdited);
 
   // 🎨 COLOR PICKER
   // Alpha値を16進数に変換する処理
