@@ -39,6 +39,15 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import {
+  signIn,
+  signOutUser,
+  ProfilePic,
+  UserName,
+  setMsg,
+  setImgMsg,
+} from "../components/firebase-index";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 const Page: NextPage = () => {
   // 全体のCSS設定はcssTextStateから
@@ -234,8 +243,8 @@ const Page: NextPage = () => {
             <Typography variant="h6" noWrap component="div">
               Hamu House
             </Typography>
+            <ProfilePic></ProfilePic>
           </Toolbar>
-          <Header title="Hamu House"></Header>
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
@@ -247,7 +256,6 @@ const Page: NextPage = () => {
               )}
             </IconButton>
           </DrawerHeader>
-
           <Divider />
           <List>
             {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
@@ -275,8 +283,8 @@ const Page: NextPage = () => {
           </List>
           <Divider />
           <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <a href="https://github.com/kusare/chat" target="_self">
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -291,12 +299,15 @@ const Page: NextPage = () => {
                       justifyContent: "center",
                     }}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <GitHubIcon />
                   </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText
+                    primary={"GitHub"}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
                 </ListItemButton>
-              </ListItem>
-            ))}
+              </a>
+            </ListItem>
           </List>
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
@@ -338,7 +349,7 @@ const Page: NextPage = () => {
                 {useCssMsgs("cssImgMsgs").map((msg, index) => (
                   <div key={index.toString() + "div"}>
                     <GetCssImg
-                      // TODO msg?.id.toString() cannot delete
+                      // msg?.id.toString() cannot delete
                       key={msg?.id.toString() + index.toString() + "msg"}
                       msg={msg}
                     ></GetCssImg>
@@ -355,7 +366,7 @@ const Page: NextPage = () => {
               {useCssMsgs("cssMsgs").map((msg, index) => (
                 <div key={index.toString() + "div"}>
                   <GetCssMsg
-                    // TODO msg?.id.toString() cannot delete
+                    // msg?.id.toString() cannot delete
                     key={msg?.id.toString() + index.toString() + "msg"}
                     msg={msg}
                   ></GetCssMsg>
