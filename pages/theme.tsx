@@ -96,21 +96,6 @@ const Page: NextPage = () => {
     setCssTextState(cssEdited);
   };
 
-  // 背景画像を設定するテスト関数予定地
-  const chgBg = () => {
-    // JSONのCSSに追加
-    cssJson.background = `url('https://firebasestorage.googleapis.com/v0/b/chat-831ad.appspot.com/o/fbSu5m6Qy2ZJLe9Nx5eK3ngYVw83%2FCxFU8wHkoosuaiphxd9v%2Fanimal_okojo_summer.png?alt=media&token=5d678777-3251-48f3-ad09-928de972868b')`;
-    setCssJson(cssJson);
-    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
-    setCssEdited(
-      toCSS({
-        attributes: { ...cssJson },
-      })
-    );
-    // 全体のCSS設定を更新
-    setCssTextState(cssEdited);
-  };
-
   /**
 ██████╗ ██████╗  █████╗ ██╗    ██╗███████╗██████╗ 
 ██╔══██╗██╔══██╗██╔══██╗██║    ██║██╔════╝██╔══██╗
@@ -379,7 +364,6 @@ const Page: NextPage = () => {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
-          <h1>Theme</h1>
           <Grid container direction="row">
             {/* ███████╗██╗  ██╗███████╗███████╗████████╗
             ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
@@ -389,7 +373,7 @@ const Page: NextPage = () => {
             ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
  */}
             <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
-              <h2>Sheet</h2>
+              <h2>Overall Style</h2>
               <Stack spacing={2} direction="row">
                 <TextField
                   multiline
@@ -407,7 +391,7 @@ const Page: NextPage = () => {
               ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
               ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
-              <h4>background-image</h4>
+              <h4>Image</h4>
               <Grid item>
                 <Input
                   type="file"
@@ -422,7 +406,7 @@ const Page: NextPage = () => {
                     ></GetCssImg>
                   </div>
                 ))}
-                <h4>background-color</h4>
+                <h4>Color</h4>
                 <SketchPicker
                   color={colorPicked}
                   onChange={handleColorPicked}
