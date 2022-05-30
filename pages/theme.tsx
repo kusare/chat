@@ -14,6 +14,7 @@ import {
   useCssMsgs,
   setCssMsg,
   SetCssTextToAtomBtn,
+  setCssImg,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssTextState, cssMsgState } from "../recoil/cssMsgStates";
@@ -130,7 +131,6 @@ const Page: NextPage = () => {
             <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
           </Stack>
           <h3>background</h3>
-          <h4>background-image</h4>
           {/* ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
               ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
               ██║██╔████╔██║███████║██║  ███╗█████╗  
@@ -138,7 +138,9 @@ const Page: NextPage = () => {
               ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
               ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
+          <h4>background-image</h4>
           <Grid item>
+            <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
             {useCssMsgs("cssImgMsgs").map((msg, index) => (
               <div key={index.toString() + "div"}>
                 <GetCssImg

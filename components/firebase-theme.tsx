@@ -278,15 +278,14 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card
+        sx={{ maxWidth: 345 }}
+        css={css`
+          ${props.msg.text}
+        `}
+      >
         {/* 💅CSS Sheet` */}
-        <CardContent
-          css={css`
-            * {
-              ${props.msg.text}
-            }
-          `}
-        >
+        <CardContent>
           <Typography variant="body2" color="text.secondary">
             {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
