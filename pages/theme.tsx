@@ -51,6 +51,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import ChatIcon from "@mui/icons-material/Chat";
 import Link from "@mui/material/Link";
 import PaletteIcon from "@mui/icons-material/Palette";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const Page: NextPage = () => {
   // 全体のCSS設定はcssTextStateから
@@ -189,6 +191,25 @@ const Page: NextPage = () => {
   };
 
   /**
+████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
+╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
+   ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
+   ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
+   ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
+   ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
+                                                    
+ */
+
+  const [alignment, setAlignment] = React.useState("background");
+
+  const handleToggle = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setAlignment(newAlignment);
+  };
+
+  /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
 ██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
@@ -218,7 +239,7 @@ const Page: NextPage = () => {
           position="fixed"
           open={open}
           css={css`
-            background: #acccf8;
+            background: #d4e4ff;
           `}
         >
           <Toolbar>
@@ -366,12 +387,12 @@ const Page: NextPage = () => {
           <DrawerHeader />
           <Grid container direction="row">
             {/* ███████╗██╗  ██╗███████╗███████╗████████╗
-            ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
-            ███████╗███████║█████╗  █████╗     ██║   
-            ╚════██║██╔══██║██╔══╝  ██╔══╝     ██║   
-            ███████║██║  ██║███████╗███████╗   ██║   
-            ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
- */}
+                ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
+                ███████╗███████║█████╗  █████╗     ██║   
+                ╚════██║██╔══██║██╔══╝  ██╔══╝     ██║   
+                ███████║██║  ██║███████╗███████╗   ██║   
+                ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
+             */}
             <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
               <h2>Overall Style</h2>
               <Stack spacing={2} direction="row">
@@ -383,8 +404,28 @@ const Page: NextPage = () => {
                 />
                 <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
               </Stack>
+
+              {/* 
+              ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
+              ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
+                 ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
+                 ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
+                 ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
+                 ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝ 
+             */}
+              <ToggleButtonGroup
+                color="primary"
+                value={alignment}
+                exclusive
+                onChange={handleToggle}
+              >
+                <ToggleButton value="background">Background</ToggleButton>
+                <ToggleButton value="topbar">TopBar</ToggleButton>
+                <ToggleButton value="message">Message</ToggleButton>
+              </ToggleButtonGroup>
               <h3>background</h3>
-              {/* ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
+              {/* 
+              ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
               ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
               ██║██╔████╔██║███████║██║  ███╗█████╗  
               ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
