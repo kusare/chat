@@ -411,6 +411,7 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
   //  💅CSS to Return
   // 全体のCSS設定にする予定
   const cssText = useRecoilValue(cssTextState);
+  const setCssTextState = useSetRecoilState(cssTextState);
 
   // 😭avater
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -435,9 +436,34 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
     p: 4,
   };
 
-  const [openEdit, setOpenEdit] = React.useState(false);
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
+  // const [openEdit, setOpenEdit] = React.useState(false);
+  // const handleOpenEdit = () => setOpenEdit(true);
+  // const handleCloseEdit = () => setOpenEdit(false);
+
+  // (props) CSS to Json
+  const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
+
+  // (css) Json to CSS
+  const [cssEdited, setCssEdited] = useState(
+    toCSS({
+      attributes: { ...cssJson },
+    })
+  );
+
+  // 背景画像を設定するテスト関数予定地
+  const chgBg = () => {
+    // JSONのCSSに追加
+    cssJson.background = `url('${props?.msg?.imageUrl}')`;
+    setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // 全体のCSS設定を更新
+    setCssTextState(cssEdited);
+  };
 
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
@@ -464,21 +490,8 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
             alt="Paella dish"
           />
         )}
-        {/* 💅CSS Sheet` */}
-        {/* <CardContent
-          css={css`
-            * {
-              ${props.msg.text}
-            }
-          `}
-        >
-          <Typography variant="body2" color="text.secondary">
-            {
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
-            }
-          </Typography>
-        </CardContent> */}
-        {/* bottom line */}
+        {/* aa */}
+        <button onClick={chgBg}>SET</button>
       </Card>
     </>
   );
@@ -512,7 +525,7 @@ export const SetCssTextToAtomBtn = (msg: any) => {
   const setCssTextState = useSetRecoilState(cssTextState);
   return (
     <>
-      {/* TODO msg.msg.text */}
+      {/* msg.msg.text */}
       <Button onClick={() => setCssTextState(msg.msg.text)}>Set</Button>
     </>
   );
