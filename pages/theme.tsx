@@ -226,7 +226,13 @@ const Page: NextPage = () => {
 
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar
+          position="fixed"
+          open={open}
+          css={css`
+            background: #acccf8;
+          `}
+        >
           <Toolbar>
             <IconButton
               color="inherit"
