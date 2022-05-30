@@ -48,6 +48,9 @@ import {
   setImgMsg,
 } from "../components/firebase-index";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import ChatIcon from "@mui/icons-material/Chat";
+import Link from "@mui/material/Link";
+import PaletteIcon from "@mui/icons-material/Palette";
 
 const Page: NextPage = () => {
   // 全体のCSS設定はcssTextStateから
@@ -246,9 +249,18 @@ const Page: NextPage = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Hamu House
-            </Typography>
+            <Link
+              color="inherit"
+              noWrap
+              key={"chat"}
+              // variant="body2"
+              href={"/"}
+              // sx={{ p: 1, flexShrink: 0 }}
+            >
+              <Typography variant="h6" noWrap component="div">
+                Hamu House
+              </Typography>
+            </Link>
             <ProfilePic></ProfilePic>
           </Toolbar>
         </AppBar>
@@ -264,8 +276,15 @@ const Page: NextPage = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <Link
+                // color="inherit"
+                noWrap
+                key={"chat"}
+                // variant="body2"
+                href={"/"}
+                // sx={{ p: 1, flexShrink: 0 }}
+              >
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -280,17 +299,59 @@ const Page: NextPage = () => {
                       justifyContent: "center",
                     }}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <ChatIcon />
                   </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemText
+                    primary={"Chat"}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
                 </ListItemButton>
-              </ListItem>
-            ))}
+              </Link>
+            </ListItem>
+            <ListItem disablePadding sx={{ display: "block" }}>
+              <Link
+                // color="inherit"
+                noWrap
+                key={"theme"}
+                // variant="body2"
+                href={"/theme"}
+                // sx={{ p: 1, flexShrink: 0 }}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <PaletteIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Theme"}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </Link>
+            </ListItem>
           </List>
           <Divider />
           <List>
             <ListItem disablePadding sx={{ display: "block" }}>
-              <a href="https://github.com/kusare/chat" target="_self">
+              <Link
+                // color="inherit"
+                noWrap
+                key={"github"}
+                // variant="body2"
+                href={"https://github.com/kusare/chat"}
+                // sx={{ p: 1, flexShrink: 0 }}
+              >
                 <ListItemButton
                   sx={{
                     minHeight: 48,
@@ -312,7 +373,7 @@ const Page: NextPage = () => {
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
-              </a>
+              </Link>
             </ListItem>
           </List>
         </Drawer>
