@@ -106,7 +106,7 @@ const Page: NextPage = () => {
       </Head>
       <Header title="Hamu House"></Header>
       <h1>Theme</h1>
-      <Grid direction="row" justifyContent="center" container>
+      <Grid container direction="row">
         {/* ███████╗██╗  ██╗███████╗███████╗████████╗
             ██╔════╝██║  ██║██╔════╝██╔════╝╚══██╔══╝
             ███████╗███████║█████╗  █████╗     ██║   
@@ -114,12 +114,7 @@ const Page: NextPage = () => {
             ███████║██║  ██║███████╗███████╗   ██║   
             ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
  */}
-        <Grid
-          item
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
+        <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
           <h2>Sheet</h2>
           <Stack spacing={2} direction="row">
             <TextField
@@ -150,10 +145,11 @@ const Page: NextPage = () => {
                 ></GetCssImg>
               </div>
             ))}
+            <h4>background-color</h4>
+            <SketchPicker color={colorPicked} onChange={handleColorPicked} />
           </Grid>
-          <h4>background-color</h4>
-          <SketchPicker color={colorPicked} onChange={handleColorPicked} />
-
+        </Grid>
+        <Grid item xs={12} md={6} alignItems="center">
           {useCssMsgs("cssMsgs").map((msg, index) => (
             <div key={index.toString() + "div"}>
               <GetCssMsg
