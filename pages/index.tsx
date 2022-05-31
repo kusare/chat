@@ -17,7 +17,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/cssMsgStates";
-import { CustomDrawer } from "../components/WrapperUi";
+import { CustomDrawer } from "../components/GlobalUi";
 
 const Home: NextPage = () => {
   const [text, setText] = useState("コメント");
