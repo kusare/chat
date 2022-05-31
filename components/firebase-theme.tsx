@@ -527,14 +527,18 @@ export const SetCssTextToAtomBtn = (msg: any) => {
 
 // Saves a new message to Cloud Firestore.
 export const setCssMsg = async (msgText: any) => {
+  const cssMsgForAdd = {
+    name: getUserName(),
+    text: msgText,
+    cssBackground: msgText,
+    cssTopbar: msgText,
+    cssChatMsg: msgText,
+    profilePicUrl: getProfilePicUrl(),
+    timestamp: serverTimestamp(),
+  };
   // Add a new message entry to the Firebase database.
   try {
-    await addDoc(collection(getFirestore(), "cssMsgs"), {
-      name: getUserName(),
-      text: msgText,
-      profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
-    });
+    await addDoc(collection(getFirestore(), "cssMsgs"), cssMsgForAdd);
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }
