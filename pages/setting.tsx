@@ -1,55 +1,49 @@
 import { NextPage } from "next";
-import React, { useState, useEffect, useRef } from "react";
-import { css } from "@emotion/react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Stack, Button } from "@mui/material";
-import { Msg } from "../components/firebase-index";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  getDocs,
-  setDoc,
-  updateDoc,
-  doc,
-  serverTimestamp,
-  Timestamp,
-} from "firebase/firestore";
 import { AsciiDocEditor } from "../components/codeMirror";
 import { CustomDrawer } from "../components/WrapperUi";
+import { Global, css } from "@emotion/react";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  cssTextState,
+  cssTopbarState,
+  cssChatMsgState,
+} from "../recoil/cssMsgStates";
 
 const Page: NextPage = () => {
-  const [sheet, setSheet] = useState(`color: black; background-color: red`);
+  /**
+██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
+██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
+██████╔╝█████╗  ██║     ██║   ██║██║██║     
+██╔══██╗██╔══╝  ██║     ██║   ██║██║██║     
+██║  ██║███████╗╚██████╗╚██████╔╝██║███████╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+                                            
+ */
+
+  // 全体の背景のCSS設定はcssTextStateから
+  const setCssTextState = useSetRecoilState(cssTextState);
+  const cssText = useRecoilValue(cssTextState);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSheet(event.target.value);
+    setCssTextState(event.target.value);
   };
-  const lorem =
-    "Lorem ipsum dolor sit amet, consectetur 威力に聴いたのは無論今日へよほどででべき。";
-  const sampleMsg = {
-    id: "",
-    timestamp: Timestamp.fromDate(new Date()),
-    name: "",
-    text: lorem,
-    profilePicUrl: "",
-    imageUrl: "",
-  };
-  const [alignment, setAlignment] = React.useState("web");
-  const mouseChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    setAlignment(newAlignment);
-  };
+
+  // 全体のtopbarのCSS設定
+  const cssTopbar = useRecoilValue(cssTopbarState);
+  const setCssTopbarState = useSetRecoilState(cssTopbarState);
+
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  const setChatMsgState = useSetRecoilState(cssChatMsgState);
 
   return (
     <>
+      <Global
+        styles={css`
+          body {
+            ${cssText}
+          }
+        `}
+      />
       <CustomDrawer>
         <AsciiDocEditor defaultValue="AsciiDocEditor" />
       </CustomDrawer>
