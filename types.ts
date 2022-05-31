@@ -18,15 +18,25 @@ export type ChatMsg = {
   id: string;
   timestamp: Timestamp;
   name: string;
-  text?: string;
+  text: string;
   profilePicUrl: string;
   imageUrl?: string;
 };
 export type ChatMsgState = ChatMsg | null;
 
-export type CssMsg = {
+export type ImgMsg = {
   id: string;
   timestamp: Timestamp;
+  name: string;
+  text?: string;
+  profilePicUrl: string;
+  imageUrl: string;
+};
+export type ImgMsgState = ImgMsg | null;
+
+export type CssMsg = {
+  id?: string;
+  timestamp: any;
   name: string;
   cssBackground: string;
   cssTopbar: string;

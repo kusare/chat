@@ -34,7 +34,14 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { cssBackgroundState, cssTopbarState } from "../recoil/cssMsgStates";
-import { ChatMsgState, ChatMsg, CssMsgState, CssMsg } from "../types";
+import {
+  ChatMsgState,
+  ChatMsg,
+  CssMsgState,
+  CssMsg,
+  ImgMsg,
+  ImgMsgState,
+} from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -102,7 +109,7 @@ export const getUserName = (): string => {
  */
 
 /**
- * Loads chat messages history and listens for upcoming ones.
+ *
  */
 export const useCssMsgs = (id: string) => {
   const [cssMsgs, setCssMsgs] = useState<CssMsgState[]>([]);
@@ -150,6 +157,64 @@ export const useCssMsgs = (id: string) => {
   }, []);
 
   return cssMsgs;
+};
+
+/**
+██╗   ██╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ ███████╗
+██║   ██║██╔════╝██╔════╝    ██║████╗ ████║██╔════╝     ████╗ ████║██╔════╝██╔════╝ ██╔════╝
+██║   ██║███████╗█████╗      ██║██╔████╔██║██║  ███╗    ██╔████╔██║███████╗██║  ███╗███████╗
+██║   ██║╚════██║██╔══╝      ██║██║╚██╔╝██║██║   ██║    ██║╚██╔╝██║╚════██║██║   ██║╚════██║
+╚██████╔╝███████║███████╗    ██║██║ ╚═╝ ██║╚██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝███████║
+ ╚═════╝ ╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ ╚══════╝
+                                                                                            
+ */
+
+/**
+ *
+ */
+export const useImgMsgs = (id: string) => {
+  const [imgMsgs, setImgMsgs] = useState<ImgMsgState[]>([]);
+  /**
+██╗     ██╗███╗   ███╗██╗████████╗
+██║     ██║████╗ ████║██║╚══██╔══╝
+██║     ██║██╔████╔██║██║   ██║   
+██║     ██║██║╚██╔╝██║██║   ██║   
+███████╗██║██║ ╚═╝ ██║██║   ██║   
+╚══════╝╚═╝╚═╝     ╚═╝╚═╝   ╚═╝   
+                                  
+ */
+  // ロードするメッセージの数
+  // Number of messages to load
+  const LIMIT = 6;
+
+  useEffect(() => {
+    // Create the query to load the last 12 messages and listen for new ones.
+    const recentMessagesQuery = query(
+      // collection(getFirestore(), "cssMsgs"),
+      collection(getFirestore(), id),
+      orderBy("timestamp", "desc"),
+      limit(LIMIT)
+    );
+    // Start listening to the query.
+    const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
+      let addedMsgs: ImgMsg[] = [];
+      snapshot.docs.map((change) => {
+        const message = change.data();
+        addedMsgs.push({
+          id: change.id,
+          timestamp: message.timestamp,
+          name: message.name,
+          profilePicUrl: message.profilePicUrl,
+          imageUrl: message.imageUrl,
+        });
+      }, []);
+      setImgMsgs(addedMsgs);
+      return unsub;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return imgMsgs;
 };
 
 /**
@@ -400,7 +465,7 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
 /**
  * message
  */
-export const GetCssImg: React.FC<{ msg: CssMsgState }> = (props) => {
+export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -532,14 +597,13 @@ export const SetCssTextToAtomBtn = (msg: any) => {
 
 // Saves a new message to Cloud Firestore.
 export const setCssMsg = async (msgText: any) => {
-  const cssMsgForAdd = {
+  const cssMsgForAdd: CssMsg = {
+    timestamp: serverTimestamp(),
     name: getUserName(),
-    text: msgText,
     cssBackground: msgText,
     cssTopbar: msgText,
     cssChatMsg: msgText,
     profilePicUrl: getProfilePicUrl(),
-    timestamp: serverTimestamp(),
   };
   // Add a new message entry to the Firebase database.
   try {

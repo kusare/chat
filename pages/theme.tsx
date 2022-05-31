@@ -14,6 +14,7 @@ import {
   setCssMsg,
   SetCssTextToAtomBtn,
   setCssImg,
+  useImgMsgs,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
@@ -251,13 +252,15 @@ const Page: NextPage = () => {
                                                                                    
  */
 
-  const cssMsg = useCssMsgs("cssImgMsgs").map((msg, index) => (
+  const imgMsgs = useImgMsgs("cssImgMsgs").map((msg, index) => (
     <div key={index.toString() + "div"}>
-      <GetCssImg
-        // msg?.id.toString() cannot delete
-        key={msg?.id.toString() + index.toString() + "msg"}
-        msg={msg}
-      ></GetCssImg>
+      {msg && (
+        <GetCssImg
+          // msg?.id.toString() cannot delete
+          key={msg?.id?.toString() + index.toString() + "msg"}
+          msg={msg}
+        ></GetCssImg>
+      )}
     </div>
   ));
 
@@ -342,7 +345,7 @@ const Page: NextPage = () => {
               ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                                                                                    
                   */}
-                {cssMsg}
+                {imgMsgs}
                 <h4>Color</h4>
                 <SketchPicker
                   color={colorPicked}
@@ -356,11 +359,11 @@ const Page: NextPage = () => {
             {useCssMsgs("cssMsgs").map((msg, index) => (
               <div key={index.toString() + "div"}>
                 <GetCssMsg
-                  key={msg?.id.toString() + index.toString() + "msg"}
+                  key={msg?.id?.toString() + index.toString() + "msg"}
                   msg={msg}
                 ></GetCssMsg>
                 <SetCssTextToAtomBtn
-                  key={msg?.id.toString() + index.toString() + "css"}
+                  key={msg?.id?.toString() + index.toString() + "css"}
                   msg={msg}
                 />
               </div>
