@@ -51,27 +51,23 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   // 全体の背景のCSS設定はcssTextStateから
   const setCssTextState = useSetRecoilState(cssTextState);
   const cssText = useRecoilValue(cssTextState);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCssBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCssTextState(event.target.value);
   };
 
   // 全体のtopbarのCSS設定
   const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
+  const handleCssTopbar = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssTopbarState(event.target.value);
+  };
 
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
-  const setChatMsgState = useSetRecoilState(cssChatMsgState);
-
-  // (props) CSS to Json
-  const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
-
-  // (css) Json to CSS
-  const [cssEdited, setCssEdited] = useState(
-    toCSS({
-      attributes: { ...cssJson },
-    })
-  );
+  const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+  const handleCssChatMsg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssChatMsgState(event.target.value);
+  };
 
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
@@ -91,7 +87,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             multiline
             value={cssText}
             rows={4}
-            onChange={handleChange}
+            onChange={handleCssBackground}
           />
           <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
         </Stack>
@@ -103,7 +99,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             multiline
             value={cssTopbar}
             rows={4}
-            onChange={handleChange}
+            onChange={handleCssTopbar}
           />
           <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button>
         </Stack>
@@ -115,7 +111,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             multiline
             value={cssChatMsg}
             rows={4}
-            onChange={handleChange}
+            onChange={handleCssChatMsg}
           />
           <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button>
         </Stack>
