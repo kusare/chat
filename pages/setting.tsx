@@ -23,6 +23,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { AsciiDocEditor } from "../components/codeMirror";
+import { CustomDrawer } from "../components/WrapperUi";
 
 const Page: NextPage = () => {
   const [sheet, setSheet] = useState(`color: black; background-color: red`);
@@ -49,71 +50,9 @@ const Page: NextPage = () => {
 
   return (
     <>
-      <h1>Theme</h1>
-      <AsciiDocEditor defaultValue="aaS" />
-      <ToggleButtonGroup
-        color="primary"
-        value={alignment}
-        exclusive
-        onChange={mouseChange}
-      >
-        <ToggleButton value="web">Web</ToggleButton>
-        <ToggleButton value="android">Android</ToggleButton>
-        <ToggleButton value="ios">iOS</ToggleButton>
-      </ToggleButtonGroup>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <Stack spacing={2} direction="row">
-          <div
-            css={css(`
-          ${sheet}
-        `)}
-          >
-            <Msg msg={sampleMsg} />
-          </div>
-          <TextField
-            label="Sample"
-            multiline
-            placeholder="Placeholder"
-            value={lorem}
-            css={css(`
-          ${sheet}
-        `)}
-          />
-          <TextField
-            label="CSS"
-            multiline
-            placeholder="Placeholder"
-            value={sheet}
-            rows={4}
-            onChange={handleChange}
-          />
-        </Stack>
-        <Stack spacing={2} direction="row">
-          <TextField
-            label="Sample"
-            multiline
-            placeholder="Placeholder"
-            value={lorem}
-            css={css(`
-          ${sheet}
-        `)}
-          />
-          <TextField
-            label="CSS"
-            multiline
-            placeholder="Placeholder"
-            value={sheet}
-            onChange={handleChange}
-          />
-        </Stack>
-      </Box>
+      <CustomDrawer>
+        <AsciiDocEditor defaultValue="AsciiDocEditor" />
+      </CustomDrawer>
     </>
   );
 };
