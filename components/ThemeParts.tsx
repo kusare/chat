@@ -50,7 +50,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
 
   // 全体の背景のCSS設定はcssBackgroundStateから
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
-  const cssText = useRecoilValue(cssBackgroundState);
+  const cssBackground = useRecoilValue(cssBackgroundState);
   const handleCssBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCssBackgroundState(event.target.value);
   };
@@ -85,11 +85,11 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         <Stack spacing={2} direction="row">
           <TextField
             multiline
-            value={cssText}
+            value={cssBackground}
             rows={4}
             onChange={handleCssBackground}
           />
-          <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+          <Button onClick={() => setCssMsg(cssBackground)}>Set Msg</Button>
         </Stack>
       )}
 
