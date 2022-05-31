@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import { Box, Stack, Button, TextField } from "@mui/material";
 import {
   signIn,
@@ -17,7 +16,6 @@ import Header from "../components/Header";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
-import generatedCSS from "../components/cssGenerate";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssTextState } from "../recoil/cssMsgStates";
@@ -32,7 +30,7 @@ const Home: NextPage = () => {
 
   const cssText = useRecoilValue(cssTextState);
   return (
-    <div className={styles.container}>
+    <div>
       <Global
         styles={css`
           body {
@@ -73,24 +71,6 @@ const Home: NextPage = () => {
           <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
         ))}
       </Grid>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-
-        <IconButton aria-label="edit">
-          <a href="https://github.com/kusare/chat" target="_self">
-            <GitHubIcon />
-          </a>
-        </IconButton>
-      </footer>
     </div>
   );
 };
