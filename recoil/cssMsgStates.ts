@@ -16,8 +16,8 @@ const { persistAtom } = recoilPersist({
   key: "cssMsgStates", // this key is using to store data in local storage
 });
 
-export const cssTextState = atom({
-  key: "cssTextState",
+export const cssBackgroundState = atom({
+  key: "cssBackgroundState",
   // default: "color: black; background-color: #8AA058;",
   default: "",
   effects_UNSTABLE: [persistAtom],

@@ -16,7 +16,7 @@ import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssTextState } from "../recoil/cssMsgStates";
+import { cssBackgroundState } from "../recoil/cssMsgStates";
 import { CustomDrawer } from "../components/WrapperUi";
 
 const Home: NextPage = () => {
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     setText(event.target.value);
   };
 
-  const cssText = useRecoilValue(cssTextState);
+  const cssText = useRecoilValue(cssBackgroundState);
   return (
     <div>
       <Global

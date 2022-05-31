@@ -33,7 +33,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { cssTextState, cssTopbarState } from "../recoil/cssMsgStates";
+import { cssBackgroundState, cssTopbarState } from "../recoil/cssMsgStates";
 import { MsgState, Msg } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -194,7 +194,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   //  💅CSS to Return
   // 全体のCSS設定にする予定
-  // const cssText = useRecoilValue(cssTextState);
+  // const cssText = useRecoilValue(cssBackgroundState);
 
   // 😭avater
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -413,8 +413,8 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
 
   //  💅CSS to Return
   // 全体のCSS設定にする予定
-  const cssText = useRecoilValue(cssTextState);
-  const setCssTextState = useSetRecoilState(cssTextState);
+  const cssText = useRecoilValue(cssBackgroundState);
+  const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
 
   const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
@@ -442,7 +442,7 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
       })
     );
     // 全体のCSS設定を更新
-    setCssTextState(cssEdited);
+    setCssBackgroundState(cssEdited);
     // setCssTopbarState(cssEdited);
   };
 
@@ -503,11 +503,11 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
  */
 export const SetCssTextToAtomBtn = (msg: any) => {
   // const setMsg = useSetRecoilState(cssMsgState);
-  const setCssTextState = useSetRecoilState(cssTextState);
+  const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
   return (
     <>
       {/* msg.msg.text */}
-      <Button onClick={() => setCssTextState(msg.msg.text)}>Set</Button>
+      <Button onClick={() => setCssBackgroundState(msg.msg.text)}>Set</Button>
     </>
   );
 };

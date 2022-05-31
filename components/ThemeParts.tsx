@@ -17,7 +17,7 @@ import {
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  cssTextState,
+  cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
 } from "../recoil/cssMsgStates";
@@ -48,11 +48,11 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
                                             
  */
 
-  // 全体の背景のCSS設定はcssTextStateから
-  const setCssTextState = useSetRecoilState(cssTextState);
-  const cssText = useRecoilValue(cssTextState);
+  // 全体の背景のCSS設定はcssBackgroundStateから
+  const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
+  const cssText = useRecoilValue(cssBackgroundState);
   const handleCssBackground = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCssTextState(event.target.value);
+    setCssBackgroundState(event.target.value);
   };
 
   // 全体のtopbarのCSS設定

@@ -17,7 +17,7 @@ import {
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  cssTextState,
+  cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
 } from "../recoil/cssMsgStates";
@@ -68,11 +68,11 @@ const Page: NextPage = () => {
                                             
  */
 
-  // 全体の背景のCSS設定はcssTextStateから
-  const setCssTextState = useSetRecoilState(cssTextState);
-  const cssText = useRecoilValue(cssTextState);
+  // 全体の背景のCSS設定はcssBackgroundStateから
+  const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
+  const cssText = useRecoilValue(cssBackgroundState);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCssTextState(event.target.value);
+    setCssBackgroundState(event.target.value);
   };
 
   // 全体のtopbarのCSS設定
@@ -126,7 +126,7 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    setCssTextState(cssEdited);
+    setCssBackgroundState(cssEdited);
   };
 
   /**
