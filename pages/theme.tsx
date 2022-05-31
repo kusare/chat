@@ -313,34 +313,9 @@ const Page: NextPage = () => {
                 ╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   
              */}
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
-            <h2>Sheet</h2>
+            <h3>Sheet</h3>
             <EditThemeCss id={alignment}></EditThemeCss>
 
-            {alignment === "topbar" && (
-              <Stack spacing={2} direction="row">
-                <TextField
-                  multiline
-                  value={cssTopbar}
-                  rows={4}
-                  onChange={handleChange}
-                />
-                <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button>
-              </Stack>
-            )}
-
-            {alignment === "message" && (
-              <Stack spacing={2} direction="row">
-                <TextField
-                  multiline
-                  value={cssChatMsg}
-                  rows={4}
-                  onChange={handleChange}
-                />
-                <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button>
-              </Stack>
-            )}
-
-            <h3>background</h3>
             {/* 
               ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
               ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
@@ -349,7 +324,7 @@ const Page: NextPage = () => {
               ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
               ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
-            <h4>Image</h4>
+            <h3>Image</h3>
             {alignment === "background" && (
               <Grid item>
                 <Input

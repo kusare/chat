@@ -96,6 +96,30 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
           <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
         </Stack>
       )}
+
+      {props.id === "topbar" && (
+        <Stack spacing={2} direction="row">
+          <TextField
+            multiline
+            value={cssTopbar}
+            rows={4}
+            onChange={handleChange}
+          />
+          <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button>
+        </Stack>
+      )}
+
+      {props.id === "message" && (
+        <Stack spacing={2} direction="row">
+          <TextField
+            multiline
+            value={cssChatMsg}
+            rows={4}
+            onChange={handleChange}
+          />
+          <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button>
+        </Stack>
+      )}
     </>
   );
 };
