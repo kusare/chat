@@ -55,6 +55,7 @@ import PaletteIcon from "@mui/icons-material/Palette";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/WrapperUi";
+import { ThemeUiTargetId, EditThemeCss } from "../components/ThemeParts";
 
 const Page: NextPage = () => {
   /**
@@ -230,11 +231,12 @@ const Page: NextPage = () => {
                                                     
  */
 
-  const [alignment, setAlignment] = React.useState("background");
+  const [alignment, setAlignment] =
+    React.useState<ThemeUiTargetId>("background");
 
   const handleToggle = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
+    newAlignment: ThemeUiTargetId
   ) => {
     setAlignment(newAlignment);
   };
@@ -312,17 +314,7 @@ const Page: NextPage = () => {
              */}
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
             <h2>Sheet</h2>
-            {alignment === "background" && (
-              <Stack spacing={2} direction="row">
-                <TextField
-                  multiline
-                  value={cssText}
-                  rows={4}
-                  onChange={handleChange}
-                />
-                <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
-              </Stack>
-            )}
+            <EditThemeCss id={alignment}></EditThemeCss>
 
             {alignment === "topbar" && (
               <Stack spacing={2} direction="row">
