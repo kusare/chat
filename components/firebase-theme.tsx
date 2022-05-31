@@ -143,9 +143,9 @@ export const useCssMsgs = (id: string) => {
           id: change.id,
           timestamp: message.timestamp,
           name: message.name,
-          cssBackground: message.text,
-          cssTopbar: message.text,
-          cssChatMsg: message.text,
+          cssBackground: message.cssBackground,
+          cssTopbar: message.Topbar,
+          cssChatMsg: message.ChatMsg,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -574,12 +574,14 @@ export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
 /**
  *
  */
-export const SetCssTextToAtomBtn = (msg: any) => {
+export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
+  const msg = props.msg;
+
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
   return (
     <>
       {/* msg.msg.text */}
-      <Button onClick={() => setCssBackgroundState(msg.msg.cssBackground)}>
+      <Button onClick={() => setCssBackgroundState(msg.cssBackground)}>
         Set
       </Button>
     </>

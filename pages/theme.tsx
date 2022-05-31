@@ -11,7 +11,6 @@ import {
   GetCssMsg,
   GetCssImg,
   useCssMsgs,
-  setCssMsg,
   SetCssTextToAtomBtn,
   setCssImg,
   useImgMsgs,
@@ -357,16 +356,20 @@ const Page: NextPage = () => {
 
           <Grid item xs={12} md={6} alignItems="center">
             {useCssMsgs("cssMsgs").map((msg, index) => (
-              <div key={index.toString() + "div"}>
-                <GetCssMsg
-                  key={msg?.id?.toString() + index.toString() + "msg"}
-                  msg={msg}
-                ></GetCssMsg>
-                <SetCssTextToAtomBtn
-                  key={msg?.id?.toString() + index.toString() + "css"}
-                  msg={msg}
-                />
-              </div>
+              <>
+                {msg && (
+                  <div key={index.toString() + "div"}>
+                    <GetCssMsg
+                      key={msg?.id?.toString() + index.toString() + "msg"}
+                      msg={msg}
+                    ></GetCssMsg>
+                    <SetCssTextToAtomBtn
+                      key={msg?.id?.toString() + index.toString() + "css"}
+                      msg={msg}
+                    />
+                  </div>
+                )}
+              </>
             ))}
           </Grid>
         </Grid>
