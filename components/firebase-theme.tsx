@@ -506,12 +506,13 @@ export const GetCssImg: React.FC<{ msg: CssMsgState }> = (props) => {
  *
  */
 export const SetCssTextToAtomBtn = (msg: any) => {
-  // const setMsg = useSetRecoilState(cssMsgState);
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
   return (
     <>
       {/* msg.msg.text */}
-      <Button onClick={() => setCssBackgroundState(msg.msg.text)}>Set</Button>
+      <Button onClick={() => setCssBackgroundState(msg.msg.cssBackground)}>
+        Set
+      </Button>
     </>
   );
 };
