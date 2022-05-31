@@ -209,17 +209,17 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
   };
 
   // 🖊Edit
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
+  // const style = {
+  //   position: "absolute" as "absolute",
+  //   top: "50%",
+  //   left: "50%",
+  //   transform: "translate(-50%, -50%)",
+  //   width: 400,
+  //   bgcolor: "background.paper",
+  //   border: "2px solid #000",
+  //   boxShadow: 24,
+  //   p: 4,
+  // };
 
   const [openEdit, setOpenEdit] = React.useState(false);
   const handleOpenEdit = () => setOpenEdit(true);
@@ -283,7 +283,11 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
         `}
       >
         {/* 💅CSS Sheet` */}
-        <CardContent>
+        <CardContent
+          css={css`
+            ${props.msg.cssChatMsg}
+          `}
+        >
           <Typography variant="body2" color="text.secondary">
             {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
@@ -349,7 +353,7 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box sx={style}>
+              <Box>
                 <Input
                   type="file"
                   onChange={(e) => setCssImg(e, "cssImgMsgs")}

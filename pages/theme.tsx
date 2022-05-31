@@ -356,7 +356,6 @@ const Page: NextPage = () => {
             {useCssMsgs("cssMsgs").map((msg, index) => (
               <div key={index.toString() + "div"}>
                 <GetCssMsg
-                  // msg?.id.toString() cannot delete
                   key={msg?.id.toString() + index.toString() + "msg"}
                   msg={msg}
                 ></GetCssMsg>
