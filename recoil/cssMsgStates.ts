@@ -46,16 +46,16 @@ export const cssMsgState = atom<MsgState>({
     imageUrl: "",
   },
 });
-export const cssMsgsState = atom<MsgState[]>({
-  key: "cssMsgsState",
-  default: [
-    {
-      id: "",
-      timestamp: Timestamp.fromDate(new Date()),
-      name: "",
-      text: "",
-      profilePicUrl: "",
-      imageUrl: "",
-    },
-  ],
-});
+// export const cssMsgsState = atom<MsgState[]>({
+//   key: "cssMsgsState",
+//   default: [
+//     {
+//       id: "",
+//       timestamp: Timestamp.fromDate(new Date()),
+//       name: "",
+//       text: "",
+//       profilePicUrl: "",
+//       imageUrl: "",
+//     },
+//   ],
+// });
