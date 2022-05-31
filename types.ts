@@ -18,9 +18,9 @@ export type ChatMsg = {
   id: string;
   timestamp: Timestamp;
   name: string;
-  text: string;
+  text?: string;
   profilePicUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 export type ChatMsgState = ChatMsg | null;
 
@@ -32,7 +32,7 @@ export type CssMsg = {
   cssTopbar: string;
   cssChatMsg: string;
   profilePicUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 
 export type CssMsgState = CssMsg | null;
