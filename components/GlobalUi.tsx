@@ -17,11 +17,7 @@ import {
   setCssImg,
 } from "./firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  cssTextState,
-  cssTopbarState,
-  cssChatMsgState,
-} from "../recoil/cssMsgStates";
+import { cssTopbarState, cssChatMsgState } from "../recoil/cssMsgStates";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
