@@ -23,6 +23,18 @@ export const cssTextState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cssTopbarState = atom({
+  key: "cssTopbarState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const cssChatMsgState = atom({
+  key: "cssChatMsgState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const cssMsgState = atom<MsgState>({
   key: "cssMsgState",
   default: {

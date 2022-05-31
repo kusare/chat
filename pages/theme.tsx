@@ -17,7 +17,11 @@ import {
   setCssImg,
 } from "../components/firebase-theme";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssTextState, cssMsgState } from "../recoil/cssMsgStates";
+import {
+  cssTextState,
+  cssTopbarState,
+  cssChatMsgState,
+} from "../recoil/cssMsgStates";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
@@ -36,8 +40,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import {
   signIn,
@@ -55,12 +57,20 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const Page: NextPage = () => {
-  // 全体のCSS設定はcssTextStateから
+  // 全体の背景のCSS設定はcssTextStateから
   const setCssTextState = useSetRecoilState(cssTextState);
   const cssText = useRecoilValue(cssTextState);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCssTextState(event.target.value);
   };
+
+  // 全体のtopbarのCSS設定
+  const cssTopbar = useRecoilValue(cssTopbarState);
+  const setCssTopbarState = useSetRecoilState(cssTopbarState);
+
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  const setChatMsgState = useSetRecoilState(cssChatMsgState);
 
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
@@ -442,6 +452,30 @@ const Page: NextPage = () => {
                     onChange={handleChange}
                   />
                   <Button onClick={() => setCssMsg(cssText)}>Set Msg</Button>
+                </Stack>
+              )}
+
+              {alignment === "topbar" && (
+                <Stack spacing={2} direction="row">
+                  <TextField
+                    multiline
+                    value={cssTopbar}
+                    rows={4}
+                    onChange={handleChange}
+                  />
+                  <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button>
+                </Stack>
+              )}
+
+              {alignment === "message" && (
+                <Stack spacing={2} direction="row">
+                  <TextField
+                    multiline
+                    value={cssChatMsg}
+                    rows={4}
+                    onChange={handleChange}
+                  />
+                  <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button>
                 </Stack>
               )}
 

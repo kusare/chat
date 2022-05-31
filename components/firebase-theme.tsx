@@ -33,14 +33,8 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import {
-  cssMsgsState,
-  cssMsgState,
-  cssTextState,
-} from "../recoil/cssMsgStates";
+import { cssTextState, cssTopbarState } from "../recoil/cssMsgStates";
 import { MsgState, Msg } from "../types";
-
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -200,7 +194,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
 
   //  💅CSS to Return
   // 全体のCSS設定にする予定
-  const cssText = useRecoilValue(cssTextState);
+  // const cssText = useRecoilValue(cssTextState);
 
   // 😭avater
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -407,40 +401,27 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
     );
   }, [props.msg?.timestamp]);
 
+  /**
+██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
+██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
+██████╔╝█████╗  ██║     ██║   ██║██║██║     
+██╔══██╗██╔══╝  ██║     ██║   ██║██║██║     
+██║  ██║███████╗╚██████╗╚██████╔╝██║███████╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+                                            
+ */
+
   //  💅CSS to Return
   // 全体のCSS設定にする予定
   const cssText = useRecoilValue(cssTextState);
   const setCssTextState = useSetRecoilState(cssTextState);
 
-  // 😭avater
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // 🖊Edit
-  const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
-  // const [openEdit, setOpenEdit] = React.useState(false);
-  // const handleOpenEdit = () => setOpenEdit(true);
-  // const handleCloseEdit = () => setOpenEdit(false);
+  const cssTopbar = useRecoilValue(cssTopbarState);
+  const setCssTopbarState = useSetRecoilState(cssTopbarState);
 
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
+  // const [cssJson, setCssJson] = useState(toJSON(cssTopbar).attributes);
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -462,6 +443,7 @@ export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
     );
     // 全体のCSS設定を更新
     setCssTextState(cssEdited);
+    // setCssTopbarState(cssEdited);
   };
 
   /**
