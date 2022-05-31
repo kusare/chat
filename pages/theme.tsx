@@ -14,7 +14,7 @@ import {
   SetCssTextToAtomBtn,
   setCssImg,
   useImgMsgs,
-} from "../components/firebase-theme";
+} from "../components/ThemeFirebase";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
@@ -47,7 +47,7 @@ import {
   UserName,
   setMsg,
   setImgMsg,
-} from "../components/firebase-index";
+} from "../components/ChatFirebase";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ChatIcon from "@mui/icons-material/Chat";
 import Link from "@mui/material/Link";

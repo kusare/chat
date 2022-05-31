@@ -12,7 +12,7 @@ import {
   UserName,
   setMsg,
   setImgMsg,
-} from "../components/firebase-index";
+} from "./ChatFirebase";
 
 const sections = [
   { title: "Chat", url: "/" },

@@ -10,7 +10,7 @@ import {
   Msg,
   useMsgs,
   setImgMsg,
-} from "../components/firebase-index";
+} from "../components/ChatFirebase";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";

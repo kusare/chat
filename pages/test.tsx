@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Stack, Button } from "@mui/material";
-import { Msg } from "../components/firebase-index";
+import { Msg } from "../components/ChatFirebase";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import {

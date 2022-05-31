@@ -14,7 +14,7 @@ import {
   setCssMsg,
   SetCssTextToAtomBtn,
   setCssImg,
-} from "../components/firebase-theme";
+} from "./ThemeFirebase";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
