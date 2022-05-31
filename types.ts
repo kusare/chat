@@ -14,7 +14,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-export type Msg = {
+export type ChatMsg = {
   id: string;
   timestamp: Timestamp;
   name: string;
@@ -22,4 +22,17 @@ export type Msg = {
   profilePicUrl: string;
   imageUrl: string;
 };
-export type MsgState = Msg | null;
+export type ChatMsgState = ChatMsg | null;
+
+export type CssMsg = {
+  id: string;
+  timestamp: Timestamp;
+  name: string;
+  cssBackground: string;
+  cssTopbar: string;
+  cssChatMsg: string;
+  profilePicUrl: string;
+  imageUrl: string;
+};
+
+export type CssMsgState = CssMsg | null;

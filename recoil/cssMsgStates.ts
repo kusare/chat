@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { Timestamp } from "firebase/firestore";
-import { MsgState, Msg } from "../types";
+import { CssMsgState, CssMsg } from "../types";
 import { recoilPersist } from "recoil-persist";
 
 /**
@@ -35,27 +35,16 @@ export const cssChatMsgState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const cssMsgState = atom<MsgState>({
+export const cssMsgState = atom<CssMsgState>({
   key: "cssMsgState",
   default: {
     id: "",
     timestamp: Timestamp.fromDate(new Date()),
     name: "",
-    text: "",
+    cssBackground: "",
+    cssTopbar: "",
+    cssChatMsg: "",
     profilePicUrl: "",
     imageUrl: "",
   },
 });
-// export const cssMsgsState = atom<MsgState[]>({
-//   key: "cssMsgsState",
-//   default: [
-//     {
-//       id: "",
-//       timestamp: Timestamp.fromDate(new Date()),
-//       name: "",
-//       text: "",
-//       profilePicUrl: "",
-//       imageUrl: "",
-//     },
-//   ],
-// });

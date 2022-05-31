@@ -34,7 +34,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { cssBackgroundState, cssTopbarState } from "../recoil/cssMsgStates";
-import { MsgState, Msg } from "../types";
+import { ChatMsgState, ChatMsg, CssMsgState, CssMsg } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -105,7 +105,7 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 export const useCssMsgs = (id: string) => {
-  const [msgs, setMsgs] = useState<MsgState[]>([]);
+  const [cssMsgs, setCssMsgs] = useState<CssMsgState[]>([]);
   /**
 ██╗     ██╗███╗   ███╗██╗████████╗
 ██║     ██║████╗ ████║██║╚══██╔══╝
@@ -129,25 +129,27 @@ export const useCssMsgs = (id: string) => {
     );
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
-      let addedMsgs: Msg[] = [];
+      let addedMsgs: CssMsg[] = [];
       snapshot.docs.map((change) => {
         const message = change.data();
         addedMsgs.push({
           id: change.id,
           timestamp: message.timestamp,
           name: message.name,
-          text: message.text,
+          cssBackground: message.text,
+          cssTopbar: message.text,
+          cssChatMsg: message.text,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
       }, []);
-      setMsgs(addedMsgs);
+      setCssMsgs(addedMsgs);
       return unsub;
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return msgs;
+  return cssMsgs;
 };
 
 /**
@@ -183,7 +185,7 @@ export const useCssMsgs = (id: string) => {
 /**
  * message
  */
-export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
+export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -224,7 +226,9 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
   const handleCloseEdit = () => setOpenEdit(false);
 
   // (props) CSS to Json
-  const [cssJson, setCssJson] = useState(toJSON(props?.msg?.text).attributes);
+  const [cssJson, setCssJson] = useState(
+    toJSON(props?.msg?.cssBackground).attributes
+  );
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -275,7 +279,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
       <Card
         sx={{ maxWidth: 345 }}
         css={css`
-          ${props.msg.text}
+          ${props.msg.cssBackground}
         `}
       >
         {/* 💅CSS Sheet` */}
@@ -392,7 +396,7 @@ export const GetCssMsg: React.FC<{ msg: MsgState }> = (props) => {
 /**
  * message
  */
-export const GetCssImg: React.FC<{ msg: MsgState }> = (props) => {
+export const GetCssImg: React.FC<{ msg: CssMsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
