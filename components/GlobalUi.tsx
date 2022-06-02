@@ -6,7 +6,6 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import Head from "next/head";
-import Header from "./Header";
 import { Global, css } from "@emotion/react";
 import {
   GetCssMsg,
