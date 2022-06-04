@@ -584,14 +584,18 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
 ╚══════╝╚══════╝   ╚═╝   
  */
 
+type CssMsgArg = {
+  msgText: string;
+};
+
 // Saves a new message to Cloud Firestore.
-export const setCssMsg = async (msgText: any) => {
+export const setCssMsg = async (arg: CssMsgArg) => {
   const cssMsgForAdd: CssMsg = {
     timestamp: serverTimestamp(),
     name: getUserName(),
-    cssBackground: msgText,
-    cssTopbar: msgText,
-    cssChatMsg: msgText,
+    cssBackground: arg.msgText,
+    cssTopbar: arg.msgText,
+    cssChatMsg: arg.msgText,
     profilePicUrl: getProfilePicUrl(),
   };
   // Add a new message entry to the Firebase database.

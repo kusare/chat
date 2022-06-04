@@ -81,41 +81,51 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
 
   return (
     <>
-      {props.id === "background" && (
-        <Stack spacing={2} direction="row">
-          <TextField
-            multiline
-            value={cssBackground}
-            rows={4}
-            onChange={handleCssBackground}
-          />
-          <Button onClick={() => setCssMsg(cssBackground)}>Set Msg</Button>
-        </Stack>
-      )}
+      <Stack spacing={2} direction="row">
+        {props.id === "background" && (
+          <>
+            <TextField
+              multiline
+              value={cssBackground}
+              rows={4}
+              onChange={handleCssBackground}
+            />
+            <Button onClick={() => setCssMsg({ msgText: cssBackground })}>
+              Set Msg
+            </Button>
+          </>
+        )}
 
-      {props.id === "topbar" && (
-        <Stack spacing={2} direction="row">
-          <TextField
-            multiline
-            value={cssTopbar}
-            rows={4}
-            onChange={handleCssTopbar}
-          />
-          <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button>
-        </Stack>
-      )}
+        {props.id === "topbar" && (
+          <>
+            <TextField
+              multiline
+              value={cssTopbar}
+              rows={4}
+              onChange={handleCssTopbar}
+            />
+            {/* <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button> */}
+            <Button onClick={() => setCssMsg({ msgText: cssTopbar })}>
+              Set Msg
+            </Button>
+          </>
+        )}
 
-      {props.id === "message" && (
-        <Stack spacing={2} direction="row">
-          <TextField
-            multiline
-            value={cssChatMsg}
-            rows={4}
-            onChange={handleCssChatMsg}
-          />
-          <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button>
-        </Stack>
-      )}
+        {props.id === "message" && (
+          <>
+            <TextField
+              multiline
+              value={cssChatMsg}
+              rows={4}
+              onChange={handleCssChatMsg}
+            />
+            {/* <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button> */}
+            <Button onClick={() => setCssMsg({ msgText: cssChatMsg })}>
+              Set Msg
+            </Button>
+          </>
+        )}
+      </Stack>
     </>
   );
 };
