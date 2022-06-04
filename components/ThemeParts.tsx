@@ -90,9 +90,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               rows={4}
               onChange={handleCssBackground}
             />
-            <Button onClick={() => setCssMsg({ msgText: cssBackground })}>
-              Set Msg
-            </Button>
           </>
         )}
 
@@ -104,10 +101,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               rows={4}
               onChange={handleCssTopbar}
             />
-            {/* <Button onClick={() => setCssMsg(cssTopbar)}>Set Msg</Button> */}
-            <Button onClick={() => setCssMsg({ msgText: cssTopbar })}>
-              Set Msg
-            </Button>
           </>
         )}
 
@@ -119,12 +112,19 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               rows={4}
               onChange={handleCssChatMsg}
             />
-            {/* <Button onClick={() => setCssMsg(cssChatMsg)}>Set Msg</Button> */}
-            <Button onClick={() => setCssMsg({ msgText: cssChatMsg })}>
-              Set Msg
-            </Button>
           </>
         )}
+        <Button
+          onClick={() =>
+            setCssMsg({
+              cssBackground: cssBackground,
+              cssTopbar: cssTopbar,
+              cssChatMsg: cssChatMsg,
+            })
+          }
+        >
+          Set Msg
+        </Button>
       </Stack>
     </>
   );
