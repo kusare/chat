@@ -25,7 +25,7 @@ import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
 
-export type ThemeUiTargetId = "background" | "topbar" | "message";
+import { ThemeUiTargetId } from "../types";
 
 export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   /**

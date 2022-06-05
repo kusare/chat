@@ -55,7 +55,8 @@ import PaletteIcon from "@mui/icons-material/Palette";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/GlobalUi";
-import { ThemeUiTargetId, EditThemeCss } from "../components/ThemeParts";
+import { EditThemeCss } from "../components/ThemeParts";
+import { ThemeUiTargetId } from "../types";
 
 const Page: NextPage = () => {
   /**

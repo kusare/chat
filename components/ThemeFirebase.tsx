@@ -453,13 +453,13 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
  * message
  */
 export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
-  const [time, setTime] = useState("");
+  // const [time, setTime] = useState("");
 
-  useEffect(() => {
-    setTime(
-      dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
-    );
-  }, [props.msg?.timestamp]);
+  // useEffect(() => {
+  //   setTime(
+  //     dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
+  //   );
+  // }, [props.msg?.timestamp]);
 
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
