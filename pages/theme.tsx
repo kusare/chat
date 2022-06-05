@@ -10,7 +10,7 @@ import { Global, css } from "@emotion/react";
 import {
   GetCssMsg,
   GetCssImg,
-  useCssMsgs,
+  useGetCssMsgs,
   SetCssTextToAtomBtn,
   setCssImg,
   useImgMsgs,
@@ -259,6 +259,7 @@ const Page: NextPage = () => {
           // msg?.id.toString() cannot delete
           key={msg?.id?.toString() + index.toString() + "msg"}
           msg={msg}
+          id={alignment}
         ></GetCssImg>
       )}
     </div>
@@ -329,34 +330,24 @@ const Page: NextPage = () => {
               ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
                                         */}
             <h3>Image</h3>
-            {alignment === "background" && (
-              <Grid item>
-                <Input
-                  type="file"
-                  onChange={(e) => setCssImg(e, "cssImgMsgs")}
-                />
+            <Grid item>
+              <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
 
-                {/* 
-               ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ 
-              ██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔════╝     ████╗ ████║██╔════╝██╔════╝ 
-              ██║     ███████╗███████╗    ██║██╔████╔██║██║  ███╗    ██╔████╔██║███████╗██║  ███╗
-              ██║     ╚════██║╚════██║    ██║██║╚██╔╝██║██║   ██║    ██║╚██╔╝██║╚════██║██║   ██║
-              ╚██████╗███████║███████║    ██║██║ ╚═╝ ██║╚██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
-              ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
-                                                                                   
-                  */}
-                {imgMsgs}
-                <h4>Color</h4>
-                <SketchPicker
-                  color={colorPicked}
-                  onChange={handleColorPicked}
-                />
-              </Grid>
-            )}
+              {imgMsgs}
+              {alignment === "background" && (
+                <>
+                  <h4>Color</h4>
+                  <SketchPicker
+                    color={colorPicked}
+                    onChange={handleColorPicked}
+                  />
+                </>
+              )}
+            </Grid>
           </Grid>
 
           <Grid item xs={12} md={6} alignItems="center">
-            {useCssMsgs("cssMsgs").map((msg, index) => (
+            {useGetCssMsgs("cssMsgs").map((msg, index) => (
               <>
                 {msg && (
                   <div key={index.toString() + "div"}>
