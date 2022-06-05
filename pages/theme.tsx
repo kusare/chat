@@ -79,11 +79,31 @@ const Page: NextPage = () => {
 
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
-  const setChatMsgState = useSetRecoilState(cssChatMsgState);
+  const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setCssBackgroundState(event.target.value);
-  // };
+  /**
+████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
+╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
+   ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
+   ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
+   ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
+   ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
+                                                    
+ */
+
+  const [alignment, setAlignment] =
+    React.useState<ThemeUiTargetId>("background");
+
+  const handleToggle = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: ThemeUiTargetId
+  ) => {
+    setAlignment(newAlignment);
+  };
+
+  /**
+   *
+   */
 
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
@@ -117,6 +137,11 @@ const Page: NextPage = () => {
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
     const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
+
+    // alignment に応じて切り替え
+    alignment === "background" && setCssJson(toJSON(cssBackground).attributes);
+    alignment === "topbar" && setCssJson(toJSON(cssTopbar).attributes);
+    alignment === "message" && setCssJson(toJSON(cssChatMsg).attributes);
     // JSONのCSSに追加
     cssJson.background = hexCode;
     setCssJson(cssJson);
@@ -129,7 +154,9 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    setCssBackgroundState(cssEdited);
+    alignment === "background" && setCssBackgroundState(cssEdited);
+    alignment === "topbar" && setCssTopbarState(cssEdited);
+    alignment === "message" && setCssChatMsgState(cssEdited);
   };
 
   /**
@@ -223,26 +250,6 @@ const Page: NextPage = () => {
   // const handleDrawerClose = () => {
   //   setOpen(false);
   // };
-
-  /**
-████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
-╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
-   ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
-   ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
-   ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
-   ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
-                                                    
- */
-
-  const [alignment, setAlignment] =
-    React.useState<ThemeUiTargetId>("background");
-
-  const handleToggle = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: ThemeUiTargetId
-  ) => {
-    setAlignment(newAlignment);
-  };
 
   /**
  ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ 
