@@ -167,14 +167,14 @@ const Page: NextPage = () => {
                                            
  */
 
-  function valuetext(value: number) {
+  function backgroundSizeText(value: number) {
     return `${value}%`;
   }
 
-  const [value, setValue] = React.useState<number[]>([50]);
+  const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+    setBackgroundSize(newValue as number[]);
   };
 
   /**
@@ -251,11 +251,10 @@ const Page: NextPage = () => {
                 // valueLabelDisplay="auto"
                 // max={100}
                 getAriaLabel={() => "background-size range"}
-                value={value}
+                value={backgroundSize}
                 onChange={handleSlider}
                 valueLabelDisplay="auto"
-                // getAriaValueText={valuetext}
-                valueLabelFormat={valuetext}
+                valueLabelFormat={backgroundSizeText}
               />
               {imgMsgs}
               <h4>Color</h4>
