@@ -7,14 +7,7 @@ import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import Head from "next/head";
 import { Global, css } from "@emotion/react";
-import {
-  GetCssMsg,
-  GetCssImg,
-  useCssMsgs,
-  setCssMsg,
-  SetCssTextToAtomBtn,
-  setCssImg,
-} from "./ThemeFirebase";
+import { setCssMsg } from "./ThemeFirebase";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
