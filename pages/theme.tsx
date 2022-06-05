@@ -250,7 +250,7 @@ const Page: NextPage = () => {
                 // aria-label="Default"
                 // valueLabelDisplay="auto"
                 // max={100}
-                getAriaLabel={() => "Temperature range"}
+                getAriaLabel={() => "background-size range"}
                 value={value}
                 onChange={handleSlider}
                 valueLabelDisplay="auto"
