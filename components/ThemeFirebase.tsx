@@ -33,7 +33,11 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { cssBackgroundState, cssTopbarState } from "../recoil/cssMsgStates";
+import {
+  cssBackgroundState,
+  cssChatMsgState,
+  cssTopbarState,
+} from "../recoil/cssMsgStates";
 import {
   ChatMsgState,
   ChatMsg,
@@ -41,6 +45,7 @@ import {
   CssMsg,
   ImgMsg,
   ImgMsgState,
+  ThemeUiTargetId,
 } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -111,7 +116,7 @@ export const getUserName = (): string => {
 /**
  *
  */
-export const useCssMsgs = (id: string) => {
+export const useGetCssMsgs = (id: string) => {
   const [cssMsgs, setCssMsgs] = useState<CssMsgState[]>([]);
   /**
 ██╗     ██╗███╗   ███╗██╗████████╗
@@ -144,8 +149,8 @@ export const useCssMsgs = (id: string) => {
           timestamp: message.timestamp,
           name: message.name,
           cssBackground: message.cssBackground,
-          cssTopbar: message.Topbar,
-          cssChatMsg: message.ChatMsg,
+          cssTopbar: message.cssTopbar,
+          cssChatMsg: message.cssChatMsg,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -335,16 +340,16 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
         `}
       >
         {/* 💅CSS Sheet` */}
-        <CardContent
-          css={css`
-            ${props.msg.cssChatMsg}
-          `}
-        >
-          <Typography variant="body2" color="text.secondary">
+        <CardContent>
+          <p
+            css={css`
+              ${props.msg.cssChatMsg}
+            `}
+          >
             {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
             }
-          </Typography>
+          </p>
         </CardContent>
         {/* bottom line */}
         <CardActions disableSpacing>
@@ -452,7 +457,9 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
 /**
  * message
  */
-export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
+export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
+  props
+) => {
   // const [time, setTime] = useState("");
 
   // useEffect(() => {
@@ -479,6 +486,9 @@ export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
 
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
   // const [cssJson, setCssJson] = useState(toJSON(cssTopbar).attributes);
@@ -502,8 +512,9 @@ export const GetCssImg: React.FC<{ msg: ImgMsg }> = (props) => {
       })
     );
     // 全体のCSS設定を更新
-    setCssBackgroundState(cssEdited);
-    // setCssTopbarState(cssEdited);
+    props.id === "background" && setCssBackgroundState(cssEdited);
+    props.id === "topbar" && setCssTopbarState(cssEdited);
+    props.id === "message" && setCssChatMsgState(cssEdited);
   };
 
   /**
