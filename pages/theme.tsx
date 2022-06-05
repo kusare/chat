@@ -158,6 +158,26 @@ const Page: NextPage = () => {
   ));
 
   /**
+███████╗██╗     ██╗██████╗ ███████╗██████╗ 
+██╔════╝██║     ██║██╔══██╗██╔════╝██╔══██╗
+███████╗██║     ██║██║  ██║█████╗  ██████╔╝
+╚════██║██║     ██║██║  ██║██╔══╝  ██╔══██╗
+███████║███████╗██║██████╔╝███████╗██║  ██║
+╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+                                           
+ */
+
+  function valuetext(value: number) {
+    return `${value}%`;
+  }
+
+  const [value, setValue] = React.useState<number[]>([50]);
+
+  const handleSlider = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number[]);
+  };
+
+  /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
 ██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
@@ -226,10 +246,16 @@ const Page: NextPage = () => {
               <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
               <h4>background-size</h4>
               <Slider
-                defaultValue={50}
-                aria-label="Default"
+                // defaultValue={50}
+                // aria-label="Default"
+                // valueLabelDisplay="auto"
+                // max={100}
+                getAriaLabel={() => "Temperature range"}
+                value={value}
+                onChange={handleSlider}
                 valueLabelDisplay="auto"
-                max={100}
+                // getAriaValueText={valuetext}
+                valueLabelFormat={valuetext}
               />
               {imgMsgs}
               <h4>Color</h4>
