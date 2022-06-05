@@ -167,14 +167,32 @@ const Page: NextPage = () => {
                                            
  */
 
-  function backgroundSizeText(value: number) {
+  function backgroundSizeText(value: number | number[]) {
     return `${value}%`;
   }
 
   const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
+    // alignment に応じて切り替え
+    alignment === "background" && setCssJson(toJSON(cssBackground).attributes);
+    alignment === "topbar" && setCssJson(toJSON(cssTopbar).attributes);
+    alignment === "message" && setCssJson(toJSON(cssChatMsg).attributes);
+    // JSONのCSSに追加
+    cssJson[`background-size`] = backgroundSizeText(backgroundSize);
+    setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // slide
     setBackgroundSize(newValue as number[]);
+    // 全体のCSS設定を更新
+    alignment === "background" && setCssBackgroundState(cssEdited);
+    alignment === "topbar" && setCssTopbarState(cssEdited);
+    alignment === "message" && setCssChatMsgState(cssEdited);
   };
 
   /**
