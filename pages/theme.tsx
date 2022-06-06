@@ -40,6 +40,7 @@ import {
   useGetMsgs,
   setImgMsg,
 } from "../components/ChatFirebase";
+import { DummyMsg } from "../dummy";
 
 const Page: NextPage = () => {
   /**
@@ -264,7 +265,8 @@ const Page: NextPage = () => {
           <ToggleButton value="cssChatMsg">Message</ToggleButton>
         </ToggleButtonGroup>
         <Grid container direction="row">
-          {/* 
+          <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+            {/* 
                  ██████╗███████╗███████╗
                 ██╔════╝██╔════╝██╔════╝
                 ██║     ███████╗███████╗
@@ -273,7 +275,7 @@ const Page: NextPage = () => {
                  ╚═════╝╚══════╝╚══════╝
 
              */}
-          <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+            <ChatMsgEle msg={DummyMsg} />
             <h3>CSS</h3>
             <EditThemeCss id={alignment}></EditThemeCss>
 

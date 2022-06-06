@@ -42,6 +42,11 @@ import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { Msg, MsgState } from "../types";
+import {
+  cssBackgroundState,
+  cssTopbarState,
+  cssChatMsgState,
+} from "../recoil/cssMsgStates";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -323,6 +328,9 @@ export const UserName: React.FC = () => {
  * message
  */
 export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -333,7 +341,13 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
-      <Stack spacing={2} direction="row">
+      <Stack
+        spacing={2}
+        direction="row"
+        css={css`
+          ${cssChatMsg}
+        `}
+      >
         <Box>
           {props.msg.profilePicUrl && (
             <Avatar
