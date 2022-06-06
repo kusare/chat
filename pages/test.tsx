@@ -317,7 +317,6 @@ const Page: NextPage = () => {
       ...props,
     }));
     return (
-      // TODO
       // @ts-ignoree
       <mesh ref={ref}>
         <planeGeometry args={[100, 100]} />
@@ -328,7 +327,6 @@ const Page: NextPage = () => {
   function Cube(props: any) {
     const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }));
     return (
-      // TODO
       // @ts-ignoree
       <mesh ref={ref}>
         <boxGeometry />
@@ -434,7 +432,6 @@ const Page: NextPage = () => {
                                                     
  */
 
-  // TODO
   // @ts-ignoree
   const count = useSelector(selectCount);
   const dispatch = useDispatch();

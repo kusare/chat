@@ -23,6 +23,7 @@ export const cssBackgroundState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// TODO defaultの中にcss項目を増やす
 export const cssTopbarState = atom({
   key: "cssTopbarState",
   default: "",
