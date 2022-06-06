@@ -75,6 +75,9 @@ const Page: NextPage = () => {
     })
   );
 
+  // for colorPicker setting (background-color)
+  const [colorPicked, setColorPicked] = useState(cssJson.background);
+
   /**
 ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
 ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
@@ -97,7 +100,7 @@ const Page: NextPage = () => {
 
   // Switch according to alignment
   // alignment に応じて切り替え
-  const switchAccordingAlignment = () => {
+  const switchCssJsonAccordingAlignment = () => {
     alignment === "cssBackground" &&
       setCssJson(toJSON(cssBackground).attributes);
     alignment === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
@@ -128,14 +131,14 @@ const Page: NextPage = () => {
     alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
 
   // for colorPicker setting (background-color)
-  const [colorPicked, setColorPicked] = useState(cssJson.background);
+  // const [colorPicked, setColorPicked] = useState(cssJson.background);
 
   // when color picked
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
     const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
     // alignment に応じて切り替え
-    switchAccordingAlignment();
+    switchCssJsonAccordingAlignment();
     // JSONのCSSに追加
     cssJson.background = hexCode;
     setCssJson(cssJson);
@@ -192,10 +195,10 @@ const Page: NextPage = () => {
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
     // alignment に応じて切り替え
-    switchAccordingAlignment();
+    switchCssJsonAccordingAlignment();
     // JSONのCSSに追加
     cssJson[`background-size`] = backgroundSizeText(backgroundSize);
-    setCssJson(cssJson);
+    // setCssJson(cssJson);
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     setCssEdited(
       toCSS({
