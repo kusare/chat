@@ -7,8 +7,8 @@ import {
   ProfilePic,
   UserName,
   setMsg,
-  Msg,
-  useMsgs,
+  ChatMsgEle,
+  useGetMsgs,
   setImgMsg,
 } from "../components/ChatFirebase";
 import Grid from "@mui/material/Grid";
@@ -63,8 +63,8 @@ const Home: NextPage = () => {
             </Stack>
           </Box>
           <Input type="file" onChange={setImgMsg} />
-          {useMsgs().map((msg, index) => (
-            <Msg key={msg?.id + index.toString()} msg={msg}></Msg>
+          {useGetMsgs().map((msg, index) => (
+            <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
           ))}
         </Grid>
       </CustomDrawer>
