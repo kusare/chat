@@ -25,8 +25,6 @@ import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
 import Slider from "@mui/material/Slider";
-import Link from "@mui/material/Link";
-import PaletteIcon from "@mui/icons-material/Palette";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/GlobalUi";
@@ -57,6 +55,27 @@ const Page: NextPage = () => {
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
   /**
+███████╗████████╗ █████╗ ████████╗███████╗
+██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
+███████╗   ██║   ███████║   ██║   █████╗  
+╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
+███████║   ██║   ██║  ██║   ██║   ███████╗
+╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+                                          
+ */
+
+  // (props) CSS to Json
+  // TODO ダミーのCSSが欲しい
+  const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
+
+  // (css) Json to CSS
+  const [cssEdited, setCssEdited] = useState(
+    toCSS({
+      attributes: { ...cssJson },
+    })
+  );
+
+  /**
 ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
 ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
    ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
@@ -67,7 +86,7 @@ const Page: NextPage = () => {
  */
 
   const [alignment, setAlignment] =
-    React.useState<ThemeUiTargetId>("background");
+    React.useState<ThemeUiTargetId>("cssBackground");
 
   const handleToggle = (
     event: React.MouseEvent<HTMLElement>,
@@ -76,19 +95,22 @@ const Page: NextPage = () => {
     setAlignment(newAlignment);
   };
 
-  /**
-   *
-   */
+  // Switch according to alignment
+  // alignment に応じて切り替え
+  const switchAccordingAlignment = () => {
+    alignment === "cssBackground" &&
+      setCssJson(toJSON(cssBackground).attributes);
+    alignment === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
+    alignment === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
+  };
 
-  // (props) CSS to Json
-  const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
-
-  // (css) Json to CSS
-  const [cssEdited, setCssEdited] = useState(
-    toCSS({
-      attributes: { ...cssJson },
-    })
-  );
+  // Update overall CSS settings
+  // 全体のCSS設定を更新
+  const updateOverAllCss = () => {
+    alignment === "cssBackground" && setCssBackgroundState(cssEdited);
+    alignment === "cssTopbar" && setCssTopbarState(cssEdited);
+    alignment === "cssChatMsg" && setCssChatMsgState(cssEdited);
+  };
 
   /**
  ██████╗ ██████╗ ██╗      ██████╗ ██████╗     ██████╗ ██╗ ██████╗██╗  ██╗███████╗██████╗ 
@@ -112,11 +134,8 @@ const Page: NextPage = () => {
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
     const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
-
     // alignment に応じて切り替え
-    alignment === "background" && setCssJson(toJSON(cssBackground).attributes);
-    alignment === "topbar" && setCssJson(toJSON(cssTopbar).attributes);
-    alignment === "message" && setCssJson(toJSON(cssChatMsg).attributes);
+    switchAccordingAlignment();
     // JSONのCSSに追加
     cssJson.background = hexCode;
     setCssJson(cssJson);
@@ -129,9 +148,7 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    alignment === "background" && setCssBackgroundState(cssEdited);
-    alignment === "topbar" && setCssTopbarState(cssEdited);
-    alignment === "message" && setCssChatMsgState(cssEdited);
+    updateOverAllCss();
   };
 
   /**
@@ -175,9 +192,7 @@ const Page: NextPage = () => {
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
     // alignment に応じて切り替え
-    alignment === "background" && setCssJson(toJSON(cssBackground).attributes);
-    alignment === "topbar" && setCssJson(toJSON(cssTopbar).attributes);
-    alignment === "message" && setCssJson(toJSON(cssChatMsg).attributes);
+    switchAccordingAlignment();
     // JSONのCSSに追加
     cssJson[`background-size`] = backgroundSizeText(backgroundSize);
     setCssJson(cssJson);
@@ -190,9 +205,7 @@ const Page: NextPage = () => {
     // slide
     setBackgroundSize(newValue as number[]);
     // 全体のCSS設定を更新
-    alignment === "background" && setCssBackgroundState(cssEdited);
-    alignment === "topbar" && setCssTopbarState(cssEdited);
-    alignment === "message" && setCssChatMsgState(cssEdited);
+    updateOverAllCss();
   };
 
   /**
@@ -233,9 +246,9 @@ const Page: NextPage = () => {
           exclusive
           onChange={handleToggle}
         >
-          <ToggleButton value="background">Background</ToggleButton>
-          <ToggleButton value="topbar">TopBar</ToggleButton>
-          <ToggleButton value="message">Message</ToggleButton>
+          <ToggleButton value="cssBackground">Background</ToggleButton>
+          <ToggleButton value="cssTopbar">TopBar</ToggleButton>
+          <ToggleButton value="cssChatMsg">Message</ToggleButton>
         </ToggleButtonGroup>
         <Grid container direction="row">
           {/* 
@@ -264,10 +277,6 @@ const Page: NextPage = () => {
               <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
               <h4>background-size</h4>
               <Slider
-                // defaultValue={50}
-                // aria-label="Default"
-                // valueLabelDisplay="auto"
-                // max={100}
                 getAriaLabel={() => "background-size range"}
                 value={backgroundSize}
                 onChange={handleSlider}

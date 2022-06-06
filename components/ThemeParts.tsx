@@ -75,7 +75,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   return (
     <>
       <Stack spacing={2} direction="row">
-        {props.id === "background" && (
+        {props.id === "cssBackground" && (
           <>
             <TextField
               multiline
@@ -86,7 +86,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
           </>
         )}
 
-        {props.id === "topbar" && (
+        {props.id === "cssTopbar" && (
           <>
             <TextField
               multiline
@@ -97,7 +97,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
           </>
         )}
 
-        {props.id === "message" && (
+        {props.id === "cssChatMsg" && (
           <>
             <TextField
               multiline
