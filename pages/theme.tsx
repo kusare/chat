@@ -106,10 +106,10 @@ const Page: NextPage = () => {
 
   // Update overall CSS settings
   // 全体のCSS設定を更新
-  const updateOverAllCss = () => {
-    alignment === "cssBackground" && setCssBackgroundState(cssEdited);
-    alignment === "cssTopbar" && setCssTopbarState(cssEdited);
-    alignment === "cssChatMsg" && setCssChatMsgState(cssEdited);
+  const updateOverAllCss = (id: string) => {
+    id === "cssBackground" && setCssBackgroundState(cssEdited);
+    id === "cssTopbar" && setCssTopbarState(cssEdited);
+    id === "cssChatMsg" && setCssChatMsgState(cssEdited);
   };
 
   /**
@@ -148,7 +148,7 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    updateOverAllCss();
+    updateOverAllCss(alignment);
   };
 
   /**
@@ -205,7 +205,7 @@ const Page: NextPage = () => {
     // slide
     setBackgroundSize(newValue as number[]);
     // 全体のCSS設定を更新
-    updateOverAllCss();
+    updateOverAllCss(alignment);
   };
 
   /**

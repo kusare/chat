@@ -480,7 +480,7 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
 
   //  💅CSS to Return
   // 全体のCSS設定にする予定
-  const cssText = useRecoilValue(cssBackgroundState);
+  const cssBackground = useRecoilValue(cssBackgroundState);
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
 
   const cssTopbar = useRecoilValue(cssTopbarState);
@@ -490,7 +490,7 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
   // (props) CSS to Json
-  const [cssJson, setCssJson] = useState(toJSON(cssText).attributes);
+  const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
   // const [cssJson, setCssJson] = useState(toJSON(cssTopbar).attributes);
 
   // (css) Json to CSS
@@ -512,9 +512,9 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
       })
     );
     // 全体のCSS設定を更新
-    props.id === "background" && setCssBackgroundState(cssEdited);
-    props.id === "topbar" && setCssTopbarState(cssEdited);
-    props.id === "message" && setCssChatMsgState(cssEdited);
+    props.id === "cssBackground" && setCssBackgroundState(cssEdited);
+    props.id === "cssTopbar" && setCssTopbarState(cssEdited);
+    props.id === "cssChatMsg" && setCssChatMsgState(cssEdited);
   };
 
   /**
