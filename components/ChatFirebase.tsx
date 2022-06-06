@@ -41,6 +41,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import { Msg, MsgState } from "../types";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
@@ -52,20 +53,11 @@ export const userNameState = atom<string>({
   default: "NO NAME", // default value (aka initial value)
 });
 
-export type Msg = {
-  id: string;
-  timestamp: Timestamp;
-  name: string;
-  text: string;
-  profilePicUrl: string;
-  imageUrl: string;
-};
-export type MsgState = Msg | null;
 export const msgState = atom<MsgState>({
   key: "msgState",
   default: {
     id: "",
-    timestamp: Timestamp.fromDate(new Date()),
+    date: Timestamp.fromDate(new Date()).toDate(),
     name: "",
     text: "",
     profilePicUrl: "",
@@ -77,7 +69,7 @@ export const msgsState = atom<MsgState[]>({
   default: [
     {
       id: "",
-      timestamp: Timestamp.fromDate(new Date()),
+      date: Timestamp.fromDate(new Date()).toDate(),
       name: "",
       text: "",
       profilePicUrl: "",
@@ -154,7 +146,7 @@ export const getUserName = (): string => {
 /**
  * Loads chat messages history and listens for upcoming ones.
  */
-export const useMsgs = () => {
+export const useGetMsgs = () => {
   const setMsgs = useSetRecoilState(msgsState);
   const msgs = useRecoilValue(msgsState);
   const LIMIT = 24;
@@ -173,7 +165,7 @@ export const useMsgs = () => {
         const message = change.data();
         addedMsgs.push({
           id: change.id,
-          timestamp: message.timestamp,
+          date: message.date,
           name: message.name,
           text: message.text,
           profilePicUrl: message.profilePicUrl,
@@ -330,14 +322,12 @@ export const UserName: React.FC = () => {
 /**
  * message
  */
-export const Msg: React.FC<{ msg: MsgState }> = (props) => {
+export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    setTime(
-      dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
-    );
-  }, [props.msg?.timestamp]);
+    setTime(dayjs(props.msg?.date).format("YYYY/MM/DD ddd HH:mm:ss"));
+  }, [props.msg?.date]);
 
   if (!props.msg) return <></>;
 
@@ -357,7 +347,7 @@ export const Msg: React.FC<{ msg: MsgState }> = (props) => {
         <Box>
           <Stack spacing={2} direction="row">
             {props.msg.name && <div>{props.msg.name}</div>}
-            {props.msg.timestamp && <time dateTime={time}>{time}</time>}
+            {props.msg.date && <time dateTime={time}>{time}</time>}
           </Stack>
           <TextField
             multiline
