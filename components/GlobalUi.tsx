@@ -176,16 +176,14 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
               <MenuIcon />
             </IconButton>
             <Link
-              color="inherit"
               noWrap
               key={"chat"}
               // variant="body2"
               href={"/"}
               // sx={{ p: 1, flexShrink: 0 }}
+              underline="none"
             >
-              <Typography variant="h6" noWrap component="div">
-                Hamu House
-              </Typography>
+              <p>Hamu House</p>
             </Link>
             <ProfilePic></ProfilePic>
           </Toolbar>
