@@ -130,6 +130,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             setCssMsg({
               cssBackground: cssBackground,
               cssTopbar: cssTopbar,
+              cssTopbarDeco: cssTopbarDeco,
               cssChatMsg: cssChatMsg,
             })
           }
