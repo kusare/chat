@@ -40,6 +40,7 @@ export type CssMsg = {
   name: string;
   cssBackground: string;
   cssTopbar: string;
+  cssTopbarDeco: string;
   cssChatMsg: string;
   profilePicUrl: string;
   imageUrl?: string;

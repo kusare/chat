@@ -35,8 +35,9 @@ import {
 } from "firebase/storage";
 import {
   cssBackgroundState,
-  cssChatMsgState,
   cssTopbarState,
+  cssTopbarDecoState,
+  cssChatMsgState,
 } from "../recoil/cssMsgStates";
 import {
   ChatMsgState,
@@ -150,6 +151,7 @@ export const useGetCssMsgs = (id: string) => {
           name: message.name,
           cssBackground: message.cssBackground,
           cssTopbar: message.cssTopbar,
+          cssTopbarDeco: message.cssTopbarDeco,
           cssChatMsg: message.cssChatMsg,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
@@ -573,15 +575,24 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
  *
  */
 export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
-  const msg = props.msg;
-
+  // 全体の背景のCSS設定はcssBackgroundStateから
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
+  // 全体のtopbarのCSS設定
+  const setCssTopbarState = useSetRecoilState(cssTopbarState);
+  // 全体のtopbarのCSS設定
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
+  // 全体のChatのMessageのCSS設定
+  const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+
+  const updateWholeCss = () => {
+    setCssBackgroundState(props.msg.cssBackground);
+    setCssTopbarState(props.msg.cssTopbar);
+    setCssTopbarDecoState(props.msg.cssTopbarDeco);
+    setCssChatMsgState(props.msg.cssChatMsg);
+  };
   return (
     <>
-      {/* msg.msg.text */}
-      <Button onClick={() => setCssBackgroundState(msg.cssBackground)}>
-        Set
-      </Button>
+      <Button onClick={() => updateWholeCss()}>Set</Button>
     </>
   );
 };
@@ -595,9 +606,11 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
 ╚══════╝╚══════╝   ╚═╝   
  */
 
+// TODO move to types.ts
 type CssMsgArg = {
   cssBackground: string;
   cssTopbar: string;
+  cssTopbarDeco: string;
   cssChatMsg: string;
 };
 
@@ -608,6 +621,7 @@ export const setCssMsg = async (arg: CssMsgArg) => {
     name: getUserName(),
     cssBackground: arg.cssBackground,
     cssTopbar: arg.cssTopbar,
+    cssTopbarDeco: arg.cssTopbarDeco,
     cssChatMsg: arg.cssChatMsg,
     profilePicUrl: getProfilePicUrl(),
   };
