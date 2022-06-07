@@ -30,6 +30,12 @@ export const cssTopbarState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cssTopbarDecoState = atom({
+  key: "cssTopbarDecoState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const cssChatMsgState = atom({
   key: "cssChatMsgState",
   default: "",

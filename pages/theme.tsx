@@ -19,6 +19,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
   cssTopbarState,
+  cssTopbarDecoState,
   cssChatMsgState,
 } from "../recoil/cssMsgStates";
 import { SketchPicker, ColorResult } from "react-color";
@@ -60,6 +61,10 @@ const Page: NextPage = () => {
   // 全体のtopbarのCSS設定
   const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
+
+  // 全体のtopbarのCSS設定
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
 
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
@@ -115,6 +120,8 @@ const Page: NextPage = () => {
     alignment === "cssBackground" &&
       setCssJson(toJSON(cssBackground).attributes);
     alignment === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
+    alignment === "cssTopbarDeco" &&
+      setCssJson(toJSON(cssTopbarDeco).attributes);
     alignment === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
   };
 
@@ -123,6 +130,7 @@ const Page: NextPage = () => {
   const updateOverAllCss = (id: string) => {
     id === "cssBackground" && setCssBackgroundState(cssEdited);
     id === "cssTopbar" && setCssTopbarState(cssEdited);
+    id === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
     id === "cssChatMsg" && setCssChatMsgState(cssEdited);
   };
 
@@ -262,6 +270,7 @@ const Page: NextPage = () => {
         >
           <ToggleButton value="cssBackground">Background</ToggleButton>
           <ToggleButton value="cssTopbar">TopBar</ToggleButton>
+          <ToggleButton value="cssTopbarDeco">TopbarDeco</ToggleButton>
           <ToggleButton value="cssChatMsg">Message</ToggleButton>
         </ToggleButtonGroup>
         <Grid container direction="row">

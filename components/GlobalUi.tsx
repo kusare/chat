@@ -40,6 +40,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import {
   cssBackgroundState,
   cssTopbarState,
+  cssTopbarDecoState,
   cssChatMsgState,
 } from "../recoil/cssMsgStates";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
@@ -59,6 +60,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
 
   // 全体のtopbarのCSS設定
   const cssTopbar = useRecoilValue(cssTopbarState);
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
 
   /**
 ██████╗ ██████╗  █████╗ ██╗    ██╗███████╗██████╗ 
@@ -189,7 +191,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
           </Toolbar>
           <p
             css={css`
-              ${cssTopbar}
+              ${cssTopbarDeco}
             `}
           >
             Planned wave installation site

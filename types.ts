@@ -47,7 +47,11 @@ export type CssMsg = {
 
 export type CssMsgState = CssMsg | null;
 
-export type ThemeUiTargetId = "cssBackground" | "cssTopbar" | "cssChatMsg";
+export type ThemeUiTargetId =
+  | "cssBackground"
+  | "cssTopbar"
+  | "cssTopbarDeco"
+  | "cssChatMsg";
 
 export type Msg = {
   id: string;
