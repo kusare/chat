@@ -188,6 +188,13 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
             </Link>
             <ProfilePic></ProfilePic>
           </Toolbar>
+          <p
+            css={css`
+              ${cssTopbar}
+            `}
+          >
+            Planned wave installation site
+          </p>
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
