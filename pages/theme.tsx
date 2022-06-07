@@ -213,7 +213,7 @@ const Page: NextPage = () => {
  */
 
   function backgroundSizeText(value: number | number[]) {
-    return `${value}%`;
+    return `${value}px`;
   }
 
   const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
@@ -306,6 +306,7 @@ const Page: NextPage = () => {
             <Grid item>
               <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
               <h4>background-size</h4>
+              <h5>{cssJson[`background-size`]} </h5>
               <Slider
                 getAriaLabel={() => "background-size range"}
                 value={backgroundSize}
@@ -315,6 +316,7 @@ const Page: NextPage = () => {
               />
               {imgMsgs}
               <h4>Color</h4>
+              <h5>{cssJson[`background-color`]} </h5>
               <SketchPicker color={colorPicked} onChange={handleColorPicked} />
             </Grid>
           </Grid>
