@@ -155,8 +155,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   return (
     <div>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
+        <AppBar position="fixed" open={open} color="transparent">
           <Toolbar
             css={css`
               ${cssTopbar}
@@ -196,6 +195,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
             Planned wave installation site
           </p>
         </AppBar>
+
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>

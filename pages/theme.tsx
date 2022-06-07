@@ -151,7 +151,7 @@ const Page: NextPage = () => {
     // alignment に応じて切り替え
     switchCssJsonAccordingAlignment();
     // JSONのCSSに追加
-    cssJson.background = hexCode;
+    cssJson[`background-color`] = hexCode;
     setCssJson(cssJson);
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     setCssEdited(
