@@ -55,6 +55,13 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
     setCssTopbarState(event.target.value);
   };
 
+  // 全体のTopbarのDecoのCSS設定
+  const cssTopbarDeco = useRecoilValue(cssTopbarState);
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarState);
+  const handleCssTopbarDeco = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssTopbarDecoState(event.target.value);
+  };
+
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
@@ -93,6 +100,17 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               value={cssTopbar}
               rows={4}
               onChange={handleCssTopbar}
+            />
+          </>
+        )}
+
+        {props.id === "cssTopbarDeco" && (
+          <>
+            <TextField
+              multiline
+              value={cssTopbarDeco}
+              rows={4}
+              onChange={handleCssTopbarDeco}
             />
           </>
         )}
