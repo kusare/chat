@@ -12,6 +12,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
   cssTopbarState,
+  cssTopbarDecoState,
   cssChatMsgState,
 } from "../recoil/cssMsgStates";
 import { SketchPicker, ColorResult } from "react-color";
@@ -56,8 +57,8 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   };
 
   // 全体のTopbarのDecoのCSS設定
-  const cssTopbarDeco = useRecoilValue(cssTopbarState);
-  const setCssTopbarDecoState = useSetRecoilState(cssTopbarState);
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
   const handleCssTopbarDeco = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCssTopbarDecoState(event.target.value);
   };
