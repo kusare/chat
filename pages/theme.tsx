@@ -9,7 +9,7 @@ import Head from "next/head";
 import { Global, css } from "@emotion/react";
 import {
   GetCssMsg,
-  GetCssImg,
+  CssImg,
   useGetCssMsgs,
   SetCssTextToAtomBtn,
   setCssImg,
@@ -193,12 +193,11 @@ const Page: NextPage = () => {
   const imgMsgs = useImgMsgs("cssImgMsgs").map((msg, index) => (
     <div key={index.toString() + "div"}>
       {msg && (
-        <GetCssImg
+        <CssImg
           // msg?.id.toString() cannot delete
           key={msg?.id?.toString() + index.toString() + "msg"}
           msg={msg}
-          id={editCssTargetId}
-        ></GetCssImg>
+        ></CssImg>
       )}
     </div>
   ));

@@ -38,6 +38,7 @@ import {
   cssTopbarState,
   cssTopbarDecoState,
   cssChatMsgState,
+  editCssTargetIdState,
 } from "../recoil/States";
 import {
   ChatMsgState,
@@ -459,9 +460,7 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
 /**
  * message
  */
-export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
-  props
-) => {
+export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
@@ -472,16 +471,35 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
                                             
  */
 
-  //  💅CSS to Return
-  // 全体のCSS設定にする予定
+  // 全体の背景のCSS設定はcssBackgroundStateから
   const cssBackground = useRecoilValue(cssBackgroundState);
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
 
+  // 全体のtopbarのCSS設定
   const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
 
+  // 全体のtopbarのCSS設定
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
+
+  // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+
+  // 編集するCSSを選択するときに使用するID
+  const editCssTargetId = useRecoilValue(editCssTargetIdState);
+  const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+
+  /**
+██████╗ ███████╗ █████╗  ██████╗████████╗    ███████╗████████╗ █████╗ ████████╗███████╗
+██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
+██████╔╝█████╗  ███████║██║        ██║       ███████╗   ██║   ███████║   ██║   █████╗  
+██╔══██╗██╔══╝  ██╔══██║██║        ██║       ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
+██║  ██║███████╗██║  ██║╚██████╗   ██║       ███████║   ██║   ██║  ██║   ██║   ███████╗
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+                                                                                       
+ */
 
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
@@ -507,9 +525,10 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
     );
     // 全体のCSS設定を更新
     // TODO cssTopbarDecoを追加
-    props.id === "cssBackground" && setCssBackgroundState(cssEdited);
-    props.id === "cssTopbar" && setCssTopbarState(cssEdited);
-    props.id === "cssChatMsg" && setCssChatMsgState(cssEdited);
+    editCssTargetId === "cssBackground" && setCssBackgroundState(cssEdited);
+    editCssTargetId === "cssTopbar" && setCssTopbarState(cssEdited);
+    editCssTargetId === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
+    editCssTargetId === "cssChatMsg" && setCssChatMsgState(cssEdited);
   };
 
   /**
