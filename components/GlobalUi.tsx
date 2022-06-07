@@ -37,10 +37,29 @@ import Link from "@mui/material/Link";
 import PaletteIcon from "@mui/icons-material/Palette";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import {
+  cssBackgroundState,
+  cssTopbarState,
+  cssChatMsgState,
+} from "../recoil/cssMsgStates";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   props
 ) => {
+  /**
+██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
+██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
+██████╔╝█████╗  ██║     ██║   ██║██║██║     
+██╔══██╗██╔══╝  ██║     ██║   ██║██║██║     
+██║  ██║███████╗╚██████╗╚██████╔╝██║███████╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+                                            
+ */
+
+  // 全体のtopbarのCSS設定
+  const cssTopbar = useRecoilValue(cssTopbarState);
+
   /**
 ██████╗ ██████╗  █████╗ ██╗    ██╗███████╗██████╗ 
 ██╔══██╗██╔══██╗██╔══██╗██║    ██║██╔════╝██╔══██╗
@@ -137,14 +156,12 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
     <div>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar
-          position="fixed"
-          open={open}
-          css={css`
-            background: #d4e4ff;
-          `}
-        >
-          <Toolbar>
+        <AppBar position="fixed" open={open}>
+          <Toolbar
+            css={css`
+              ${cssTopbar}
+            `}
+          >
             <IconButton
               color="inherit"
               aria-label="open drawer"
