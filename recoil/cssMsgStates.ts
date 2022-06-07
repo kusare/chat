@@ -50,6 +50,7 @@ export const cssMsgState = atom<CssMsgState>({
     name: "",
     cssBackground: "",
     cssTopbar: "",
+    cssTopbarDeco: "",
     cssChatMsg: "",
     profilePicUrl: "",
     imageUrl: "",

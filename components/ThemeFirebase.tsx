@@ -462,14 +462,6 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
 export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
   props
 ) => {
-  // const [time, setTime] = useState("");
-
-  // useEffect(() => {
-  //   setTime(
-  //     dayjs(props.msg?.timestamp?.toDate()).format("YYYY/MM/DD ddd HH:mm:ss")
-  //   );
-  // }, [props.msg?.timestamp]);
-
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
@@ -514,6 +506,7 @@ export const GetCssImg: React.FC<{ msg: ImgMsg; id: ThemeUiTargetId }> = (
       })
     );
     // 全体のCSS設定を更新
+    // TODO cssTopbarDecoを追加
     props.id === "cssBackground" && setCssBackgroundState(cssEdited);
     props.id === "cssTopbar" && setCssTopbarState(cssEdited);
     props.id === "cssChatMsg" && setCssChatMsgState(cssEdited);
