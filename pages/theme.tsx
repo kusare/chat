@@ -21,6 +21,7 @@ import {
   cssTopbarState,
   cssTopbarDecoState,
   cssChatMsgState,
+  editCssTargetIdState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
@@ -70,6 +71,10 @@ const Page: NextPage = () => {
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
+  // 編集するCSSを選択するときに使用するID
+  const editCssTargetId = useRecoilValue(editCssTargetIdState);
+  const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+
   /**
 ███████╗████████╗ █████╗ ████████╗███████╗
 ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
@@ -102,27 +107,29 @@ const Page: NextPage = () => {
    ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
    ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
                                                     
- */
+*/
 
-  const [alignment, setAlignment] =
-    React.useState<ThemeUiTargetId>("cssBackground");
+  // const [alignment, setAlignment] =
+  //   React.useState<ThemeUiTargetId>("cssBackground");
 
   const handleToggle = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: ThemeUiTargetId
   ) => {
-    setAlignment(newAlignment);
+    // setAlignment(newAlignment);
+    setEditCssTargetId(newAlignment);
   };
 
   // Switch according to alignment
   // alignment に応じて切り替え
   const switchCssJsonAccordingAlignment = () => {
-    alignment === "cssBackground" &&
+    editCssTargetId === "cssBackground" &&
       setCssJson(toJSON(cssBackground).attributes);
-    alignment === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
-    alignment === "cssTopbarDeco" &&
+    editCssTargetId === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
+    editCssTargetId === "cssTopbarDeco" &&
       setCssJson(toJSON(cssTopbarDeco).attributes);
-    alignment === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
+    editCssTargetId === "cssChatMsg" &&
+      setCssJson(toJSON(cssChatMsg).attributes);
   };
 
   // Update overall CSS settings
@@ -156,7 +163,7 @@ const Page: NextPage = () => {
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
     const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
-    // alignment に応じて切り替え
+    // editCssTargetId に応じて切り替え
     switchCssJsonAccordingAlignment();
     // JSONのCSSに追加
     cssJson[`background-color`] = hexCode;
@@ -170,7 +177,7 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    updateOverAllCss(alignment);
+    updateOverAllCss(editCssTargetId);
   };
 
   /**
@@ -190,7 +197,7 @@ const Page: NextPage = () => {
           // msg?.id.toString() cannot delete
           key={msg?.id?.toString() + index.toString() + "msg"}
           msg={msg}
-          id={alignment}
+          id={editCssTargetId}
         ></GetCssImg>
       )}
     </div>
@@ -213,7 +220,7 @@ const Page: NextPage = () => {
   const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
-    // alignment に応じて切り替え
+    // editCssTargetId に応じて切り替え
     switchCssJsonAccordingAlignment();
     // JSONのCSSに追加
     cssJson[`background-size`] = backgroundSizeText(backgroundSize);
@@ -227,7 +234,7 @@ const Page: NextPage = () => {
     // slide
     setBackgroundSize(newValue as number[]);
     // 全体のCSS設定を更新
-    updateOverAllCss(alignment);
+    updateOverAllCss(editCssTargetId);
   };
 
   /**
@@ -264,7 +271,7 @@ const Page: NextPage = () => {
              */}
         <ToggleButtonGroup
           color="primary"
-          value={alignment}
+          value={editCssTargetId}
           exclusive
           onChange={handleToggle}
         >
@@ -286,7 +293,7 @@ const Page: NextPage = () => {
              */}
             <ChatMsgEle msg={DummyMsg} />
             <h3>CSS</h3>
-            <EditThemeCss id={alignment}></EditThemeCss>
+            <EditThemeCss id={editCssTargetId}></EditThemeCss>
 
             {/* 
               ██╗███╗   ███╗ █████╗  ██████╗ ███████╗

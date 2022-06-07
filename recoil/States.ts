@@ -86,7 +86,7 @@ export const cssMsgState = atom<CssMsgState>({
            
  */
 
-export const EditCssTargetIdState = atom<ThemeUiTargetId>({
-  key: "EditCssTargetIdState",
+export const editCssTargetIdState = atom<ThemeUiTargetId>({
+  key: "editCssTargetIdState",
   default: "cssBackground",
 });
