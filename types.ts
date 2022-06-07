@@ -14,6 +14,27 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
+/**
+███╗   ███╗███████╗ ██████╗ 
+████╗ ████║██╔════╝██╔════╝ 
+██╔████╔██║███████╗██║  ███╗
+██║╚██╔╝██║╚════██║██║   ██║
+██║ ╚═╝ ██║███████║╚██████╔╝
+╚═╝     ╚═╝╚══════╝ ╚═════╝ 
+                            
+ */
+
+//TODO delete msg type
+export type Msg = {
+  id: string;
+  date: Date;
+  name: string;
+  text: string;
+  profilePicUrl: string;
+  imageUrl: string;
+};
+export type MsgState = Msg | null;
+
 export type ChatMsg = {
   id: string;
   timestamp: Timestamp;
@@ -48,18 +69,19 @@ export type CssMsg = {
 
 export type CssMsgState = CssMsg | null;
 
+/**
+██╗██████╗ 
+██║██╔══██╗
+██║██║  ██║
+██║██║  ██║
+██║██████╔╝
+╚═╝╚═════╝ 
+           
+ */
+
+//TODO Rename TypeThemeUiTargetId
 export type ThemeUiTargetId =
   | "cssBackground"
   | "cssTopbar"
   | "cssTopbarDeco"
   | "cssChatMsg";
-
-export type Msg = {
-  id: string;
-  date: Date;
-  name: string;
-  text: string;
-  profilePicUrl: string;
-  imageUrl: string;
-};
-export type MsgState = Msg | null;

@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { Timestamp } from "firebase/firestore";
-import { CssMsgState, CssMsg } from "../types";
+import { CssMsgState, ThemeUiTargetId } from "../types";
 import { recoilPersist } from "recoil-persist";
 
 /**
@@ -74,4 +74,19 @@ export const cssMsgState = atom<CssMsgState>({
     profilePicUrl: "",
     imageUrl: "",
   },
+});
+
+/**
+██╗██████╗ 
+██║██╔══██╗
+██║██║  ██║
+██║██║  ██║
+██║██████╔╝
+╚═╝╚═════╝ 
+           
+ */
+
+export const EditCssTargetIdState = atom<ThemeUiTargetId>({
+  key: "EditCssTargetIdState",
+  default: "cssBackground",
 });
