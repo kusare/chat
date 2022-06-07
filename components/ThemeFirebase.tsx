@@ -501,6 +501,7 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
                                                                                        
  */
 
+  //TODO Change to Recoil
   // (props) CSS to Json
   const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
   // const [cssJson, setCssJson] = useState(toJSON(cssTopbar).attributes);
@@ -515,7 +516,7 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   // 背景画像を設定するテスト関数予定地
   const chgBg = () => {
     // JSONのCSSに追加
-    cssJson.background = `url('${props?.msg?.imageUrl}')`;
+    cssJson[`background-image`] = `url('${props?.msg?.imageUrl}')`;
     setCssJson(cssJson);
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     setCssEdited(
