@@ -46,7 +46,7 @@ import {
   cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
-} from "../recoil/cssMsgStates";
+} from "../recoil/States";
 
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)

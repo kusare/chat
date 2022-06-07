@@ -13,12 +13,21 @@ import { recoilPersist } from "recoil-persist";
                                                                                                     
  */
 const { persistAtom } = recoilPersist({
-  key: "cssMsgStates", // this key is using to store data in local storage
+  key: "States", // this key is using to store data in local storage
 });
+
+/**
+ ██████╗███████╗███████╗
+██╔════╝██╔════╝██╔════╝
+██║     ███████╗███████╗
+██║     ╚════██║╚════██║
+╚██████╗███████║███████║
+ ╚═════╝╚══════╝╚══════╝
+                        
+ */
 
 export const cssBackgroundState = atom({
   key: "cssBackgroundState",
-  // default: "color: black; background-color: #8AA058;",
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
@@ -41,6 +50,16 @@ export const cssChatMsgState = atom({
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
+
+/**
+███╗   ███╗███████╗ ██████╗ 
+████╗ ████║██╔════╝██╔════╝ 
+██╔████╔██║███████╗██║  ███╗
+██║╚██╔╝██║╚════██║██║   ██║
+██║ ╚═╝ ██║███████║╚██████╔╝
+╚═╝     ╚═╝╚══════╝ ╚═════╝ 
+                            
+ */
 
 export const cssMsgState = atom<CssMsgState>({
   key: "cssMsgState",
