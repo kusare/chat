@@ -38,6 +38,7 @@ import {
   cssTopbarState,
   cssTopbarDecoState,
   cssChatMsgState,
+  cssChatMsgDecoState,
   editCssTargetIdState,
 } from "../recoil/States";
 import {
@@ -597,12 +598,16 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
   const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
   // 全体のChatのMessageのCSS設定
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+  // 全体のChatのMessageのDecoのCSS設定
+  const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
 
+  // TODO　どのようにrecoilに反映されてるか確認
   const updateWholeCss = () => {
     setCssBackgroundState(props.msg.cssBackground);
     setCssTopbarState(props.msg.cssTopbar);
     setCssTopbarDecoState(props.msg.cssTopbarDeco);
     setCssChatMsgState(props.msg.cssChatMsg);
+    setCssChatMsgDecoState(props.msg.cssChatMsgDeco);
   };
   return (
     <>

@@ -46,8 +46,10 @@ import {
   cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
+  cssChatMsgDecoState,
 } from "../recoil/States";
 
+// TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
   key: "profilePicUrState", // unique ID (with respect to other atoms/selectors)
   default: "/images/profile_placeholder.png", // default value (aka initial value)
@@ -69,6 +71,7 @@ export const msgState = atom<MsgState>({
     imageUrl: "",
   },
 });
+
 export const msgsState = atom<MsgState[]>({
   key: "msgsState",
   default: [
@@ -331,6 +334,9 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
 
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -341,6 +347,11 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 
   return (
     <>
+      <div
+        css={css`
+          ${cssChatMsgDeco}
+        `}
+      >{`planned cssChatMsgDeco`}</div>
       <Stack
         spacing={2}
         direction="row"
