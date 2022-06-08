@@ -154,6 +154,7 @@ export const useGetCssMsgs = (id: string) => {
           cssTopbar: message.cssTopbar,
           cssTopbarDeco: message.cssTopbarDeco,
           cssChatMsg: message.cssChatMsg,
+          cssChatMsgDeco: message.cssChatMsgDeco,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -625,6 +626,7 @@ type CssMsgArg = {
   cssTopbar: string;
   cssTopbarDeco: string;
   cssChatMsg: string;
+  cssChatMsgDeco: string;
 };
 
 // Saves a new message to Cloud Firestore.
@@ -636,6 +638,7 @@ export const setCssMsg = async (arg: CssMsgArg) => {
     cssTopbar: arg.cssTopbar,
     cssTopbarDeco: arg.cssTopbarDeco,
     cssChatMsg: arg.cssChatMsg,
+    cssChatMsgDeco: arg.cssChatMsgDeco,
     profilePicUrl: getProfilePicUrl(),
   };
   // Add a new message entry to the Firebase database.

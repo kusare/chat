@@ -63,6 +63,7 @@ export type CssMsg = {
   cssTopbar: string;
   cssTopbarDeco: string;
   cssChatMsg: string;
+  cssChatMsgDeco: string;
   profilePicUrl: string;
   imageUrl?: string;
 };
@@ -84,4 +85,5 @@ export type ThemeUiTargetId =
   | "cssBackground"
   | "cssTopbar"
   | "cssTopbarDeco"
-  | "cssChatMsg";
+  | "cssChatMsg"
+  | "cssChatMsgDeco";

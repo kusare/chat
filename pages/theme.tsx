@@ -277,7 +277,8 @@ const Page: NextPage = () => {
           <ToggleButton value="cssBackground">Background</ToggleButton>
           <ToggleButton value="cssTopbar">TopBar</ToggleButton>
           <ToggleButton value="cssTopbarDeco">TopbarDeco</ToggleButton>
-          <ToggleButton value="cssChatMsg">Message</ToggleButton>
+          <ToggleButton value="cssChatMsg">ChatMsg</ToggleButton>
+          <ToggleButton value="cssChatMsgDeco">ChatMsgDeco</ToggleButton>
         </ToggleButtonGroup>
         <Grid container direction="row">
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>

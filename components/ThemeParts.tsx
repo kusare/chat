@@ -14,6 +14,7 @@ import {
   cssTopbarState,
   cssTopbarDecoState,
   cssChatMsgState,
+  cssChatMsgDecoState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
@@ -68,6 +69,13 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
   const handleCssChatMsg = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCssChatMsgState(event.target.value);
+  };
+
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+  const handleCssChatMsgDeco = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssChatMsgDecoState(event.target.value);
   };
 
   /**
@@ -126,6 +134,17 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
+
+        {props.id === "cssChatMsgDeco" && (
+          <>
+            <TextField
+              multiline
+              value={cssChatMsgDeco}
+              rows={4}
+              onChange={handleCssChatMsgDeco}
+            />
+          </>
+        )}
         <Button
           onClick={() =>
             setCssMsg({
@@ -133,6 +152,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               cssTopbar: cssTopbar,
               cssTopbarDeco: cssTopbarDeco,
               cssChatMsg: cssChatMsg,
+              cssChatMsgDeco: cssChatMsgDeco,
             })
           }
         >

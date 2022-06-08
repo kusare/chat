@@ -51,6 +51,12 @@ export const cssChatMsgState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cssChatMsgDecoState = atom({
+  key: "cssChatMsgDecoState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 /**
 ███╗   ███╗███████╗ ██████╗ 
 ████╗ ████║██╔════╝██╔════╝ 
@@ -71,6 +77,7 @@ export const cssMsgState = atom<CssMsgState>({
     cssTopbar: "",
     cssTopbarDeco: "",
     cssChatMsg: "",
+    cssChatMsgDeco: "",
     profilePicUrl: "",
     imageUrl: "",
   },
