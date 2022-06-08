@@ -21,6 +21,7 @@ import {
   cssTopbarState,
   cssTopbarDecoState,
   cssChatMsgState,
+  cssChatMsgDecoState,
   editCssTargetIdState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
@@ -71,6 +72,10 @@ const Page: NextPage = () => {
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
@@ -87,6 +92,7 @@ const Page: NextPage = () => {
 
   // (props) CSS to Json
   // TODO ダミーのCSSが欲しい
+  // TODO recoilに変更してみる
   const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
 
   // (css) Json to CSS
@@ -130,6 +136,8 @@ const Page: NextPage = () => {
       setCssJson(toJSON(cssTopbarDeco).attributes);
     editCssTargetId === "cssChatMsg" &&
       setCssJson(toJSON(cssChatMsg).attributes);
+    editCssTargetId === "cssChatMsgDeco" &&
+      setCssJson(toJSON(cssChatMsgDeco).attributes);
   };
 
   // Update overall CSS settings
@@ -139,6 +147,7 @@ const Page: NextPage = () => {
     id === "cssTopbar" && setCssTopbarState(cssEdited);
     id === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
     id === "cssChatMsg" && setCssChatMsgState(cssEdited);
+    id === "cssChatMsgDeco" && setCssChatMsgDecoState(cssEdited);
   };
 
   /**
