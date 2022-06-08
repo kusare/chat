@@ -26,13 +26,26 @@ const { persistAtom } = recoilPersist({
                         
  */
 
+// TODO defaultの中にcss項目を増やす
+// TODO cssを統合する予定
+export const cssState = atom({
+  key: "cssState",
+  default: {
+    background: "",
+    topbar: "",
+    topbarDeco: "",
+    chatMsg: "",
+    chatMsgDeco: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const cssBackgroundState = atom({
   key: "cssBackgroundState",
   default: "",
   effects_UNSTABLE: [persistAtom],
 });
 
-// TODO defaultの中にcss項目を増やす
 export const cssTopbarState = atom({
   key: "cssTopbarState",
   default: "",
@@ -70,7 +83,11 @@ export const cssChatMsgDecoState = atom({
 export const jsonCssState = atom({
   key: "jsonCssState",
   default: {
-    jsonCss: {},
+    background: {},
+    topbar: {},
+    topbarDeco: {},
+    chatMsg: {},
+    chatMsgDeco: {},
   },
   effects_UNSTABLE: [persistAtom],
 });
