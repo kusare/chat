@@ -339,12 +339,6 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
 
-  // const [time, setTime] = useState("");
-
-  // useEffect(() => {
-  //   setTime(props.msg?.date);
-  // }, [props.msg?.date]);
-
   if (!props.msg) return <></>;
 
   return (
