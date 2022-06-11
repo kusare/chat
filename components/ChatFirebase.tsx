@@ -413,6 +413,11 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
 
+  const [text, setText] = useState("test Comment");
+  const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+  };
+
   if (!props.msg) return <></>;
 
   return (
@@ -523,9 +528,16 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
               </div>
             )}
           </span>
-          <IconButton aria-label="edit">
+          <IconButton aria-label="edit" onClick={() => setChatMsg(text)}>
             <EditIcon />
           </IconButton>
+          <TextField
+            multiline
+            placeholder="No Comment"
+            maxRows={4}
+            value={text}
+            onChange={handleMsgInput}
+          />
         </div>
       </div>
     </>
@@ -553,9 +565,6 @@ export const setChatMsg = async (msgText: any) => {
       name: getUserName(),
       text: msgText,
       profilePicUrl: getProfilePicUrl(),
-      // date: dayjs(Timestamp.fromDate(new Date()).toDate()).format(
-      //   "YYYY/MM/DD ddd HH:mm:ss"
-      // ),
       date: date.toString(),
     });
   } catch (error) {
