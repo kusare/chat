@@ -3,7 +3,6 @@ import { css } from "@emotion/react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Stack, Button } from "@mui/material";
-import { Msg } from "../components/ChatFirebase";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import {
@@ -317,7 +316,7 @@ const Page: NextPage = () => {
       ...props,
     }));
     return (
-      // @ts-ignoree
+      // @ts-ignore
       <mesh ref={ref}>
         <planeGeometry args={[100, 100]} />
       </mesh>
@@ -327,7 +326,7 @@ const Page: NextPage = () => {
   function Cube(props: any) {
     const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }));
     return (
-      // @ts-ignoree
+      // @ts-ignore
       <mesh ref={ref}>
         <boxGeometry />
       </mesh>
@@ -469,9 +468,7 @@ const Page: NextPage = () => {
             css={css(`
           ${sheet}
         `)}
-          >
-            <Msg msg={sampleMsg} />
-          </div>
+          ></div>
 
           <TextField
             label="Message CSS"
