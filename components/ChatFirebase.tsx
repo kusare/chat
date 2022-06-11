@@ -154,6 +154,7 @@ export const getUserName = (): string => {
 /**
  * Loads chat messages history and listens for upcoming ones.
  */
+// TODO for chat or img
 export const useGetMsgs = () => {
   const setMsgs = useSetRecoilState(msgsState);
   const msgs = useRecoilValue(msgsState);
@@ -162,8 +163,8 @@ export const useGetMsgs = () => {
   useEffect(() => {
     // Create the query to load the last 12 messages and listen for new ones.
     const recentMessagesQuery = query(
-      collection(getFirestore(), "messages"),
-      orderBy("timestamp", "desc"),
+      collection(getFirestore(), "ChatMsgs"),
+      orderBy("date", "desc"),
       limit(LIMIT)
     );
     // Start listening to the query.
@@ -328,9 +329,81 @@ export const UserName: React.FC = () => {
 };
 
 /**
- * message
+ * Chat Message Normal Layout
  */
+// TODO Rename to ChatMsgNormalLayout
 export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+
+  // const [time, setTime] = useState("");
+
+  // useEffect(() => {
+  //   setTime(props.msg?.date);
+  // }, [props.msg?.date]);
+
+  if (!props.msg) return <></>;
+
+  return (
+    <>
+      <div
+        css={css`
+          ${cssChatMsgDeco}
+        `}
+      >{`planned cssChatMsgDeco`}</div>
+      <Stack
+        spacing={2}
+        direction="row"
+        css={css`
+          ${cssChatMsg}
+        `}
+      >
+        <Box>
+          {props.msg.profilePicUrl && (
+            <Avatar
+              alt="profilePic"
+              src={props.msg.profilePicUrl}
+              sx={{ width: 48, height: 48 }}
+            />
+          )}
+        </Box>
+
+        <Box>
+          <Stack spacing={2} direction="row">
+            {props.msg.name && <div>{props.msg.name}</div>}
+            {props.msg.date && <time>{props.msg.date.toString()}</time>}
+          </Stack>
+          <TextField
+            multiline
+            placeholder="No Comment"
+            maxRows={4}
+            value={props.msg.text}
+          />
+        </Box>
+      </Stack>
+      <div>
+        {props.msg.imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={props.msg.imageUrl}
+            alt="no image"
+            css={css(`
+          max-width: 100%;
+        `)}
+          />
+        )}
+      </div>
+    </>
+  );
+};
+
+/**
+ * Chat Message Recipi Layout
+ */
+export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
 
@@ -411,11 +484,14 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 export const setMsg = async (msgText: any) => {
   // Add a new message entry to the Firebase database.
   try {
-    await addDoc(collection(getFirestore(), "messages"), {
+    await addDoc(collection(getFirestore(), "ChatMsgs"), {
       name: getUserName(),
       text: msgText,
       profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
+      // date: dayjs(Timestamp.fromDate(new Date()).toDate()).format(
+      //   "YYYY/MM/DD ddd HH:mm:ss"
+      // ),
+      date: dayjs(Timestamp.fromDate(new Date()).toDate()),
     });
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);

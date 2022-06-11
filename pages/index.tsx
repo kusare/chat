@@ -42,32 +42,32 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CustomDrawer>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justifyContent="center"
-          style={{ minHeight: "100vh" }}
-        >
-          <Box>
-            <Stack spacing={2} direction="row">
-              <TextField
-                label="Comment"
-                multiline
-                placeholder="Placeholder"
-                value={text}
-                rows={4}
-                onChange={handleChange}
-              />
-              <Button onClick={() => setMsg(text)}>Set Msg</Button>
-            </Stack>
-          </Box>
-          <Input type="file" onChange={setImgMsg} />
-          <ChatRadioBtn></ChatRadioBtn>
-          {useGetMsgs().map((msg, index) => (
-            <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
-          ))}
+        <Grid container direction="row">
+          <Grid item xs={12} md={6} alignItems="center">
+            <Box>
+              <Stack spacing={2} direction="row">
+                <TextField
+                  label="Comment"
+                  multiline
+                  placeholder="Placeholder"
+                  value={text}
+                  rows={4}
+                  onChange={handleChange}
+                />
+                <Button onClick={() => setMsg(text)}>Set Msg</Button>
+              </Stack>
+            </Box>
+            <Input type="file" onChange={setImgMsg} />
+            <ChatRadioBtn></ChatRadioBtn>
+            {useGetMsgs().map((msg, index) => (
+              <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
+            ))}
+          </Grid>
+          <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+            {useGetMsgs().map((msg, index) => (
+              <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
+            ))}
+          </Grid>
         </Grid>
       </CustomDrawer>
     </div>
