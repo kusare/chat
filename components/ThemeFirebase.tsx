@@ -489,6 +489,10 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
@@ -505,33 +509,33 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
 
   //TODO Change to Recoil
   // (props) CSS to Json
-  const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
-  // const [cssJson, setCssJson] = useState(toJSON(cssTopbar).attributes);
+  const [jsonCss, setJsonCss] = useState(toJSON(cssBackground).attributes);
+  // const jsonCss = useRecoilValue(jsonCssState);
+  // const setJsonCssState = useSetRecoilState(jsonCssState);
 
   // (css) Json to CSS
-  const [cssEdited, setCssEdited] = useState(
+  const [jsonCssEdited, setJsonCssEdited] = useState(
     toCSS({
-      attributes: { ...cssJson },
+      attributes: { ...jsonCss },
     })
   );
 
   // 背景画像を設定するテスト関数予定地
   const chgBg = () => {
+    setJsonCss(toJSON(cssBackground).attributes);
     // JSONのCSSに追加
-    cssJson[`background-image`] = `url('${props?.msg?.imageUrl}')`;
-    setCssJson(cssJson);
+    jsonCss[`background-image`] = `url('${props?.msg?.imageUrl}')`;
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
-    setCssEdited(
-      toCSS({
-        attributes: { ...cssJson },
-      })
-    );
+    const cssEdited = toCSS({
+      attributes: { ...jsonCss },
+    });
     // 全体のCSS設定を更新
-    // TODO cssTopbarDecoを追加
+    // TODO theme.tsxと統合
     editCssTargetId === "cssBackground" && setCssBackgroundState(cssEdited);
     editCssTargetId === "cssTopbar" && setCssTopbarState(cssEdited);
     editCssTargetId === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
     editCssTargetId === "cssChatMsg" && setCssChatMsgState(cssEdited);
+    editCssTargetId === "cssChatMsgDeco" && setCssChatMsgDecoState(cssEdited);
   };
 
   /**
