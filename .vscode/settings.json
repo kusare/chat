@@ -1,7 +1,11 @@
 {
   "files.autoGuessEncoding": true, // emoji
   "editor.wordWrap": "on", // markdown
-  "editor.quickSuggestions": true, // markdown
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  }, // markdown
   "editor.snippetSuggestions": "top",
   "editor.fontFamily": "'Migu 1C', Consolas, 'Courier New', monospace, 'Segoe UI Emoji'",
   "markdown-pdf.displayHeaderFooter": false,
