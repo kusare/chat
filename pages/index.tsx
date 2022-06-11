@@ -64,7 +64,7 @@ const Home: NextPage = () => {
               <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
             ))}
           </Grid>
-          <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+          <Grid item xs={12} md={6}>
             {useGetMsgs().map((msg, index) => (
               <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
             ))}

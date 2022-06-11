@@ -416,50 +416,58 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
     <>
       <div
         css={css`
-          ${cssChatMsgDeco}
-        `}
-      >{`planned cssChatMsgDeco`}</div>
-      <Stack
-        spacing={2}
-        direction="row"
-        css={css`
-          ${cssChatMsg}
+          border-radius: 8px;
+          overflow: hidden;
+          margin-bottom: 20px;
         `}
       >
-        <Box>
-          {props.msg.profilePicUrl && (
-            <Avatar
-              alt="profilePic"
-              src={props.msg.profilePicUrl}
-              sx={{ width: 48, height: 48 }}
-            />
-          )}
-        </Box>
+        <div
+          css={css`
+            ${cssChatMsgDeco}
+          `}
+        >{`planned cssChatMsgDeco`}</div>
+        <Stack
+          spacing={2}
+          direction="row"
+          css={css`
+            ${cssChatMsg}
+          `}
+        >
+          <Box>
+            {props.msg.profilePicUrl && (
+              <Avatar
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+                sx={{ width: 48, height: 48 }}
+              />
+            )}
+          </Box>
 
-        <Box>
-          <Stack spacing={2} direction="row">
-            {props.msg.name && <div>{props.msg.name}</div>}
-            {props.msg.date && <time>{props.msg.date.toString()}</time>}
-          </Stack>
-          <TextField
-            multiline
-            placeholder="No Comment"
-            maxRows={4}
-            value={props.msg.text}
-          />
-        </Box>
-      </Stack>
-      <div>
-        {props.msg.imageUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={props.msg.imageUrl}
-            alt="no image"
-            css={css(`
+          <Box>
+            <Stack spacing={2} direction="row">
+              {props.msg.name && <div>{props.msg.name}</div>}
+              {props.msg.date && <time>{props.msg.date.toString()}</time>}
+            </Stack>
+            <TextField
+              multiline
+              placeholder="No Comment"
+              maxRows={4}
+              value={props.msg.text}
+            />
+          </Box>
+        </Stack>
+        <div>
+          {props.msg.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={props.msg.imageUrl}
+              alt="no image"
+              css={css(`
           max-width: 100%;
         `)}
-          />
-        )}
+            />
+          )}
+        </div>
       </div>
     </>
   );
