@@ -33,16 +33,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/GlobalUi";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
-import {
-  signIn,
-  signOutUser,
-  ProfilePic,
-  UserName,
-  setMsg,
-  ChatMsgEle,
-  useGetMsgs,
-  setImgMsg,
-} from "../components/ChatFirebase";
+import { ChatMsgEle } from "../components/ChatFirebase";
 import { DummyMsg } from "../dummy";
 import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
 

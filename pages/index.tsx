@@ -20,8 +20,31 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalUi";
 import { ChatRadioBtn } from "../components/RadioBtn";
+import { chatRadioBtnIdState } from "../recoil/States";
+
+export function ChatMsgs() {
+  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+  const msgId = chatRadioBtnId;
+
+  const normal = useGetMsgs().map((msg, index) => (
+    <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
+  ));
+  const recipe = useGetMsgs().map((msg, index) => (
+    <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+  ));
+
+  return (
+    <div>
+      {msgId === "Normal" && normal}
+      {msgId === "Recipe" && recipe}
+    </div>
+  );
+}
 
 const Home: NextPage = () => {
+  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+  const id = chatRadioBtnId;
+
   const [text, setText] = useState("コメント");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
@@ -59,15 +82,20 @@ const Home: NextPage = () => {
               </Stack>
             </Box>
             <Input type="file" onChange={setImgMsg} />
+            {/*
+            ██████╗  █████╗ ██████╗ ██╗ ██████╗ 
+            ██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗
+            ██████╔╝███████║██║  ██║██║██║   ██║
+            ██╔══██╗██╔══██║██║  ██║██║██║   ██║
+            ██║  ██║██║  ██║██████╔╝██║╚██████╔╝
+            ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
+ */}
+
             <ChatRadioBtn></ChatRadioBtn>
-            {useGetMsgs().map((msg, index) => (
-              <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
-            ))}
+            <ChatMsgs />
           </Grid>
           <Grid item xs={12} md={6}>
-            {useGetMsgs().map((msg, index) => (
-              <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-            ))}
+            Planned site
           </Grid>
         </Grid>
       </CustomDrawer>
