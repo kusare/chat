@@ -19,7 +19,6 @@ import {
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
 import { toCSS, toJSON } from "cssjson";
-
 import { ThemeUiTargetId } from "../types";
 
 export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {

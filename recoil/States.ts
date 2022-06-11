@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { Timestamp } from "firebase/firestore";
-import { CssMsgState, ThemeUiTargetId } from "../types";
+import { CssMsgState, ThemeUiTargetId, ChatRadioBtnId } from "../types";
 import { recoilPersist } from "recoil-persist";
 
 /**
@@ -107,4 +107,21 @@ export const cssMsgState = atom<CssMsgState>({
 export const editCssTargetIdState = atom<ThemeUiTargetId>({
   key: "editCssTargetIdState",
   default: "cssBackground",
+  effects_UNSTABLE: [persistAtom],
+});
+
+/**
+██████╗  █████╗ ██████╗ ██╗ ██████╗     ██████╗ ████████╗███╗   ██╗
+██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗    ██╔══██╗╚══██╔══╝████╗  ██║
+██████╔╝███████║██║  ██║██║██║   ██║    ██████╔╝   ██║   ██╔██╗ ██║
+██╔══██╗██╔══██║██║  ██║██║██║   ██║    ██╔══██╗   ██║   ██║╚██╗██║
+██║  ██║██║  ██║██████╔╝██║╚██████╔╝    ██████╔╝   ██║   ██║ ╚████║
+╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝     ╚═════╝    ╚═╝   ╚═╝  ╚═══╝
+                                                                   
+ */
+
+export const chatRadioBtnIdState = atom<ChatRadioBtnId>({
+  key: "chatRadioBtnIdState",
+  default: "Normal",
+  effects_UNSTABLE: [persistAtom],
 });
