@@ -110,16 +110,7 @@ export const editCssTargetIdState = atom<ThemeUiTargetId>({
   effects_UNSTABLE: [persistAtom],
 });
 
-/**
-██████╗  █████╗ ██████╗ ██╗ ██████╗     ██████╗ ████████╗███╗   ██╗
-██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗    ██╔══██╗╚══██╔══╝████╗  ██║
-██████╔╝███████║██║  ██║██║██║   ██║    ██████╔╝   ██║   ██╔██╗ ██║
-██╔══██╗██╔══██║██║  ██║██║██║   ██║    ██╔══██╗   ██║   ██║╚██╗██║
-██║  ██║██║  ██║██████╔╝██║╚██████╔╝    ██████╔╝   ██║   ██║ ╚████║
-╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝     ╚═════╝    ╚═╝   ╚═╝  ╚═══╝
-                                                                   
- */
-
+// TODO Rename to chatLayoutIdState
 export const chatRadioBtnIdState = atom<ChatRadioBtnId>({
   key: "chatRadioBtnIdState",
   default: "Normal",

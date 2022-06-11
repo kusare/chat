@@ -44,6 +44,7 @@ import {
   setImgMsg,
 } from "../components/ChatFirebase";
 import { DummyMsg } from "../dummy";
+import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
 
 const Page: NextPage = () => {
   /**
@@ -267,28 +268,37 @@ const Page: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CustomDrawer>
-        {/* 
-              ████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
-              ╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
-                 ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
-                 ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
-                 ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
-                 ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝ 
-             */}
-        <ToggleButtonGroup
-          color="primary"
-          value={editCssTargetId}
-          exclusive
-          onChange={handleToggle}
-        >
-          <ToggleButton value="cssBackground">Background</ToggleButton>
-          <ToggleButton value="cssTopbar">TopBar</ToggleButton>
-          <ToggleButton value="cssTopbarDeco">TopbarDeco</ToggleButton>
-          <ToggleButton value="cssChatMsg">ChatMsg</ToggleButton>
-          <ToggleButton value="cssChatMsgDeco">ChatMsgDeco</ToggleButton>
-        </ToggleButtonGroup>
         <Grid container direction="row">
+          <Grid item xs={12} md={6} alignItems="center">
+            {useGetCssMsgs("cssMsgs").map((msg, index) => (
+              <>
+                {msg && (
+                  <div key={index.toString() + "div"}>
+                    <GetCssMsg
+                      key={msg?.id?.toString() + index.toString() + "msg"}
+                      msg={msg}
+                    ></GetCssMsg>
+                    <SetCssTextToAtomBtn
+                      key={msg?.id?.toString() + index.toString() + "css"}
+                      msg={msg}
+                    />
+                  </div>
+                )}
+              </>
+            ))}
+          </Grid>
+
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+            {/*
+          ██████╗  █████╗ ██████╗ ██╗ ██████╗ 
+          ██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗
+          ██████╔╝███████║██║  ██║██║██║   ██║
+          ██╔══██╗██╔══██║██║  ██║██║██║   ██║
+          ██║  ██║██║  ██║██████╔╝██║╚██████╔╝
+          ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
+                                     */}
+
+            <EditCssTargetIdRadioBtn></EditCssTargetIdRadioBtn>
             {/* 
                 ███████╗ █████╗ ███╗   ███╗██████╗ ██╗     ███████╗    ███╗   ███╗███████╗ ██████╗ 
                 ██╔════╝██╔══██╗████╗ ████║██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝██╔════╝ 
@@ -336,25 +346,6 @@ const Page: NextPage = () => {
               <h5>{cssJson[`background-color`]} </h5>
               <SketchPicker color={colorPicked} onChange={handleColorPicked} />
             </Grid>
-          </Grid>
-
-          <Grid item xs={12} md={6} alignItems="center">
-            {useGetCssMsgs("cssMsgs").map((msg, index) => (
-              <>
-                {msg && (
-                  <div key={index.toString() + "div"}>
-                    <GetCssMsg
-                      key={msg?.id?.toString() + index.toString() + "msg"}
-                      msg={msg}
-                    ></GetCssMsg>
-                    <SetCssTextToAtomBtn
-                      key={msg?.id?.toString() + index.toString() + "css"}
-                      msg={msg}
-                    />
-                  </div>
-                )}
-              </>
-            ))}
           </Grid>
         </Grid>
       </CustomDrawer>
