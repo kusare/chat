@@ -129,15 +129,12 @@ const Page: NextPage = () => {
   // Switch according to alignment
   // alignment に応じて切り替え
   const switchCssJsonAccordingAlignment = () => {
-    editCssTargetId === "cssBackground" &&
-      setCssJson(toJSON(cssBackground).attributes);
-    editCssTargetId === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
-    editCssTargetId === "cssTopbarDeco" &&
-      setCssJson(toJSON(cssTopbarDeco).attributes);
-    editCssTargetId === "cssChatMsg" &&
-      setCssJson(toJSON(cssChatMsg).attributes);
-    editCssTargetId === "cssChatMsgDeco" &&
-      setCssJson(toJSON(cssChatMsgDeco).attributes);
+    const id = editCssTargetId;
+    id === "cssBackground" && setCssJson(toJSON(cssBackground).attributes);
+    id === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
+    id === "cssTopbarDeco" && setCssJson(toJSON(cssTopbarDeco).attributes);
+    id === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
+    id === "cssChatMsgDeco" && setCssJson(toJSON(cssChatMsgDeco).attributes);
   };
 
   // Update overall CSS settings
