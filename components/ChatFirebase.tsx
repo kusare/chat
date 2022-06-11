@@ -477,6 +477,7 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
 // Saves a new message to Cloud Firestore.
 export const setMsg = async (msgText: any) => {
   // Add a new message entry to the Firebase database.
+  const date = dayjs(Timestamp.fromDate(new Date()).toDate());
   try {
     await addDoc(collection(getFirestore(), "ChatMsgs"), {
       name: getUserName(),
@@ -485,7 +486,7 @@ export const setMsg = async (msgText: any) => {
       // date: dayjs(Timestamp.fromDate(new Date()).toDate()).format(
       //   "YYYY/MM/DD ddd HH:mm:ss"
       // ),
-      date: dayjs(Timestamp.fromDate(new Date()).toDate()),
+      date: date.toString(),
     });
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
