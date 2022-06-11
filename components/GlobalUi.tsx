@@ -23,26 +23,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import {
-  signIn,
-  signOutUser,
-  ProfilePic,
-  UserName,
-  setMsg,
-  setImgMsg,
-} from "./ChatFirebase";
+import { ProfilePic } from "./ChatFirebase";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ChatIcon from "@mui/icons-material/Chat";
 import Link from "@mui/material/Link";
 import PaletteIcon from "@mui/icons-material/Palette";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import {
-  cssBackgroundState,
-  cssTopbarState,
-  cssTopbarDecoState,
-  cssChatMsgState,
-} from "../recoil/States";
+import { cssTopbarState, cssTopbarDecoState } from "../recoil/States";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (

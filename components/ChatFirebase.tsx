@@ -48,6 +48,15 @@ import {
   cssChatMsgState,
   cssChatMsgDecoState,
 } from "../recoil/States";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import ChatIcon from "@mui/icons-material/Chat";
+import Link from "@mui/material/Link";
+import PaletteIcon from "@mui/icons-material/Palette";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -468,6 +477,55 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
         `)}
             />
           )}
+        </div>
+        {/* 
+███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗ 
+██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝ 
+███████╗██║   ██║██████╔╝    ██╔████╔██║███████╗██║  ███╗
+╚════██║██║   ██║██╔══██╗    ██║╚██╔╝██║╚════██║██║   ██║
+███████║╚██████╔╝██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
+╚══════╝ ╚═════╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝  
+*/}
+        <div
+          css={css`
+            ${cssChatMsg}
+          `}
+        >
+          <span>
+            {props.msg.profilePicUrl && (
+              <div
+                css={css`
+                  display: flex;
+                `}
+              >
+                <Avatar
+                  alt="profilePic"
+                  src={props.msg.profilePicUrl}
+                  sx={{ width: 24, height: 24 }}
+                />
+                <p>sss</p>
+              </div>
+            )}
+          </span>
+          <span>
+            {props.msg.profilePicUrl && (
+              <div
+                css={css`
+                  display: flex;
+                `}
+              >
+                <Avatar
+                  alt="profilePic"
+                  src={props.msg.profilePicUrl}
+                  sx={{ width: 24, height: 24 }}
+                />
+                <p>sss</p>
+              </div>
+            )}
+          </span>
+          <IconButton aria-label="edit">
+            <EditIcon />
+          </IconButton>
         </div>
       </div>
     </>
