@@ -172,7 +172,7 @@ export const useGetMsgs = () => {
   useEffect(() => {
     // Create the query to load the last 12 messages and listen for new ones.
     const recentMessagesQuery = query(
-      collection(getFirestore(), "ChatMsgs"),
+      collection(getFirestore(), "chat-msgs"),
       orderBy("date", "desc"),
       limit(LIMIT)
     );
@@ -406,6 +406,7 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 /**
  * Chat Message Recipi Layout
  */
+//TODO move to ThemeParts.tsx
 export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
@@ -528,7 +529,7 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
               </div>
             )}
           </span>
-          <IconButton aria-label="edit" onClick={() => setChatMsg(text)}>
+          <IconButton aria-label="edit" onClick={() => setSubChatMsg(text)}>
             <EditIcon />
           </IconButton>
           <TextField
@@ -553,16 +554,45 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
 ╚══════╝╚══════╝   ╚═╝   
  */
 
-// Saves a new message to Cloud Firestore.
+/**
+ ██████╗██╗  ██╗ █████╗ ████████╗
+██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+██║     ███████║███████║   ██║   
+██║     ██╔══██║██╔══██║   ██║   
+╚██████╗██║  ██║██║  ██║   ██║   
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+                                 
+ */
+
 // TODO Rename to setChatMsg
 export const setChatMsg = async (msgText: any) => {
-  // Add a new message entry to the Firebase database.
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   try {
-    await addDoc(collection(getFirestore(), "ChatMsgs"), {
+    await addDoc(collection(getFirestore(), "chat-msgs"), {
       name: getUserName(),
+      text: msgText,
+      profilePicUrl: getProfilePicUrl(),
+      date: date.toString(),
+    });
+  } catch (error) {
+    console.error("Error writing new message to Firebase Database", error);
+  }
+};
+
+export const setSubChatMsg = async (msgText: any) => {
+  const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
+    "YYYY/MM/DD ddd HH:mm:ss"
+  );
+  const db = getFirestore();
+  const docRef = doc(db, "chat-msgs", "BtpPrXBXMlk8nlrM0TPE");
+  // const colRef = collection(getFirestore(), "chat-msgs");
+  const colRef = collection(docRef, "sub-chat-msgs");
+  try {
+    await addDoc(colRef, {
+      name: getUserName(),
+      //TODO Rename to chatText
       text: msgText,
       profilePicUrl: getProfilePicUrl(),
       date: date.toString(),
