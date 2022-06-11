@@ -475,9 +475,12 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
  */
 
 // Saves a new message to Cloud Firestore.
+// TODO Rename to setChatMsg
 export const setMsg = async (msgText: any) => {
   // Add a new message entry to the Firebase database.
-  const date = dayjs(Timestamp.fromDate(new Date()).toDate());
+  const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
+    "YYYY/MM/DD ddd HH:mm:ss"
+  );
   try {
     await addDoc(collection(getFirestore(), "ChatMsgs"), {
       name: getUserName(),
