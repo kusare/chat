@@ -10,6 +10,7 @@ import {
   ChatMsgEle,
   useGetMsgs,
   setImgMsg,
+  ChatMsgRecipiLayout,
 } from "../components/ChatFirebase";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
@@ -65,7 +66,7 @@ const Home: NextPage = () => {
           </Grid>
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
             {useGetMsgs().map((msg, index) => (
-              <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
+              <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
             ))}
           </Grid>
         </Grid>

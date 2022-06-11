@@ -410,12 +410,6 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
 
-  const [time, setTime] = useState("");
-
-  useEffect(() => {
-    setTime(dayjs(props.msg?.date).format("YYYY/MM/DD ddd HH:mm:ss"));
-  }, [props.msg?.date]);
-
   if (!props.msg) return <></>;
 
   return (
@@ -445,7 +439,7 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
         <Box>
           <Stack spacing={2} direction="row">
             {props.msg.name && <div>{props.msg.name}</div>}
-            {props.msg.date && <time dateTime={time}>{time}</time>}
+            {props.msg.date && <time>{props.msg.date.toString()}</time>}
           </Stack>
           <TextField
             multiline
