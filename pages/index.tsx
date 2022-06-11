@@ -18,6 +18,7 @@ import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalUi";
+import { ChatRadioBtn } from "../components/RadioBtn";
 
 const Home: NextPage = () => {
   const [text, setText] = useState("コメント");
@@ -63,6 +64,7 @@ const Home: NextPage = () => {
             </Stack>
           </Box>
           <Input type="file" onChange={setImgMsg} />
+          <ChatRadioBtn></ChatRadioBtn>
           {useGetMsgs().map((msg, index) => (
             <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
           ))}
