@@ -6,7 +6,7 @@ import {
   signOutUser,
   ProfilePic,
   UserName,
-  setMsg,
+  setChatMsg,
   ChatMsgEle,
   useGetMsgs,
   setImgMsg,
@@ -55,7 +55,7 @@ const Home: NextPage = () => {
                   rows={4}
                   onChange={handleChange}
                 />
-                <Button onClick={() => setMsg(text)}>Set Msg</Button>
+                <Button onClick={() => setChatMsg(text)}>Set Msg</Button>
               </Stack>
             </Box>
             <Input type="file" onChange={setImgMsg} />
