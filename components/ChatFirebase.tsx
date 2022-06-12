@@ -439,11 +439,18 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
  * Chat Message Recipi Layout
  */
 //TODO move to ThemeParts.tsx
-export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
+export const ChatMsgRecipiLayout: React.FC<{
+  msg: MsgState;
+  // docId?: any;
+}> = (props) => {
+  // const docId = props.docId;
+
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  // サブメッセージ取得
+  // const subChatMsgs = useGetChatSubMsgs(docId);
 
   const [text, setText] = useState("test Comment");
   const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -573,6 +580,89 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
             value={text}
             onChange={handleMsgInput}
           />
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const SubChatMsgRecipiLayout: React.FC<{
+  msg: MsgState;
+}> = (props) => {
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+
+  const [text, setText] = useState("test Comment");
+  const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setText(event.target.value);
+  };
+
+  if (!props.msg) return <></>;
+
+  return (
+    <>
+      <div
+        css={css`
+          border-radius: 8px;
+          overflow: hidden;
+          margin-bottom: 30px;
+        `}
+      >
+        <div
+          css={css`
+            ${cssChatMsgDeco}
+          `}
+        >{`planned cssChatMsgDeco`}</div>
+        <div
+          css={css`
+            ${cssChatMsg}
+          `}
+        >
+          <h2
+            css={css`
+              text-align: center;
+            `}
+          >
+            Title Sample
+          </h2>
+          <Stack spacing={2} direction="row">
+            <Box>
+              {props.msg.profilePicUrl && (
+                <Avatar
+                  alt="profilePic"
+                  src={props.msg.profilePicUrl}
+                  sx={{ width: 48, height: 48 }}
+                />
+              )}
+            </Box>
+
+            <Box>
+              <Stack spacing={2} direction="row">
+                {props.msg.name && <div>{props.msg.name}</div>}
+                {props.msg.date && <time>{props.msg.date.toString()}</time>}
+              </Stack>
+              <TextField
+                multiline
+                placeholder="No Comment"
+                maxRows={4}
+                value={props.msg.text}
+              />
+            </Box>
+          </Stack>
+        </div>
+        <div>
+          {props.msg.imageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={props.msg.imageUrl}
+              alt="no image"
+              css={css(`
+          max-width: 100%;
+        `)}
+            />
+          )}
         </div>
       </div>
     </>

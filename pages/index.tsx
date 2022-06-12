@@ -12,6 +12,7 @@ import {
   useGetChatSubMsgs,
   setImgMsg,
   ChatMsgRecipiLayout,
+  SubChatMsgRecipiLayout,
 } from "../components/ChatFirebase";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
@@ -27,23 +28,24 @@ export function ChatMsgs() {
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
   const msgId = chatRadioBtnId;
 
-  const normal = useGetMsgs().map((msg, index) => (
+  const chatMsgs = useGetMsgs();
+  const subChatMsgs = useGetChatSubMsgs("2s02pTaCo2kyqSeUlpmS");
+
+  const normal = chatMsgs.map((msg, index) => (
     <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
   ));
-  const recipe = useGetMsgs().map((msg, index) => (
+  const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
   ));
-  const subChatMsg = useGetChatSubMsgs("2s02pTaCo2kyqSeUlpmS").map(
-    (msg, index) => (
-      <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-    )
-  );
+  const subChatMsgEle = subChatMsgs.map((msg, index) => (
+    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+  ));
 
   return (
     <div>
       {msgId === "Normal" && normal}
       {msgId === "Recipe" && recipe}
-      aa {subChatMsg}aa
+      aa {subChatMsgEle}aa
     </div>
   );
 }
