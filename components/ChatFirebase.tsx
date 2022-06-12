@@ -529,7 +529,10 @@ export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
               </div>
             )}
           </span>
-          <IconButton aria-label="edit" onClick={() => setSubChatMsg(text)}>
+          <IconButton
+            aria-label="edit"
+            onClick={() => props?.msg?.id && setSubChatMsg(text, props.msg.id)}
+          >
             <EditIcon />
           </IconButton>
           <TextField
@@ -581,12 +584,12 @@ export const setChatMsg = async (msgText: any) => {
   }
 };
 
-export const setSubChatMsg = async (msgText: any) => {
+export const setSubChatMsg = async (msgText: string, docId: string) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   const db = getFirestore();
-  const docRef = doc(db, "chat-msgs", "BtpPrXBXMlk8nlrM0TPE");
+  const docRef = doc(db, "chat-msgs", docId);
   // const colRef = collection(getFirestore(), "chat-msgs");
   const colRef = collection(docRef, "sub-chat-msgs");
   try {
