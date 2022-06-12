@@ -1,6 +1,11 @@
 import { atom } from "recoil";
 import { Timestamp } from "firebase/firestore";
-import { CssMsgState, ThemeUiTargetId, ChatRadioBtnId } from "../types";
+import {
+  MsgState,
+  CssMsgState,
+  ThemeUiTargetId,
+  ChatRadioBtnId,
+} from "../types";
 import { recoilPersist } from "recoil-persist";
 
 /**
@@ -77,6 +82,33 @@ export const cssChatMsgDecoState = atom({
 ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                             
  */
+export const msgsState = atom<MsgState[]>({
+  key: "msgsState",
+  default: [
+    {
+      id: "",
+      date: Timestamp.fromDate(new Date()).toDate(),
+      name: "",
+      text: "",
+      profilePicUrl: "",
+      imageUrl: "",
+    },
+  ],
+});
+
+export const chatSubMsgsState = atom<MsgState[]>({
+  key: "msgsState",
+  default: [
+    {
+      id: "",
+      date: Timestamp.fromDate(new Date()).toDate(),
+      name: "",
+      text: "",
+      profilePicUrl: "",
+      imageUrl: "",
+    },
+  ],
+});
 
 export const cssMsgState = atom<CssMsgState>({
   key: "cssMsgState",

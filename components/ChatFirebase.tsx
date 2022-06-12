@@ -43,20 +43,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { Msg, MsgState } from "../types";
 import {
+  msgsState,
+  chatSubMsgsState,
   cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
   cssChatMsgDecoState,
 } from "../recoil/States";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import ChatIcon from "@mui/icons-material/Chat";
-import Link from "@mui/material/Link";
-import PaletteIcon from "@mui/icons-material/Palette";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -69,31 +62,17 @@ export const userNameState = atom<string>({
   default: "NO NAME", // default value (aka initial value)
 });
 
-export const msgState = atom<MsgState>({
-  key: "msgState",
-  default: {
-    id: "",
-    date: Timestamp.fromDate(new Date()).toDate(),
-    name: "",
-    text: "",
-    profilePicUrl: "",
-    imageUrl: "",
-  },
-});
-
-export const msgsState = atom<MsgState[]>({
-  key: "msgsState",
-  default: [
-    {
-      id: "",
-      date: Timestamp.fromDate(new Date()).toDate(),
-      name: "",
-      text: "",
-      profilePicUrl: "",
-      imageUrl: "",
-    },
-  ],
-});
+// export const msgState = atom<MsgState>({
+//   key: "msgState",
+//   default: {
+//     id: "",
+//     date: Timestamp.fromDate(new Date()).toDate(),
+//     name: "",
+//     text: "",
+//     profilePicUrl: "",
+//     imageUrl: "",
+//   },
+// });
 
 /**
 ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗
@@ -165,12 +144,18 @@ export const getUserName = (): string => {
  */
 // TODO for chat or img
 export const useGetMsgs = () => {
-  const setMsgs = useSetRecoilState(msgsState);
-  const msgs = useRecoilValue(msgsState);
-  const LIMIT = 24;
+  const setChatMsgs = useSetRecoilState(msgsState);
+  const chatMsgs = useRecoilValue(msgsState);
+  const LIMIT = 12;
+
+  //  ██████╗██╗  ██╗ █████╗ ████████╗    ███╗   ███╗███████╗ ██████╗
+  // ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ████╗ ████║██╔════╝██╔════╝
+  // ██║     ███████║███████║   ██║       ██╔████╔██║███████╗██║  ███╗
+  // ██║     ██╔══██║██╔══██║   ██║       ██║╚██╔╝██║╚════██║██║   ██║
+  // ╚██████╗██║  ██║██║  ██║   ██║       ██║ ╚═╝ ██║███████║╚██████╔╝
+  //  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝     ╚═╝╚══════╝ ╚═════╝
 
   useEffect(() => {
-    // Create the query to load the last 12 messages and listen for new ones.
     const recentMessagesQuery = query(
       collection(getFirestore(), "chat-msgs"),
       orderBy("date", "desc"),
@@ -190,13 +175,60 @@ export const useGetMsgs = () => {
           imageUrl: message.imageUrl,
         });
       }, []);
-      setMsgs(addedMsgs);
+      setChatMsgs(addedMsgs);
       return unsub;
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return msgs;
+  return chatMsgs;
+};
+
+export const useGetChatSubMsgs = (docId: string) => {
+  const setChatSubMsgs = useSetRecoilState(chatSubMsgsState);
+  const chatSubMsgs = useRecoilValue(chatSubMsgsState);
+  const LIMIT = 12;
+
+  // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
+  // ██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝
+  // ███████╗██║   ██║██████╔╝    ██╔████╔██║███████╗██║  ███╗
+  // ╚════██║██║   ██║██╔══██╗    ██║╚██╔╝██║╚════██║██║   ██║
+  // ███████║╚██████╔╝██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
+  // ╚══════╝ ╚═════╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝
+
+  useEffect(() => {
+    const db = getFirestore();
+    const docRef = doc(db, "chat-msgs", docId);
+    const colRef = collection(docRef, "sub-chat-msgs");
+    const recentMessagesQuery = query(
+      colRef,
+      orderBy("date", "desc"),
+      limit(LIMIT)
+    );
+    // Start listening to the query.
+    const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
+      let addedMsgs: Msg[] = [];
+      snapshot.docs.map((change) => {
+        const message = change.data();
+        addedMsgs.push({
+          id: change.id,
+          date: message.date,
+          name: message.name,
+          text: message.text,
+          profilePicUrl: message.profilePicUrl,
+          imageUrl: message.imageUrl,
+        });
+      }, []);
+      setChatSubMsgs(addedMsgs);
+      // setMsgs(addedMsgs);
+      return unsub;
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return chatSubMsgs;
 };
 
 /**
@@ -410,7 +442,6 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 export const ChatMsgRecipiLayout: React.FC<{ msg: MsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
-
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
 
@@ -590,7 +621,6 @@ export const setSubChatMsg = async (msgText: string, docId: string) => {
   );
   const db = getFirestore();
   const docRef = doc(db, "chat-msgs", docId);
-  // const colRef = collection(getFirestore(), "chat-msgs");
   const colRef = collection(docRef, "sub-chat-msgs");
   try {
     await addDoc(colRef, {
