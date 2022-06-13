@@ -29,7 +29,9 @@ export type Msg = {
   id: string;
   date: Date;
   name: string;
-  text: string;
+  text?: string;
+  chatTxt: string;
+  title: string;
   profilePicUrl: string;
   imageUrl: string;
 };

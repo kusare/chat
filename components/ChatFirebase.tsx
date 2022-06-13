@@ -170,7 +170,8 @@ export const useGetMsgs = () => {
           id: change.id,
           date: message.date,
           name: message.name,
-          text: message.text,
+          chatTxt: message.chatTxt,
+          title: message.title,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -196,7 +197,8 @@ export const useGetChatSubMsgs = (docId: string) => {
       id: "",
       date: Timestamp.fromDate(new Date()).toDate(),
       name: "",
-      text: "",
+      chatTxt: "",
+      title: "",
       profilePicUrl: "",
       imageUrl: "",
     },
@@ -228,7 +230,8 @@ export const useGetChatSubMsgs = (docId: string) => {
           id: change.id,
           date: message.date,
           name: message.name,
-          text: message.text,
+          chatTxt: message.chatTxt,
+          title: message.title,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -422,11 +425,19 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
             {props.msg.name && <div>{props.msg.name}</div>}
             {props.msg.date && <time>{props.msg.date.toString()}</time>}
           </Stack>
+          {/* 
+             ██████╗██╗  ██╗ █████╗ ████████╗    ████████╗██╗  ██╗████████╗
+            ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ╚══██╔══╝╚██╗██╔╝╚══██╔══╝
+            ██║     ███████║███████║   ██║          ██║    ╚███╔╝    ██║   
+            ██║     ██╔══██║██╔══██║   ██║          ██║    ██╔██╗    ██║   
+            ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
+             ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
+                                                                */}
           <TextField
             multiline
             placeholder="No Comment"
             maxRows={4}
-            value={props.msg.text}
+            value={props.msg.chatTxt}
           />
         </Box>
       </Stack>
@@ -453,10 +464,7 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 export const ChatMsgRecipiLayout: React.FC<{
   msg: MsgState;
   children: React.ReactNode;
-  // docId?: any;
 }> = (props) => {
-  // const docId = props.docId;
-
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   // 全体のChatのMessageのDecoのCSS設定
@@ -464,9 +472,9 @@ export const ChatMsgRecipiLayout: React.FC<{
   // サブメッセージ取得
   // const subChatMsgs = useGetChatSubMsgs(docId);
 
-  const [text, setText] = useState("test Comment");
+  const [chatTxt, setChatTxt] = useState("");
   const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
+    setChatTxt(event.target.value);
   };
 
   if (!props.msg) return <></>;
@@ -495,7 +503,7 @@ export const ChatMsgRecipiLayout: React.FC<{
               text-align: center;
             `}
           >
-            Title Sample
+            {props.msg.title}
           </h2>
           <Stack spacing={2} direction="row">
             <Box>
@@ -513,11 +521,19 @@ export const ChatMsgRecipiLayout: React.FC<{
                 {props.msg.name && <div>{props.msg.name}</div>}
                 {props.msg.date && <time>{props.msg.date.toString()}</time>}
               </Stack>
+              {/*
+               ██████╗██╗  ██╗ █████╗ ████████╗    ████████╗██╗  ██╗████████╗
+              ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ╚══██╔══╝╚██╗██╔╝╚══██╔══╝
+              ██║     ███████║███████║   ██║          ██║    ╚███╔╝    ██║   
+              ██║     ██╔══██║██╔══██║   ██║          ██║    ██╔██╗    ██║   
+              ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
+               ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
+                                                                */}
               <TextField
                 multiline
                 placeholder="No Comment"
                 maxRows={4}
-                value={props.msg.text}
+                value={props.msg.chatTxt}
               />
             </Box>
           </Stack>
@@ -548,9 +564,19 @@ export const ChatMsgRecipiLayout: React.FC<{
           `}
         >
           {props.children}
+          {/* 
+          ███████╗███████╗████████╗
+          ██╔════╝██╔════╝╚══██╔══╝
+          ███████╗█████╗     ██║   
+          ╚════██║██╔══╝     ██║   
+          ███████║███████╗   ██║   
+          ╚══════╝╚══════╝   ╚═╝   
+                                    */}
           <IconButton
             aria-label="edit"
-            onClick={() => props?.msg?.id && setSubChatMsg(text, props.msg.id)}
+            onClick={() =>
+              props?.msg?.id && setSubChatMsg(chatTxt, props.msg.id)
+            }
           >
             <EditIcon />
           </IconButton>
@@ -558,7 +584,7 @@ export const ChatMsgRecipiLayout: React.FC<{
             multiline
             placeholder="No Comment"
             maxRows={4}
-            value={text}
+            value={chatTxt}
             onChange={handleMsgInput}
           />
         </div>
@@ -584,14 +610,6 @@ export const SubChatMsgRecipiLayout: React.FC<{
 
   return (
     <>
-      {/* 
-███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗ 
-██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝ 
-███████╗██║   ██║██████╔╝    ██╔████╔██║███████╗██║  ███╗
-╚════██║██║   ██║██╔══██╗    ██║╚██╔╝██║╚════██║██║   ██║
-███████║╚██████╔╝██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
-╚══════╝ ╚═════╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝  
-*/}
       <div
         css={css`
           ${cssChatMsg}
@@ -609,7 +627,7 @@ export const SubChatMsgRecipiLayout: React.FC<{
                 src={props.msg.profilePicUrl}
                 sx={{ width: 24, height: 24 }}
               />
-              <p>{props.msg.text}</p>
+              <p>{props.msg.chatTxt}</p>
             </div>
           )}
         </span>
@@ -638,14 +656,15 @@ export const SubChatMsgRecipiLayout: React.FC<{
  */
 
 // TODO Rename to setChatMsg
-export const setChatMsg = async (msgText: any) => {
+export const setChatMsg = async (chatTxt: any, title: any) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   try {
     await addDoc(collection(getFirestore(), "chat-msgs"), {
       name: getUserName(),
-      text: msgText,
+      chatTxt: chatTxt,
+      title: title,
       profilePicUrl: getProfilePicUrl(),
       date: date.toString(),
     });
@@ -654,7 +673,7 @@ export const setChatMsg = async (msgText: any) => {
   }
 };
 
-export const setSubChatMsg = async (msgText: string, docId: string) => {
+export const setSubChatMsg = async (chatTxt: string, docId: string) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
@@ -664,8 +683,7 @@ export const setSubChatMsg = async (msgText: string, docId: string) => {
   try {
     await addDoc(colRef, {
       name: getUserName(),
-      //TODO Rename to chatText
-      text: msgText,
+      chatTxt: chatTxt,
       profilePicUrl: getProfilePicUrl(),
       date: date.toString(),
     });

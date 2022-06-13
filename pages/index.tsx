@@ -42,10 +42,10 @@ export function ChatMsgs() {
   const chatMsgs = useGetMsgs();
 
   const normal = chatMsgs.map((msg, index) => (
-    <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
+    <ChatMsgEle key={msg?.id.toString() + index.toString()} msg={msg} />
   ));
   const recipe = chatMsgs.map((msg, index) => (
-    <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg}>
+    <ChatMsgRecipiLayout key={msg?.id.toString() + index.toString()} msg={msg}>
       <SubChatMsgEle docId={msg?.id.toString()} />
     </ChatMsgRecipiLayout>
   ));
@@ -59,12 +59,17 @@ export function ChatMsgs() {
 }
 
 const Home: NextPage = () => {
-  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
-  const id = chatRadioBtnId;
+  // const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+  // const id = chatRadioBtnId;
 
-  const [text, setText] = useState("コメント");
+  const [title, setTitle] = useState("");
+  const [chatTxt, setChatTxt] = useState("");
+  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
+    setChatTxt(event.target.value);
   };
 
   const cssText = useRecoilValue(cssBackgroundState);
@@ -86,16 +91,32 @@ const Home: NextPage = () => {
         <Grid container direction="row">
           <Grid item xs={12} md={6} alignItems="center">
             <Box>
+              <TextField
+                label="Title"
+                value={title}
+                rows={4}
+                onChange={handleTitle}
+              />
               <Stack spacing={2} direction="row">
                 <TextField
                   label="Comment"
                   multiline
-                  placeholder="Placeholder"
-                  value={text}
+                  value={chatTxt}
                   rows={4}
                   onChange={handleChange}
                 />
-                <Button onClick={() => setChatMsg(text)}>Set Msg</Button>
+                {/* 
+                ███████╗███████╗████████╗
+                ██╔════╝██╔════╝╚══██╔══╝
+                ███████╗█████╗     ██║   
+                ╚════██║██╔══╝     ██║   
+                ███████║███████╗   ██║   
+                ╚══════╝╚══════╝   ╚═╝
+                   */}
+
+                <Button onClick={() => setChatMsg(chatTxt, title)}>
+                  Set Msg
+                </Button>
               </Stack>
             </Box>
             <Input type="file" onChange={setImgMsg} />
