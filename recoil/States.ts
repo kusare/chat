@@ -64,6 +64,12 @@ export const cssChatMsgDecoState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cssSubChatMsgState = atom({
+  key: "cssSubChatMsgState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 /**
      ██╗███████╗ ██████╗ ███╗   ██╗
      ██║██╔════╝██╔═══██╗████╗  ██║
@@ -95,11 +101,6 @@ export const subChatMsgsState = atom<MsgState[]>({
 
 export const cssMsgState = atom<CssMsgState>({
   key: "cssMsgState",
-  default: dummyCssMsg,
-});
-
-export const cssSubMsgState = atom<CssMsgState>({
-  key: "cssSubMsgState",
   default: dummyCssMsg,
 });
 

@@ -48,6 +48,7 @@ import {
   cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
+  cssSubChatMsgState,
   cssChatMsgDecoState,
 } from "../recoil/States";
 
@@ -596,15 +597,8 @@ export const ChatMsgRecipiLayout: React.FC<{
 export const SubChatMsgRecipiLayout: React.FC<{
   msg: MsgState;
 }> = (props) => {
-  // 全体のChatのMessageのCSS設定
-  const cssChatMsg = useRecoilValue(cssChatMsgState);
-  // 全体のChatのMessageのDecoのCSS設定
-  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
-
-  const [text, setText] = useState("test Comment");
-  const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setText(event.target.value);
-  };
+  // CSS設定
+  const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
 
   if (!props.msg) return <></>;
 
@@ -612,9 +606,10 @@ export const SubChatMsgRecipiLayout: React.FC<{
     <>
       <div
         css={css`
-          ${cssChatMsg}
+          ${cssSubChatMsg}
         `}
       >
+        <p>{cssSubChatMsg?.toString()}</p>
         <span>
           {props.msg.profilePicUrl && (
             <div
