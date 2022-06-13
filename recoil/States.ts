@@ -7,7 +7,7 @@ import {
   ChatRadioBtnId,
 } from "../types";
 import { recoilPersist } from "recoil-persist";
-import { dummyMsg } from "../dummy";
+import { dummyMsg, dummyCssMsg } from "../dummy";
 
 /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗         ██████╗ ███████╗██████╗ ███████╗██╗███████╗████████╗
@@ -95,18 +95,12 @@ export const subChatMsgsState = atom<MsgState[]>({
 
 export const cssMsgState = atom<CssMsgState>({
   key: "cssMsgState",
-  default: {
-    id: "",
-    timestamp: Timestamp.fromDate(new Date()),
-    name: "",
-    cssBackground: "",
-    cssTopbar: "",
-    cssTopbarDeco: "",
-    cssChatMsg: "",
-    cssChatMsgDeco: "",
-    profilePicUrl: "",
-    imageUrl: "",
-  },
+  default: dummyCssMsg,
+});
+
+export const cssSubMsgState = atom<CssMsgState>({
+  key: "cssSubMsgState",
+  default: dummyCssMsg,
 });
 
 /**

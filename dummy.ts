@@ -1,4 +1,5 @@
-import { Msg } from "./types";
+import { Msg, CssMsg } from "./types";
+import { Timestamp } from "firebase/firestore";
 
 export const dummyMsg: Msg = {
   id: "dummy id",
@@ -9,4 +10,17 @@ export const dummyMsg: Msg = {
   chatTxt: "dummy chatTxt",
   profilePicUrl: "dummy url",
   imageUrl: "image url dummy",
+};
+
+export const dummyCssMsg: CssMsg = {
+  id: "",
+  timestamp: Timestamp.fromDate(new Date()),
+  name: "",
+  cssBackground: "",
+  cssTopbar: "",
+  cssTopbarDeco: "",
+  cssChatMsg: "",
+  cssChatMsgDeco: "",
+  profilePicUrl: "",
+  imageUrl: "",
 };
