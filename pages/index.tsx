@@ -24,8 +24,9 @@ import { CustomDrawer } from "../components/GlobalUi";
 import { ChatRadioBtn } from "../components/RadioBtn";
 import { chatRadioBtnIdState } from "../recoil/States";
 
-export const SubChatMsgEle = () => {
-  const subChatMsgs = useGetChatSubMsgs("2s02pTaCo2kyqSeUlpmS");
+export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
+  const { docId } = props;
+  const subChatMsgs = useGetChatSubMsgs(docId);
   const msg = subChatMsgs.map((msg, index) => (
     <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
   ));
@@ -44,12 +45,10 @@ export function ChatMsgs() {
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg}>
-      <SubChatMsgEle />
+      <SubChatMsgEle docId={msg?.id.toString()} />
+      {msg?.id}
     </ChatMsgRecipiLayout>
   ));
-  // const subChatMsgEle = subChatMsgs.map((msg, index) => (
-  //   <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-  // ));
 
   return (
     <>
