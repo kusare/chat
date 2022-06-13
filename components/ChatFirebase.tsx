@@ -44,7 +44,7 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import { Msg, MsgState } from "../types";
 import {
   msgsState,
-  chatSubMsgsState,
+  subChatMsgsState,
   cssBackgroundState,
   cssTopbarState,
   cssChatMsgState,
@@ -186,8 +186,8 @@ export const useGetMsgs = () => {
 };
 
 export const useGetChatSubMsgs = (docId: string) => {
-  const setChatSubMsgs = useSetRecoilState(chatSubMsgsState);
-  const chatSubMsgs = useRecoilValue(chatSubMsgsState);
+  const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
+  const chatSubMsgs = useRecoilValue(subChatMsgsState);
   const LIMIT = 12;
 
   // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
@@ -441,6 +441,7 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
 //TODO move to ThemeParts.tsx
 export const ChatMsgRecipiLayout: React.FC<{
   msg: MsgState;
+  children: React.ReactNode;
   // docId?: any;
 }> = (props) => {
   // const docId = props.docId;
@@ -535,38 +536,7 @@ export const ChatMsgRecipiLayout: React.FC<{
             ${cssChatMsg}
           `}
         >
-          <span>
-            {props.msg.profilePicUrl && (
-              <div
-                css={css`
-                  display: flex;
-                `}
-              >
-                <Avatar
-                  alt="profilePic"
-                  src={props.msg.profilePicUrl}
-                  sx={{ width: 24, height: 24 }}
-                />
-                <p>sss</p>
-              </div>
-            )}
-          </span>
-          <span>
-            {props.msg.profilePicUrl && (
-              <div
-                css={css`
-                  display: flex;
-                `}
-              >
-                <Avatar
-                  alt="profilePic"
-                  src={props.msg.profilePicUrl}
-                  sx={{ width: 24, height: 24 }}
-                />
-                <p>sss</p>
-              </div>
-            )}
-          </span>
+          {props.children}
           <IconButton
             aria-label="edit"
             onClick={() => props?.msg?.id && setSubChatMsg(text, props.msg.id)}
@@ -603,67 +573,35 @@ export const SubChatMsgRecipiLayout: React.FC<{
 
   return (
     <>
+      {/* 
+███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗ 
+██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝ 
+███████╗██║   ██║██████╔╝    ██╔████╔██║███████╗██║  ███╗
+╚════██║██║   ██║██╔══██╗    ██║╚██╔╝██║╚════██║██║   ██║
+███████║╚██████╔╝██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
+╚══════╝ ╚═════╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝  
+*/}
       <div
         css={css`
-          border-radius: 8px;
-          overflow: hidden;
-          margin-bottom: 30px;
+          ${cssChatMsg}
         `}
       >
-        <div
-          css={css`
-            ${cssChatMsgDeco}
-          `}
-        >{`planned cssChatMsgDeco`}</div>
-        <div
-          css={css`
-            ${cssChatMsg}
-          `}
-        >
-          <h2
-            css={css`
-              text-align: center;
-            `}
-          >
-            Title Sample
-          </h2>
-          <Stack spacing={2} direction="row">
-            <Box>
-              {props.msg.profilePicUrl && (
-                <Avatar
-                  alt="profilePic"
-                  src={props.msg.profilePicUrl}
-                  sx={{ width: 48, height: 48 }}
-                />
-              )}
-            </Box>
-
-            <Box>
-              <Stack spacing={2} direction="row">
-                {props.msg.name && <div>{props.msg.name}</div>}
-                {props.msg.date && <time>{props.msg.date.toString()}</time>}
-              </Stack>
-              <TextField
-                multiline
-                placeholder="No Comment"
-                maxRows={4}
-                value={props.msg.text}
+        <span>
+          {props.msg.profilePicUrl && (
+            <div
+              css={css`
+                display: flex;
+              `}
+            >
+              <Avatar
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+                sx={{ width: 24, height: 24 }}
               />
-            </Box>
-          </Stack>
-        </div>
-        <div>
-          {props.msg.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={props.msg.imageUrl}
-              alt="no image"
-              css={css(`
-          max-width: 100%;
-        `)}
-            />
+              <p>{props.msg.text}</p>
+            </div>
           )}
-        </div>
+        </span>
       </div>
     </>
   );

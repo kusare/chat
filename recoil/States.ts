@@ -96,8 +96,8 @@ export const msgsState = atom<MsgState[]>({
   ],
 });
 
-export const chatSubMsgsState = atom<MsgState[]>({
-  key: "msgsState",
+export const subChatMsgsState = atom<MsgState[]>({
+  key: "subChatMsgsState",
   default: [
     {
       id: "",

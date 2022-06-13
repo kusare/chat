@@ -24,29 +24,38 @@ import { CustomDrawer } from "../components/GlobalUi";
 import { ChatRadioBtn } from "../components/RadioBtn";
 import { chatRadioBtnIdState } from "../recoil/States";
 
+export const SubChatMsgEle = () => {
+  const subChatMsgs = useGetChatSubMsgs("2s02pTaCo2kyqSeUlpmS");
+  const msg = subChatMsgs.map((msg, index) => (
+    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+  ));
+
+  return <>{msg}</>;
+};
+
 export function ChatMsgs() {
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
   const msgId = chatRadioBtnId;
 
   const chatMsgs = useGetMsgs();
-  const subChatMsgs = useGetChatSubMsgs("2s02pTaCo2kyqSeUlpmS");
 
   const normal = chatMsgs.map((msg, index) => (
     <ChatMsgEle key={msg?.id + index.toString()} msg={msg} />
   ));
   const recipe = chatMsgs.map((msg, index) => (
-    <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+    <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg}>
+      <SubChatMsgEle />
+    </ChatMsgRecipiLayout>
   ));
-  const subChatMsgEle = subChatMsgs.map((msg, index) => (
-    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-  ));
+  // const subChatMsgEle = subChatMsgs.map((msg, index) => (
+  //   <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+  // ));
 
   return (
-    <div>
+    <>
       {msgId === "Normal" && normal}
       {msgId === "Recipe" && recipe}
-      aa {subChatMsgEle}aa
-    </div>
+    </>
   );
 }
 
