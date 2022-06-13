@@ -186,6 +186,8 @@ export const useGetMsgs = () => {
 };
 
 export const useGetChatSubMsgs = (docId: string) => {
+  //TODO ほかにいい方法がないかな
+  const id = docId || "dummyId";
   // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
   // const chatSubMsgs = useRecoilValue(subChatMsgsState);
 
@@ -210,7 +212,7 @@ export const useGetChatSubMsgs = (docId: string) => {
 
   useEffect(() => {
     const db = getFirestore();
-    const docRef = doc(collection(db, "chat-msgs"), docId);
+    const docRef = doc(collection(db, "chat-msgs"), id);
     const colRef = collection(docRef, "sub-chat-msgs");
     const recentMessagesQuery = query(
       colRef,
@@ -235,9 +237,7 @@ export const useGetChatSubMsgs = (docId: string) => {
       // setMsgs(addedMsgs);
       return unsub;
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [docId]);
 
   return subChatMsgs;
 };
