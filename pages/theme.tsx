@@ -34,7 +34,7 @@ import { CustomDrawer } from "../components/GlobalUi";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
-import { DummyMsg } from "../dummy";
+import { dummyMsg } from "../dummy";
 import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
 
 const Page: NextPage = () => {
@@ -298,7 +298,7 @@ const Page: NextPage = () => {
                 ███████║██║  ██║██║ ╚═╝ ██║██║     ███████╗███████╗    ██║ ╚═╝ ██║███████║╚██████╔╝
                 ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                                                                                     */}
-            <ChatMsgEle msg={DummyMsg} />
+            <ChatMsgEle msg={dummyMsg} />
 
             {/* 
                  ██████╗███████╗███████╗

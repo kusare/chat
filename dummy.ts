@@ -1,6 +1,6 @@
 import { Msg } from "./types";
 
-export const DummyMsg: Msg = {
+export const dummyMsg: Msg = {
   id: "dummy id",
   date: new Date(),
   name: "dummy name",
