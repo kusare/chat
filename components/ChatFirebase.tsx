@@ -211,7 +211,6 @@ export const useGetChatSubMsgs = (docId: string) => {
   useEffect(() => {
     const db = getFirestore();
     const docRef = doc(collection(db, "chat-msgs"), docId);
-    // const docRef = doc(db, "chat-msgs", docId);
     const colRef = collection(docRef, "sub-chat-msgs");
     const recentMessagesQuery = query(
       colRef,
