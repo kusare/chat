@@ -200,7 +200,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
                 noWrap
                 key={"chat"}
                 // variant="body2"
-                href={"/"}
+                href={"/chat"}
                 // sx={{ p: 1, flexShrink: 0 }}
               >
                 <ListItemButton
