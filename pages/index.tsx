@@ -35,6 +35,7 @@ export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
 };
 
 export function ChatMsgs() {
+  //msgIdに応じて表示を切り替える
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
   const msgId = chatRadioBtnId;
 
@@ -45,6 +46,10 @@ export function ChatMsgs() {
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg}>
+      {/* <SubChatMsgEle
+        docId="
+0eaG0liNqmKnoWQiYONc"
+      /> */}
       <SubChatMsgEle docId={msg?.id.toString()} />
       {msg?.id}
     </ChatMsgRecipiLayout>

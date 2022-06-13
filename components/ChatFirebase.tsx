@@ -186,9 +186,20 @@ export const useGetMsgs = () => {
 };
 
 export const useGetChatSubMsgs = (docId: string) => {
-  const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
-  const chatSubMsgs = useRecoilValue(subChatMsgsState);
-  const LIMIT = 12;
+  // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
+  // const chatSubMsgs = useRecoilValue(subChatMsgsState);
+
+  const [subChatMsgs, setSubChatMsgs] = useState([
+    {
+      id: "",
+      date: Timestamp.fromDate(new Date()).toDate(),
+      name: "",
+      text: "",
+      profilePicUrl: "",
+      imageUrl: "",
+    },
+  ]);
+  const LIMIT = 3;
 
   // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
   // ██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝
@@ -199,7 +210,8 @@ export const useGetChatSubMsgs = (docId: string) => {
 
   useEffect(() => {
     const db = getFirestore();
-    const docRef = doc(db, "chat-msgs", docId);
+    const docRef = doc(collection(db, "chat-msgs"), docId);
+    // const docRef = doc(db, "chat-msgs", docId);
     const colRef = collection(docRef, "sub-chat-msgs");
     const recentMessagesQuery = query(
       colRef,
@@ -220,7 +232,7 @@ export const useGetChatSubMsgs = (docId: string) => {
           imageUrl: message.imageUrl,
         });
       }, []);
-      setChatSubMsgs(addedMsgs);
+      setSubChatMsgs(addedMsgs);
       // setMsgs(addedMsgs);
       return unsub;
     });
@@ -228,7 +240,7 @@ export const useGetChatSubMsgs = (docId: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return chatSubMsgs;
+  return subChatMsgs;
 };
 
 /**
