@@ -26,3 +26,5 @@ export const dummyCssMsg: CssMsg = {
 };
 
 export const dummyCss = "";
+
+export const dummyJson = {};

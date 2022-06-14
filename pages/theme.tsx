@@ -35,7 +35,7 @@ import { CustomDrawer } from "../components/GlobalUi";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
-import { dummyMsg, dummyCss } from "../dummy";
+import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
 
 const Page: NextPage = () => {
@@ -90,18 +90,20 @@ const Page: NextPage = () => {
   // (props) CSS to Json
   // TODO alignmentに合わせて切り替える必要あり
   // TODO recoilに変更してみる
-  const [cssJson, setCssJson] = useState(toJSON(dummyCss).attributes);
+  // const [cssJson, setCssJson] = useState(toJSON(dummyCss).attributes);
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
     toCSS({
-      attributes: { ...cssJson },
+      attributes: { ...dummyJson },
     })
   );
 
   // for colorPicker setting (background-color)
   // TODO background 以外に
-  const [colorPicked, setColorPicked] = useState(cssJson.background);
+  const [colorPicked, setColorPicked] = useState(
+    toJSON(dummyCss).attributes.background
+  );
 
   const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
     const id = targetId;
@@ -128,14 +130,14 @@ const Page: NextPage = () => {
 
   // Switch according to alignment
   // alignment に応じて切り替え
-  const switchCssJsonAccordingAlignment = () => {
-    const id = editCssTargetId;
-    id === "cssBackground" && setCssJson(toJSON(cssBackground).attributes);
-    id === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
-    id === "cssTopbarDeco" && setCssJson(toJSON(cssTopbarDeco).attributes);
-    id === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
-    id === "cssChatMsgDeco" && setCssJson(toJSON(cssChatMsgDeco).attributes);
-  };
+  // const switchCssJsonAccordingAlignment = () => {
+  //   const id = editCssTargetId;
+  //   id === "cssBackground" && setCssJson(toJSON(cssBackground).attributes);
+  //   id === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
+  //   id === "cssTopbarDeco" && setCssJson(toJSON(cssTopbarDeco).attributes);
+  //   id === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
+  //   id === "cssChatMsgDeco" && setCssJson(toJSON(cssChatMsgDeco).attributes);
+  // };
 
   // Update overall CSS settings
   // 全体のCSS設定を更新
@@ -224,7 +226,8 @@ const Page: NextPage = () => {
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
     // editCssTargetId に応じて切り替え
-    switchCssJsonAccordingAlignment();
+    // switchCssJsonAccordingAlignment();
+    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
     // JSONのCSSに追加
     cssJson[`background-size`] = backgroundSizeText(backgroundSize);
     // setCssJson(cssJson);
@@ -329,7 +332,6 @@ const Page: NextPage = () => {
             <Grid item>
               <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
               <h4>background-size</h4>
-              <h5>{cssJson[`background-size`]} </h5>
               <Slider
                 getAriaLabel={() => "background-size range"}
                 value={backgroundSize}
@@ -339,7 +341,6 @@ const Page: NextPage = () => {
               />
               {imgMsgs}
               <h4>Color</h4>
-              <h5>{cssJson[`background-color`]} </h5>
               <SketchPicker color={colorPicked} onChange={handleColorPicked} />
             </Grid>
           </Grid>
