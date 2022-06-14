@@ -24,3 +24,5 @@ export const dummyCssMsg: CssMsg = {
   profilePicUrl: "",
   imageUrl: "",
 };
+
+export const dummyCss = "";
