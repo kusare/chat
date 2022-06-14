@@ -15,6 +15,7 @@ import {
   cssTopbarDecoState,
   cssChatMsgState,
   cssChatMsgDecoState,
+  cssSubChatMsgState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
@@ -77,6 +78,13 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
     setCssChatMsgDecoState(event.target.value);
   };
 
+  // 全体のChatのSubのMessageのCSS設定
+  const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
+  const setCssSubChatMsgState = useSetRecoilState(cssSubChatMsgState);
+  const handleCssSubChatMsg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCssChatMsgDecoState(event.target.value);
+  };
+
   /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
@@ -86,7 +94,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
 ╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
                                                     
  */
-
+  //TODO mapに書き換え
   return (
     <>
       <Stack spacing={2} direction="row">
@@ -141,6 +149,16 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               value={cssChatMsgDeco}
               rows={4}
               onChange={handleCssChatMsgDeco}
+            />
+          </>
+        )}
+        {props.id === "cssSubChatMsg" && (
+          <>
+            <TextField
+              multiline
+              value={cssSubChatMsg}
+              rows={4}
+              onChange={handleCssSubChatMsg}
             />
           </>
         )}
