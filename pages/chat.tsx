@@ -21,7 +21,7 @@ import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalUi";
-import { ChatRadioBtn } from "../components/RadioBtn";
+import { ChatLayoutChips } from "../components/RadioBtn";
 import { chatRadioBtnIdState } from "../recoil/States";
 
 export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
@@ -73,6 +73,16 @@ const Page: NextPage = () => {
   };
 
   const cssText = useRecoilValue(cssBackgroundState);
+
+  /**
+██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
+██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
+██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
+██╔══██╗██╔══╝     ██║   ██║   ██║██╔══██╗██║╚██╗██║
+██║  ██║███████╗   ██║   ╚██████╔╝██║  ██║██║ ╚████║
+╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
+                                                    
+ */
   return (
     <div>
       <Global
@@ -129,7 +139,7 @@ const Page: NextPage = () => {
             ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
  */}
 
-            <ChatRadioBtn></ChatRadioBtn>
+            <ChatLayoutChips></ChatLayoutChips>
             <ChatMsgs />
           </Grid>
           <Grid item xs={12} md={6}>

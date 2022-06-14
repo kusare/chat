@@ -6,6 +6,11 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { editCssTargetIdState, chatRadioBtnIdState } from "../recoil/States";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import { IconButton } from "@mui/material";
+import { Global, css } from "@emotion/react";
 
 /**
  ██████╗██╗  ██╗ █████╗ ████████╗
@@ -44,6 +49,38 @@ export function ChatRadioBtn() {
   );
 }
 
+export const ChatLayoutChips = () => {
+  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+  const setChatRadioBtnId = useSetRecoilState(chatRadioBtnIdState);
+
+  const handleChatRadioBtnId = (id: any) => {
+    setChatRadioBtnId(id);
+  };
+
+  return (
+    <>
+      <h5>Chat layout</h5>
+      <Stack direction="row" spacing={1}>
+        <Chip
+          avatar={
+            <Avatar src="https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c"></Avatar>
+          }
+          onClick={() => handleChatRadioBtnId("Normal")}
+          label="Normal"
+        />
+        <Chip
+          avatar={<Avatar></Avatar>}
+          label="Recipe"
+          onClick={() => handleChatRadioBtnId("Recipe")}
+          css={css`
+            background-color: red;
+          `}
+        />
+      </Stack>
+    </>
+  );
+};
+
 /**
 ████████╗██╗  ██╗███████╗███╗   ███╗███████╗
 ╚══██╔══╝██║  ██║██╔════╝████╗ ████║██╔════╝
@@ -66,7 +103,7 @@ export function EditCssTargetIdRadioBtn() {
 
   return (
     <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Chat Layout</FormLabel>
+      <FormLabel id="demo-row-radio-buttons-group-label">CSS</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
