@@ -21,7 +21,6 @@ import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalUi";
-import { ChatRadioBtn } from "../components/RadioBtn";
 import { chatRadioBtnIdState } from "../recoil/States";
 
 const Home: NextPage = () => {
