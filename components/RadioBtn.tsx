@@ -9,7 +9,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { IconButton } from "@mui/material";
+import { IconButton, ListItem } from "@mui/material";
 import { Global, css } from "@emotion/react";
 
 /**
@@ -60,23 +60,21 @@ export const ChatLayoutChips = () => {
   return (
     <>
       <h5>Chat layout</h5>
-      <Stack direction="row" spacing={1}>
-        <Chip
-          avatar={
-            <Avatar src="https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c"></Avatar>
-          }
-          onClick={() => handleChatRadioBtnId("Normal")}
-          label="Normal"
-        />
-        <Chip
-          avatar={<Avatar></Avatar>}
-          label="Recipe"
-          onClick={() => handleChatRadioBtnId("Recipe")}
-          css={css`
-            background-color: red;
-          `}
-        />
-      </Stack>
+      <Chip
+        avatar={
+          <Avatar src="https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c"></Avatar>
+        }
+        onClick={() => handleChatRadioBtnId("Normal")}
+        label="Normal"
+      />
+      <Chip
+        avatar={<Avatar></Avatar>}
+        label="Recipe"
+        onClick={() => handleChatRadioBtnId("Recipe")}
+        css={css`
+          background-color: red;
+        `}
+      />
     </>
   );
 };
