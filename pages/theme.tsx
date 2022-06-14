@@ -22,6 +22,7 @@ import {
   cssTopbarDecoState,
   cssChatMsgState,
   cssChatMsgDecoState,
+  cssSubChatMsgState,
   editCssTargetIdState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
@@ -34,7 +35,7 @@ import { CustomDrawer } from "../components/GlobalUi";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
-import { dummyMsg } from "../dummy";
+import { dummyMsg, dummyCss } from "../dummy";
 import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
 
 const Page: NextPage = () => {
@@ -68,6 +69,10 @@ const Page: NextPage = () => {
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
   const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
 
+  // 全体のSubのChatのCSS設定
+  const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
+  const setSubCssChatMsgState = useSetRecoilState(cssSubChatMsgState);
+
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
@@ -83,9 +88,9 @@ const Page: NextPage = () => {
  */
 
   // (props) CSS to Json
-  // TODO ダミーのCSSが欲しい
+  // TODO alignmentに合わせて切り替える必要あり
   // TODO recoilに変更してみる
-  const [cssJson, setCssJson] = useState(toJSON(cssBackground).attributes);
+  const [cssJson, setCssJson] = useState(toJSON(dummyCss).attributes);
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -95,28 +100,31 @@ const Page: NextPage = () => {
   );
 
   // for colorPicker setting (background-color)
+  // TODO background 以外に
   const [colorPicked, setColorPicked] = useState(cssJson.background);
 
-  /**
-████████╗ ██████╗  ██████╗  ██████╗ ██╗     ███████╗
-╚══██╔══╝██╔═══██╗██╔════╝ ██╔════╝ ██║     ██╔════╝
-   ██║   ██║   ██║██║  ███╗██║  ███╗██║     █████╗  
-   ██║   ██║   ██║██║   ██║██║   ██║██║     ██╔══╝  
-   ██║   ╚██████╔╝╚██████╔╝╚██████╔╝███████╗███████╗
-   ╚═╝    ╚═════╝  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝
-                                                    
-*/
+  const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
+    const id = targetId;
+    let recoilState = null;
+    id === "cssBackground" && (recoilState = cssBackground);
+    id === "cssTopbar" && (recoilState = cssTopbar);
+    id === "cssTopbarDeco" && (recoilState = cssTopbarDeco);
+    id === "cssChatMsg" && (recoilState = cssChatMsg);
+    id === "cssChatMsgDeco" && (recoilState = cssChatMsgDeco);
+    id === "cssSubChatMsg" && (recoilState = cssSubChatMsg);
 
-  // const [alignment, setAlignment] =
-  //   React.useState<ThemeUiTargetId>("cssBackground");
+    const cssJson = toJSON(recoilState).attributes;
 
-  const handleToggle = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: ThemeUiTargetId
-  ) => {
-    // setAlignment(newAlignment);
-    setEditCssTargetId(newAlignment);
+    return cssJson;
   };
+
+  // const test = (targetState: any) => {
+  //   setCssEdited(
+  //     toCSS({
+  //       attributes: { ...cssJson },
+  //     })
+  //   );
+  // };
 
   // Switch according to alignment
   // alignment に応じて切り替え
@@ -131,13 +139,13 @@ const Page: NextPage = () => {
 
   // Update overall CSS settings
   // 全体のCSS設定を更新
-  const updateOverAllCss = () => {
+  const updateOverAllCss = (css: string) => {
     const id = editCssTargetId;
-    id === "cssBackground" && setCssBackgroundState(cssEdited);
-    id === "cssTopbar" && setCssTopbarState(cssEdited);
-    id === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
-    id === "cssChatMsg" && setCssChatMsgState(cssEdited);
-    id === "cssChatMsgDeco" && setCssChatMsgDecoState(cssEdited);
+    id === "cssBackground" && setCssBackgroundState(css);
+    id === "cssTopbar" && setCssTopbarState(css);
+    id === "cssTopbarDeco" && setCssTopbarDecoState(css);
+    id === "cssChatMsg" && setCssChatMsgState(css);
+    id === "cssChatMsgDeco" && setCssChatMsgDecoState(css);
   };
 
   /**
@@ -155,18 +163,15 @@ const Page: NextPage = () => {
   const decimalToHex = (alpha: number) =>
     alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
 
-  // for colorPicker setting (background-color)
-  // const [colorPicked, setColorPicked] = useState(cssJson.background);
-
   // when color picked
   const handleColorPicked = (color: ColorResult) => {
     // "ff0500" + "80"の形式になるように
     const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
     // editCssTargetId に応じて切り替え
-    switchCssJsonAccordingAlignment();
+    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
     // JSONのCSSに追加
     cssJson[`background-color`] = hexCode;
-    setCssJson(cssJson);
+    // setCssJson(cssJson);
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     setCssEdited(
       toCSS({
@@ -176,7 +181,7 @@ const Page: NextPage = () => {
     // ColorPickerの設定を更新
     setColorPicked(hexCode);
     // 全体のCSS設定を更新
-    updateOverAllCss();
+    updateOverAllCss(cssEdited);
   };
 
   /**
@@ -232,7 +237,7 @@ const Page: NextPage = () => {
     // slide
     setBackgroundSize(newValue as number[]);
     // 全体のCSS設定を更新
-    updateOverAllCss();
+    updateOverAllCss(cssEdited);
   };
 
   /**
