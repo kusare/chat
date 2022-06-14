@@ -36,7 +36,7 @@ import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
-import { EditCssTargetIdChips } from "../components/RadioBtn";
+import { EditCssTargetIdChips } from "../components/Chips";
 
 const Page: NextPage = () => {
   /**

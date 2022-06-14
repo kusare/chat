@@ -21,7 +21,7 @@ import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalUi";
-import { ChatLayoutChips } from "../components/RadioBtn";
+import { ChatLayoutChips } from "../components/Chips";
 import { chatRadioBtnIdState } from "../recoil/States";
 
 export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
