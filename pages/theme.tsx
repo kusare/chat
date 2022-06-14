@@ -36,7 +36,10 @@ import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
-import { EditCssTargetIdRadioBtn } from "../components/RadioBtn";
+import {
+  EditCssTargetIdChips,
+  EditCssTargetIdRadioBtn,
+} from "../components/RadioBtn";
 
 const Page: NextPage = () => {
   /**
@@ -119,25 +122,6 @@ const Page: NextPage = () => {
 
     return cssJson;
   };
-
-  // const test = (targetState: any) => {
-  //   setCssEdited(
-  //     toCSS({
-  //       attributes: { ...cssJson },
-  //     })
-  //   );
-  // };
-
-  // Switch according to alignment
-  // alignment に応じて切り替え
-  // const switchCssJsonAccordingAlignment = () => {
-  //   const id = editCssTargetId;
-  //   id === "cssBackground" && setCssJson(toJSON(cssBackground).attributes);
-  //   id === "cssTopbar" && setCssJson(toJSON(cssTopbar).attributes);
-  //   id === "cssTopbarDeco" && setCssJson(toJSON(cssTopbarDeco).attributes);
-  //   id === "cssChatMsg" && setCssJson(toJSON(cssChatMsg).attributes);
-  //   id === "cssChatMsgDeco" && setCssJson(toJSON(cssChatMsgDeco).attributes);
-  // };
 
   // Update overall CSS settings
   // 全体のCSS設定を更新
@@ -296,8 +280,7 @@ const Page: NextPage = () => {
           ██║  ██║██║  ██║██████╔╝██║╚██████╔╝
           ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
                                      */}
-
-            <EditCssTargetIdRadioBtn></EditCssTargetIdRadioBtn>
+            <EditCssTargetIdChips></EditCssTargetIdChips>
             {/* 
                 ███████╗ █████╗ ███╗   ███╗██████╗ ██╗     ███████╗    ███╗   ███╗███████╗ ██████╗ 
                 ██╔════╝██╔══██╗████╗ ████║██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝██╔════╝ 

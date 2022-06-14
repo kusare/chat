@@ -22,33 +22,6 @@ import { Global, css } from "@emotion/react";
                                  
  */
 
-export function ChatRadioBtn() {
-  // const [valueChatRadioBtn, setValueChatRadioBtn] = React.useState("Normal");
-
-  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
-  const setChatRadioBtnId = useSetRecoilState(chatRadioBtnIdState);
-  const handleChatRadioBtnId = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignoree
-    setChatRadioBtnId((event.target as HTMLInputElement).value);
-  };
-
-  return (
-    <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">Chat Layout</FormLabel>
-      <RadioGroup
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-        value={chatRadioBtnId}
-        onChange={handleChatRadioBtnId}
-      >
-        <FormControlLabel value="Normal" control={<Radio />} label="Normal" />
-        <FormControlLabel value="Recipe" control={<Radio />} label="Recipe" />
-      </RadioGroup>
-    </FormControl>
-  );
-}
-
 export const ChatLayoutChips = () => {
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
   const setChatRadioBtnId = useSetRecoilState(chatRadioBtnIdState);
@@ -138,3 +111,62 @@ export function EditCssTargetIdRadioBtn() {
     </FormControl>
   );
 }
+
+export const EditCssTargetIdChips = () => {
+  const editCssTargetId = useRecoilValue(editCssTargetIdState);
+  const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+
+  const handleEditCssTargetId = (id: any) => {
+    setEditCssTargetId(id);
+  };
+
+  const array = [
+    {
+      label: "cssBackground",
+      avaterUrl:
+        "https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c",
+      css: "",
+    },
+    {
+      label: "cssTopbar",
+      avaterUrl: "",
+      css: "background-color: red;",
+    },
+    {
+      label: "cssTopbarDeco",
+      avaterUrl: "",
+      css: "",
+    },
+    {
+      label: "cssChatMsg",
+      avaterUrl: "",
+      css: "",
+    },
+    {
+      label: "cssChatMsgDeco",
+      avaterUrl: "",
+      css: "",
+    },
+  ];
+
+  const ele = array.map((value, index) => {
+    return (
+      <Chip
+        key={index}
+        avatar={<Avatar src={value.avaterUrl}></Avatar>}
+        onClick={() => handleEditCssTargetId(value.label)}
+        label={value.label}
+        css={css`
+          ${value.css}
+        `}
+      />
+    );
+  });
+
+  return (
+    <>
+      <h5>CSS</h5>
+      {ele}
+    </>
+  );
+};
