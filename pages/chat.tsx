@@ -20,7 +20,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Global, css } from "@emotion/react";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
-import { CustomDrawer } from "../components/GlobalUi";
+import { CustomDrawer } from "../components/GlobalParts";
 import { ChatLayoutChips } from "../components/Chips";
 import { chatRadioBtnIdState } from "../recoil/States";
 

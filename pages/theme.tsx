@@ -31,7 +31,7 @@ import { toCSS, toJSON } from "cssjson";
 import Slider from "@mui/material/Slider";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { CustomDrawer } from "../components/GlobalUi";
+import { CustomDrawer } from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ThemeUiTargetId } from "../types";
 import { ChatMsgEle } from "../components/ChatFirebase";
