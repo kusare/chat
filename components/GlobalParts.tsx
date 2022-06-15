@@ -33,6 +33,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import SettingsInputAntennaIcon from "@mui/icons-material/SettingsInputAntenna";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import TimerIcon from "@mui/icons-material/Timer";
+import MusicNoteOutlinedIcon from "@mui/icons-material/MusicNoteOutlined";
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   props
@@ -348,6 +349,36 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
                   </ListItemIcon>
                   <ListItemText
                     primary={"Timer"}
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </Link>
+              <Link
+                // color="inherit"
+                noWrap
+                key={"sound"}
+                // variant="body2"
+                href={"/sound"}
+                // sx={{ p: 1, flexShrink: 0 }}
+              >
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <MusicNoteOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Sound"}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
