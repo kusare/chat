@@ -11,7 +11,7 @@ export default class PastelFilter extends PIXI.Filter {
     // サンプル間の角度（360度 / サンプル数、ラジアン表現）
     const angleStep = ((Math.PI * 2) / sampleCount).toFixed(7);
     super(
-      // @ts-ignoree
+      // @ts-ignore
       null, // 頂点シェーダーのソース（今回はいらないのでnull）
       // フラグメントシェーダーのソース：
       // GLSL内でループ処理するときのループカウンタ増分を事前に計算し、

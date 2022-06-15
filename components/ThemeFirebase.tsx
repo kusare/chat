@@ -74,7 +74,7 @@ import PowerIcon from "@mui/icons-material/Power";
 import Modal from "@mui/material/Modal";
 import { Input } from "@mui/material";
 import { State } from "pixi.js";
-// @ts-ignoree
+// @ts-ignore
 import { toCSS, toJSON } from "cssjson";
 import { SketchPicker, ColorResult } from "react-color";
 

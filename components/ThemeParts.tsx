@@ -19,7 +19,7 @@ import {
   cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
-// @ts-ignoree
+// @ts-ignore
 import { toCSS, toJSON } from "cssjson";
 import { ThemeUiTargetId } from "../types";
 

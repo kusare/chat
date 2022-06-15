@@ -431,7 +431,7 @@ const Page: NextPage = () => {
                                                     
  */
 
-  // @ts-ignoree
+  // @ts-ignore
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
 

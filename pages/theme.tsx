@@ -27,7 +27,7 @@ import {
   cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
-// @ts-ignoree
+// @ts-ignore
 import { toCSS, toJSON } from "cssjson";
 import Slider from "@mui/material/Slider";
 import ToggleButton from "@mui/material/ToggleButton";
