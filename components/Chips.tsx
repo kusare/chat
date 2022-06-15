@@ -102,6 +102,11 @@ export const EditCssTargetIdChips = () => {
       avaterUrl: "",
       css: "",
     },
+    {
+      label: "cssChatMsgTitleDeco",
+      avaterUrl: "",
+      css: "",
+    },
   ];
 
   const ele = array.map((value, index) => {

@@ -70,6 +70,12 @@ export const cssSubChatMsgState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const cssChatMsgTitleDecoState = atom({
+  key: "cssChatMsgTitleDecoState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
+
 /**
      ██╗███████╗ ██████╗ ███╗   ██╗
      ██║██╔════╝██╔═══██╗████╗  ██║

@@ -24,6 +24,7 @@ import {
   cssChatMsgDecoState,
   cssSubChatMsgState,
   editCssTargetIdState,
+  cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
@@ -73,6 +74,12 @@ const Page: NextPage = () => {
   const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
   const setSubCssChatMsgState = useSetRecoilState(cssSubChatMsgState);
 
+  // 全体のSubのChatのCSS設定
+  const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
+  const setCssChatMsgTitleDecoState = useSetRecoilState(
+    cssChatMsgTitleDecoState
+  );
+
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
@@ -86,11 +93,6 @@ const Page: NextPage = () => {
 ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
                                           
  */
-
-  // (props) CSS to Json
-  // TODO alignmentに合わせて切り替える必要あり
-  // TODO recoilに変更してみる
-  // const [cssJson, setCssJson] = useState(toJSON(dummyCss).attributes);
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -114,6 +116,7 @@ const Page: NextPage = () => {
     id === "cssChatMsg" && (recoilState = cssChatMsg);
     id === "cssChatMsgDeco" && (recoilState = cssChatMsgDeco);
     id === "cssSubChatMsg" && (recoilState = cssSubChatMsg);
+    id === "cssChatMsgTitleDeco" && (recoilState = cssChatMsgTitleDeco);
 
     const cssJson = toJSON(recoilState).attributes;
 
@@ -129,6 +132,7 @@ const Page: NextPage = () => {
     id === "cssTopbarDeco" && setCssTopbarDecoState(css);
     id === "cssChatMsg" && setCssChatMsgState(css);
     id === "cssChatMsgDeco" && setCssChatMsgDecoState(css);
+    id === "cssChatMsgTitleDeco" && setCssChatMsgTitleDecoState(css);
   };
 
   /**
@@ -269,24 +273,17 @@ const Page: NextPage = () => {
           </Grid>
 
           <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
-            {/*
-          ██████╗  █████╗ ██████╗ ██╗ ██████╗ 
-          ██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗
-          ██████╔╝███████║██║  ██║██║██║   ██║
-          ██╔══██╗██╔══██║██║  ██║██║██║   ██║
-          ██║  ██║██║  ██║██████╔╝██║╚██████╔╝
-          ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
-                                     */}
-            <EditCssTargetIdChips></EditCssTargetIdChips>
             {/* 
-                 ██████╗███████╗███████╗
-                ██╔════╝██╔════╝██╔════╝
-                ██║     ███████╗███████╗
-                ██║     ╚════██║╚════██║
-                ╚██████╗███████║███████║
-                 ╚═════╝╚══════╝╚══════╝
+          ███████╗██████╗ ██╗████████╗     ██████╗███████╗███████╗
+          ██╔════╝██╔══██╗██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝
+          █████╗  ██║  ██║██║   ██║       ██║     ███████╗███████╗
+          ██╔══╝  ██║  ██║██║   ██║       ██║     ╚════██║╚════██║
+          ███████╗██████╔╝██║   ██║       ╚██████╗███████║███████║
+          ╚══════╝╚═════╝ ╚═╝   ╚═╝        ╚═════╝╚══════╝╚══════╝
+                                                        
 
              */}
+            <EditCssTargetIdChips></EditCssTargetIdChips>
             <EditThemeCss id={editCssTargetId}></EditThemeCss>
 
             {/* 

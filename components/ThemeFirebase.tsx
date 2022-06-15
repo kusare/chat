@@ -352,7 +352,7 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
             `}
           >
             {
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.栗は口の病気トォテテテテテイたちをひもを向い療だろた。"
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit.吾輩わがはいは猫である。名前はまだ無い。どこで生れたかとんと見当けんとうがつかぬ。"
             }
           </p>
         </CardContent>

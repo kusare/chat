@@ -75,7 +75,8 @@ export type ThemeUiTargetId =
   | "cssTopbarDeco"
   | "cssChatMsg"
   | "cssChatMsgDeco"
-  | "cssSubChatMsg";
+  | "cssSubChatMsg"
+  | "cssChatMsgTitleDeco";
 
 /**
 ██████╗  █████╗ ██████╗ ██╗ ██████╗     ██████╗ ████████╗███╗   ██╗

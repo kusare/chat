@@ -16,6 +16,7 @@ import {
   cssChatMsgState,
   cssChatMsgDecoState,
   cssSubChatMsgState,
+  cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignoree
@@ -23,16 +24,6 @@ import { toCSS, toJSON } from "cssjson";
 import { ThemeUiTargetId } from "../types";
 
 export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
-  /**
-██╗███╗   ██╗██╗████████╗
-██║████╗  ██║██║╚══██╔══╝
-██║██╔██╗ ██║██║   ██║   
-██║██║╚██╗██║██║   ██║   
-██║██║ ╚████║██║   ██║   
-╚═╝╚═╝  ╚═══╝╚═╝   ╚═╝   
-                         
- */
-
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
@@ -82,7 +73,18 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
   const setCssSubChatMsgState = useSetRecoilState(cssSubChatMsgState);
   const handleCssSubChatMsg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCssChatMsgDecoState(event.target.value);
+    setCssSubChatMsgState(event.target.value);
+  };
+
+  // 全体のChatのSubのMessageのCSS設定
+  const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
+  const setCssChatMsgTitleDecoState = useSetRecoilState(
+    cssChatMsgTitleDecoState
+  );
+  const handleCssChatMsgTitleDeco = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCssChatMsgTitleDecoState(event.target.value);
   };
 
   /**
@@ -108,7 +110,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
-
         {props.id === "cssTopbar" && (
           <>
             <TextField
@@ -119,7 +120,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
-
         {props.id === "cssTopbarDeco" && (
           <>
             <TextField
@@ -130,7 +130,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
-
         {props.id === "cssChatMsg" && (
           <>
             <TextField
@@ -141,7 +140,6 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
-
         {props.id === "cssChatMsgDeco" && (
           <>
             <TextField
@@ -159,6 +157,16 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               value={cssSubChatMsg}
               rows={4}
               onChange={handleCssSubChatMsg}
+            />
+          </>
+        )}
+        {props.id === "cssChatMsgTitleDeco" && (
+          <>
+            <TextField
+              multiline
+              value={cssChatMsgTitleDeco}
+              rows={4}
+              onChange={handleCssChatMsgTitleDeco}
             />
           </>
         )}
