@@ -25,6 +25,7 @@ import {
   cssSubChatMsgState,
   editCssTargetIdState,
   cssChatMsgTitleDecoState,
+  chatRadioBtnIdState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignore
@@ -34,10 +35,11 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
-import { ThemeUiTargetId } from "../types";
-import { ChatMsgEle } from "../components/ChatFirebase";
+import { ChatRadioBtnId, ThemeUiTargetId } from "../types";
+import { ChatMsgEle, ChatMsgRecipiLayout } from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { ChatLayoutChips, EditCssTargetIdChips } from "../components/Chips";
+import { SubChatMsgEle } from "./chat";
 
 const Page: NextPage = () => {
   /**
@@ -83,6 +85,9 @@ const Page: NextPage = () => {
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+
+  //msgIdに応じてサンプルのメッセージ表示を切り替える
+  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
 
   /**
 ███████╗████████╗ █████╗ ████████╗███████╗
@@ -295,8 +300,12 @@ const Page: NextPage = () => {
                 ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                                                                                     */}
             <ChatLayoutChips></ChatLayoutChips>
-            <ChatMsgEle msg={dummyMsg} />
-
+            {chatRadioBtnId === "Normal" && <ChatMsgEle msg={dummyMsg} />}
+            {chatRadioBtnId === "Recipe" && (
+              <ChatMsgRecipiLayout msg={dummyMsg}>
+                <SubChatMsgEle docId={dummyMsg?.id.toString()} />
+              </ChatMsgRecipiLayout>
+            )}
             {/* 
               ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
               ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝

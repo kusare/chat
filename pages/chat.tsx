@@ -24,6 +24,7 @@ import { CustomDrawer } from "../components/GlobalParts";
 import { ChatLayoutChips } from "../components/Chips";
 import { chatRadioBtnIdState } from "../recoil/States";
 
+//TODO docIdではなくmsgを取り込むようにする
 export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
   const { docId } = props;
   const subChatMsgs = useGetChatSubMsgs(docId);
