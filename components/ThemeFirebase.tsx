@@ -40,6 +40,7 @@ import {
   cssChatMsgState,
   cssChatMsgDecoState,
   editCssTargetIdState,
+  cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import {
   ChatMsgState,
@@ -478,20 +479,24 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
 
   // 全体のtopbarのCSS設定
-  const cssTopbar = useRecoilValue(cssTopbarState);
+  // const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
 
   // 全体のtopbarのCSS設定
-  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  // const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
   const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
 
   // 全体のChatのMessageのCSS設定
-  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  // const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
   // 全体のChatのMessageのDecoのCSS設定
-  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  // const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
   const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+
+  const setCssChatMsgTitleDecoState = useSetRecoilState(
+    cssChatMsgTitleDecoState
+  );
 
   // 編集するCSSを選択するときに使用するID
   const editCssTargetId = useRecoilValue(editCssTargetIdState);
@@ -536,6 +541,8 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
     editCssTargetId === "cssTopbarDeco" && setCssTopbarDecoState(cssEdited);
     editCssTargetId === "cssChatMsg" && setCssChatMsgState(cssEdited);
     editCssTargetId === "cssChatMsgDeco" && setCssChatMsgDecoState(cssEdited);
+    editCssTargetId === "cssChatMsgTitleDeco" &&
+      setCssChatMsgTitleDecoState(cssEdited);
   };
 
   /**
