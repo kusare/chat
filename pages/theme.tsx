@@ -9,12 +9,12 @@ import Head from "next/head";
 import { Global, css } from "@emotion/react";
 import {
   GetCssMsg,
-  CssImg,
   useGetCssMsgs,
   SetCssTextToAtomBtn,
   setCssImg,
   useImgMsgs,
 } from "../components/ThemeFirebase";
+import { CssImg } from "../components/ThemeParts";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
@@ -216,7 +216,6 @@ const Page: NextPage = () => {
 
   const handleSlider = (event: Event, newValue: number | number[]) => {
     // editCssTargetId に応じて切り替え
-    // switchCssJsonAccordingAlignment();
     let cssJson = editCssTargetIdToCssJson(editCssTargetId);
     // JSONのCSSに追加
     cssJson[`background-size`] = backgroundSizeText(backgroundSize);
