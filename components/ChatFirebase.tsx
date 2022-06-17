@@ -50,6 +50,7 @@ import {
   cssChatMsgState,
   cssSubChatMsgState,
   cssChatMsgDecoState,
+  cssChatMsgTitleDecoState,
 } from "../recoil/States";
 
 // TODO move to recoil/States
@@ -470,8 +471,8 @@ export const ChatMsgRecipiLayout: React.FC<{
   const cssChatMsg = useRecoilValue(cssChatMsgState);
   // 全体のChatのMessageのDecoのCSS設定
   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
-  // サブメッセージ取得
-  // const subChatMsgs = useGetChatSubMsgs(docId);
+  // 全体のChatのSubのMessageのCSS設定
+  const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
 
   const [chatTxt, setChatTxt] = useState("");
   const handleMsgInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -506,6 +507,21 @@ export const ChatMsgRecipiLayout: React.FC<{
           >
             {props.msg.title}
           </h2>
+          {/*               
+              ████████╗██╗████████╗██╗     ███████╗    ██████╗ ███████╗ ██████╗ ██████╗ 
+              ╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝    ██╔══██╗██╔════╝██╔════╝██╔═══██╗
+                 ██║   ██║   ██║   ██║     █████╗      ██║  ██║█████╗  ██║     ██║   ██║
+                 ██║   ██║   ██║   ██║     ██╔══╝      ██║  ██║██╔══╝  ██║     ██║   ██║
+                 ██║   ██║   ██║   ███████╗███████╗    ██████╔╝███████╗╚██████╗╚██████╔╝
+                 ╚═╝   ╚═╝   ╚═╝   ╚══════╝╚══════╝    ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ 
+                                                                           */}
+          <p
+            css={css`
+              ${cssChatMsgTitleDeco}
+            `}
+          >
+            title deco
+          </p>
           <Stack spacing={2} direction="row">
             <Box>
               {props.msg.profilePicUrl && (
@@ -522,6 +538,7 @@ export const ChatMsgRecipiLayout: React.FC<{
                 {props.msg.name && <div>{props.msg.name}</div>}
                 {props.msg.date && <time>{props.msg.date.toString()}</time>}
               </Stack>
+
               {/*
                ██████╗██╗  ██╗ █████╗ ████████╗    ████████╗██╗  ██╗████████╗
               ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ╚══██╔══╝╚██╗██╔╝╚══██╔══╝
