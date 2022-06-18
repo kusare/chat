@@ -252,21 +252,27 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
 
   // 全体のtopbarのCSS設定
-  // const cssTopbar = useRecoilValue(cssTopbarState);
+  const cssTopbar = useRecoilValue(cssTopbarState);
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
 
   // 全体のtopbarのCSS設定
-  // const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
   const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
 
   // 全体のChatのMessageのCSS設定
-  // const cssChatMsg = useRecoilValue(cssChatMsgState);
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
 
   // 全体のChatのMessageのDecoのCSS設定
-  // const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
   const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
 
+  // 全体のSubのChatのCSS設定
+  const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
+  const setSubCssChatMsgState = useSetRecoilState(cssSubChatMsgState);
+
+  // 全体のSubのChatのCSS設定
+  const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
   const setCssChatMsgTitleDecoState = useSetRecoilState(
     cssChatMsgTitleDecoState
   );
@@ -276,37 +282,67 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
 
   /**
-██████╗ ███████╗ █████╗  ██████╗████████╗    ███████╗████████╗ █████╗ ████████╗███████╗
-██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝    ██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
-██████╔╝█████╗  ███████║██║        ██║       ███████╗   ██║   ███████║   ██║   █████╗  
-██╔══██╗██╔══╝  ██╔══██║██║        ██║       ╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
-██║  ██║███████╗██║  ██║╚██████╗   ██║       ███████║   ██║   ██║  ██║   ██║   ███████╗
-╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-                                                                                       
+███████╗████████╗ █████╗ ████████╗███████╗
+██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
+███████╗   ██║   ███████║   ██║   █████╗  
+╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
+███████║   ██║   ██║  ██║   ██║   ███████╗
+╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+                                          
  */
 
-  //TODO Change to Recoil
-  // (props) CSS to Json
-  const [jsonCss, setJsonCss] = useState(toJSON(cssBackground).attributes);
-  // const jsonCss = useRecoilValue(jsonCssState);
-  // const setJsonCssState = useSetRecoilState(jsonCssState);
-
   // (css) Json to CSS
-  const [jsonCssEdited, setJsonCssEdited] = useState(
+  const [cssEdited, setCssEdited] = useState(
     toCSS({
-      attributes: { ...jsonCss },
+      attributes: { ...dummyJson },
     })
   );
 
+  const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
+    const id = targetId;
+    let recoilState = null;
+    id === "cssBackground" && (recoilState = cssBackground);
+    id === "cssTopbar" && (recoilState = cssTopbar);
+    id === "cssTopbarDeco" && (recoilState = cssTopbarDeco);
+    id === "cssChatMsg" && (recoilState = cssChatMsg);
+    id === "cssChatMsgDeco" && (recoilState = cssChatMsgDeco);
+    id === "cssSubChatMsg" && (recoilState = cssSubChatMsg);
+    id === "cssChatMsgTitleDeco" && (recoilState = cssChatMsgTitleDeco);
+
+    const cssJson = toJSON(recoilState).attributes;
+
+    return cssJson;
+  };
+
+  // Update overall CSS settings
+  // 全体のCSS設定を更新
+  const updateOverAllCss = (css: string) => {
+    const id = editCssTargetId;
+    id === "cssBackground" && setCssBackgroundState(css);
+    id === "cssTopbar" && setCssTopbarState(css);
+    id === "cssTopbarDeco" && setCssTopbarDecoState(css);
+    id === "cssChatMsg" && setCssChatMsgState(css);
+    id === "cssChatMsgDeco" && setCssChatMsgDecoState(css);
+    id === "cssChatMsgTitleDeco" && setCssChatMsgTitleDecoState(css);
+  };
+
   // 背景画像を設定するテスト関数予定地
   const chgBg = () => {
-    setJsonCss(toJSON(cssBackground).attributes);
+    // editCssTargetId に応じて切り替え
+    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
+    // setJsonCss(toJSON(cssBackground).attributes);
     // JSONのCSSに追加
-    jsonCss[`background-image`] = `url('${props?.msg?.imageUrl}')`;
+    cssJson[`background-image`] = `url('${props?.msg?.imageUrl}')`;
     // 追加したJSONをCSSに変換して(cssEdited) stateに追加
     const cssEdited = toCSS({
-      attributes: { ...jsonCss },
+      attributes: { ...cssJson },
     });
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
     // 全体のCSS設定を更新
     // TODO theme.tsxと統合
     editCssTargetId === "cssBackground" && setCssBackgroundState(cssEdited);
@@ -316,6 +352,8 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
     editCssTargetId === "cssChatMsgDeco" && setCssChatMsgDecoState(cssEdited);
     editCssTargetId === "cssChatMsgTitleDeco" &&
       setCssChatMsgTitleDecoState(cssEdited);
+    // 全体のCSS設定を更新
+    updateOverAllCss(cssEdited);
   };
 
   /**
@@ -419,9 +457,9 @@ export const BgSizeSlider: React.FC = () => {
 
   // for colorPicker setting (background-color)
   // TODO background 以外に
-  const [colorPicked, setColorPicked] = useState(
-    toJSON(dummyCss).attributes.background
-  );
+  // const [colorPicked, setColorPicked] = useState(
+  //   toJSON(dummyCss).attributes.background
+  // );
 
   const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
     const id = targetId;
