@@ -10,8 +10,12 @@
     "mechatroner.rainbow-csv",
     "oderwat.indent-rainbow",
     "stylelint.vscode-stylelint",
-    "VisualStudioExptTeam.vscodeintellicode",
-    "wix.vscode-import-cost"
+    "visualstudioexptteam.vscodeintellicode",
+    "wix.vscode-import-cost",
+    "naumovs.color-highlight",
+    "gruntfuggly.todo-tree",
+    "alefragnani.bookmarks",
+    "vscodevim.vim"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": []

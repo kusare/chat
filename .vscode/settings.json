@@ -1,7 +1,11 @@
 {
   "files.autoGuessEncoding": true, // emoji
   "editor.wordWrap": "on", // markdown
-  "editor.quickSuggestions": true, // markdown
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  }, // markdown
   "editor.snippetSuggestions": "top",
   "editor.fontFamily": "'Migu 1C', Consolas, 'Courier New', monospace, 'Segoe UI Emoji'",
   "markdown-pdf.displayHeaderFooter": false,
@@ -71,5 +75,15 @@
   // VS Code の CSS, SCSS の Lint オフ
   // Stylelint とのバッティング回避
   "css.validate": false,
-  "scss.validate": false
+  "scss.validate": false,
+  /**
+████████╗ ██████╗ ██████╗  ██████╗     ████████╗██████╗ ███████╗███████╗
+╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗    ╚══██╔══╝██╔══██╗██╔════╝██╔════╝
+   ██║   ██║   ██║██║  ██║██║   ██║       ██║   ██████╔╝█████╗  █████╗  
+   ██║   ██║   ██║██║  ██║██║   ██║       ██║   ██╔══██╗██╔══╝  ██╔══╝  
+   ██║   ╚██████╔╝██████╔╝╚██████╔╝       ██║   ██║  ██║███████╗███████╗
+   ╚═╝    ╚═════╝ ╚═════╝  ╚═════╝        ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝
+                                                                        
+ */
+  "todo-tree.filtering.excludeGlobs": ["**/node_modules/*"]
 }

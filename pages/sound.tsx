@@ -22,8 +22,9 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalParts";
 import { chatRadioBtnIdState } from "../recoil/States";
+import { SoundTest } from "../components/SoundParts";
 
-const Home: NextPage = () => {
+const Page: NextPage = () => {
   const cssText = useRecoilValue(cssBackgroundState);
   return (
     <div>
@@ -40,10 +41,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CustomDrawer>
-        <p>home</p>
+        <p>sound</p>
+        <SoundTest></SoundTest>
       </CustomDrawer>
     </div>
   );
 };
 
-export default Home;
+export default Page;

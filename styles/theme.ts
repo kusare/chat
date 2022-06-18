@@ -4,14 +4,15 @@ import { green, pink, red } from "@mui/material/colors";
 // Create a theme instance.
 const theme = createTheme({
   palette: {
-    primary: {
-      main: green[800],
-    },
-    secondary: {
-      main: "#19857b",
-    },
+    // primary: {
+    //   main: red[800],
+    // },
+    // secondary: {
+    //   main: "#19857b",
+    // },
     background: {
-      default: pink[300],
+      default: "",
+      // default: pink[300],
     },
     error: {
       main: red.A400,
