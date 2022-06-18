@@ -4,7 +4,7 @@ import { Timestamp } from "firebase/firestore";
 //TODO rename dummyChatMsg
 export const dummyMsg: ChatMsg = {
   id: "dummy id",
-  date: new Date(),
+  date: Timestamp.fromDate(new Date()).toDate(),
   name: "dummy name",
   text: "dummy text",
   title: "dummy title",
