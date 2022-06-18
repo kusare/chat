@@ -52,6 +52,8 @@ export type CssMsg = {
   cssTopbarDeco: string;
   cssChatMsg: string;
   cssChatMsgDeco: string;
+  cssSubChatMsg: string;
+  cssChatMsgTitleDeco: string;
   profilePicUrl: string;
   imageUrl?: string;
 };

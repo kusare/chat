@@ -488,6 +488,7 @@ export const ChatMsgRecipiLayout: React.FC<{
           border-radius: 8px;
           overflow: hidden;
           margin-bottom: 30px;
+          position: relative;
         `}
       >
         <div
@@ -522,7 +523,13 @@ export const ChatMsgRecipiLayout: React.FC<{
           >
             title deco
           </p>
-          <Stack spacing={2} direction="row">
+          <Stack
+            spacing={2}
+            direction="row"
+            css={css`
+              margin-top: 50px;
+            `}
+          >
             <Box>
               {props.msg.profilePicUrl && (
                 <Avatar
