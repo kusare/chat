@@ -223,6 +223,8 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
               cssTopbarDeco: cssTopbarDeco,
               cssChatMsg: cssChatMsg,
               cssChatMsgDeco: cssChatMsgDeco,
+              cssSubChatMsg: cssSubChatMsg,
+              cssChatMsgTitleDeco: cssChatMsgTitleDeco,
             })
           }
         >

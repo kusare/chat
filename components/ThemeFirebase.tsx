@@ -157,6 +157,8 @@ export const useGetCssMsgs = (id: string) => {
           cssTopbarDeco: message.cssTopbarDeco,
           cssChatMsg: message.cssChatMsg,
           cssChatMsgDeco: message.cssChatMsgDeco,
+          cssSubChatMsg: message.cssChatMsg,
+          cssChatMsgTitleDeco: message.cssChatMsgTitleDeco,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
         });
@@ -398,53 +400,6 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
             {time}
           </Typography>
           {/* 🖊 Edit */}
-          <div>
-            <IconButton aria-label="edit" onClick={handleOpenEdit}>
-              <EditIcon />
-            </IconButton>
-
-            {/* ███╗   ███╗ ██████╗ ██████╗  █████╗ ██╗     
-                ████╗ ████║██╔═══██╗██╔══██╗██╔══██╗██║     
-                ██╔████╔██║██║   ██║██║  ██║███████║██║     
-                ██║╚██╔╝██║██║   ██║██║  ██║██╔══██║██║     
-                ██║ ╚═╝ ██║╚██████╔╝██████╔╝██║  ██║███████╗
-                ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
-                                             */}
-            <Modal
-              open={openEdit}
-              onClose={handleCloseEdit}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box>
-                <Input
-                  type="file"
-                  onChange={(e) => setCssImg(e, "cssImgMsgs")}
-                />
-                {/* 🖼アップした画像 */}
-                {props.msg.imageUrl && (
-                  <CardMedia
-                    component="img"
-                    height="50"
-                    sx={{ width: 50 }}
-                    image={props.msg.imageUrl}
-                    alt="Paella dish"
-                  />
-                )}
-                <p
-                  css={css`
-                    ${cssEdited}
-                  `}
-                >
-                  {cssEdited}
-                </p>
-                <SketchPicker
-                  color={colorPicked}
-                  onChange={handleColorPicked}
-                />
-              </Box>
-            </Modal>
-          </div>
         </CardActions>
       </Card>
     </>
@@ -526,6 +481,8 @@ type CssMsgArg = {
   cssTopbarDeco: string;
   cssChatMsg: string;
   cssChatMsgDeco: string;
+  cssSubChatMsg: string;
+  cssChatMsgTitleDeco: string;
 };
 
 // Saves a new message to Cloud Firestore.
@@ -538,6 +495,8 @@ export const setCssMsg = async (arg: CssMsgArg) => {
     cssTopbarDeco: arg.cssTopbarDeco,
     cssChatMsg: arg.cssChatMsg,
     cssChatMsgDeco: arg.cssChatMsgDeco,
+    cssSubChatMsg: arg.cssSubChatMsg,
+    cssChatMsgTitleDeco: arg.cssChatMsgTitleDeco,
     profilePicUrl: getProfilePicUrl(),
   };
   // Add a new message entry to the Firebase database.
