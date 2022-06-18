@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Slider } from "@mui/material";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
@@ -18,6 +18,7 @@ import {
   cssSubChatMsgState,
   cssChatMsgTitleDecoState,
   editCssTargetIdState,
+  chatRadioBtnIdState,
 } from "../recoil/States";
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignore
@@ -65,6 +66,7 @@ import {
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
+import { dummyJson, dummyCss } from "../dummy";
 
 export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
   /**
@@ -347,3 +349,190 @@ export const CssImg: React.FC<{ msg: ImgMsg }> = (props) => {
     </>
   );
 };
+
+/**
+ * background-image size change
+ */
+export const BgSizeSlider: React.FC = () => {
+  /**
+██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
+██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
+██████╔╝█████╗  ██║     ██║   ██║██║██║     
+██╔══██╗██╔══╝  ██║     ██║   ██║██║██║     
+██║  ██║███████╗╚██████╗╚██████╔╝██║███████╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+                                            
+ */
+
+  // 全体の背景のCSS設定はcssBackgroundStateから
+  const cssBackground = useRecoilValue(cssBackgroundState);
+  const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
+
+  // 全体のtopbarのCSS設定
+  const cssTopbar = useRecoilValue(cssTopbarState);
+  const setCssTopbarState = useSetRecoilState(cssTopbarState);
+
+  // 全体のtopbarのCSS設定
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+  const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
+
+  // 全体のChatのMessageのCSS設定
+  const cssChatMsg = useRecoilValue(cssChatMsgState);
+  const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+
+  // 全体のChatのMessageのDecoのCSS設定
+  const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+  const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+
+  // 全体のSubのChatのCSS設定
+  const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
+  const setSubCssChatMsgState = useSetRecoilState(cssSubChatMsgState);
+
+  // 全体のSubのChatのCSS設定
+  const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
+  const setCssChatMsgTitleDecoState = useSetRecoilState(
+    cssChatMsgTitleDecoState
+  );
+
+  // 編集するCSSを選択するときに使用するID
+  const editCssTargetId = useRecoilValue(editCssTargetIdState);
+  const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+
+  //msgIdに応じてサンプルのメッセージ表示を切り替える
+  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+  /**
+███████╗████████╗ █████╗ ████████╗███████╗
+██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
+███████╗   ██║   ███████║   ██║   █████╗  
+╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
+███████║   ██║   ██║  ██║   ██║   ███████╗
+╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+                                          
+ */
+
+  // (css) Json to CSS
+  const [cssEdited, setCssEdited] = useState(
+    toCSS({
+      attributes: { ...dummyJson },
+    })
+  );
+
+  // for colorPicker setting (background-color)
+  // TODO background 以外に
+  const [colorPicked, setColorPicked] = useState(
+    toJSON(dummyCss).attributes.background
+  );
+
+  const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
+    const id = targetId;
+    let recoilState = null;
+    id === "cssBackground" && (recoilState = cssBackground);
+    id === "cssTopbar" && (recoilState = cssTopbar);
+    id === "cssTopbarDeco" && (recoilState = cssTopbarDeco);
+    id === "cssChatMsg" && (recoilState = cssChatMsg);
+    id === "cssChatMsgDeco" && (recoilState = cssChatMsgDeco);
+    id === "cssSubChatMsg" && (recoilState = cssSubChatMsg);
+    id === "cssChatMsgTitleDeco" && (recoilState = cssChatMsgTitleDeco);
+
+    const cssJson = toJSON(recoilState).attributes;
+
+    return cssJson;
+  };
+
+  // Update overall CSS settings
+  // 全体のCSS設定を更新
+  const updateOverAllCss = (css: string) => {
+    const id = editCssTargetId;
+    id === "cssBackground" && setCssBackgroundState(css);
+    id === "cssTopbar" && setCssTopbarState(css);
+    id === "cssTopbarDeco" && setCssTopbarDecoState(css);
+    id === "cssChatMsg" && setCssChatMsgState(css);
+    id === "cssChatMsgDeco" && setCssChatMsgDecoState(css);
+    id === "cssChatMsgTitleDeco" && setCssChatMsgTitleDecoState(css);
+  };
+
+  function backgroundSizeText(value: number | number[]) {
+    return `${value}px`;
+  }
+
+  const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
+
+  const handleSlider = (event: Event, newValue: number | number[]) => {
+    // editCssTargetId に応じて切り替え
+    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
+    // JSONのCSSに追加
+    cssJson[`background-size`] = backgroundSizeText(backgroundSize);
+    // setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // slide
+    setBackgroundSize(newValue as number[]);
+    // 全体のCSS設定を更新
+    updateOverAllCss(cssEdited);
+  };
+  return (
+    <>
+      <h4>background-size</h4>
+      <Slider
+        getAriaLabel={() => "background-size range"}
+        value={backgroundSize}
+        onChange={handleSlider}
+        valueLabelDisplay="auto"
+        valueLabelFormat={backgroundSizeText}
+      />
+    </>
+  );
+};
+
+// const useEditCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
+//   // 全体の背景のCSS設定はcssBackgroundStateから
+//   const cssBackground = useRecoilValue(cssBackgroundState);
+//   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
+
+//   // 全体のtopbarのCSS設定
+//   const cssTopbar = useRecoilValue(cssTopbarState);
+//   const setCssTopbarState = useSetRecoilState(cssTopbarState);
+
+//   // 全体のtopbarのCSS設定
+//   const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+//   const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
+
+//   // 全体のChatのMessageのCSS設定
+//   const cssChatMsg = useRecoilValue(cssChatMsgState);
+//   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
+
+//   // 全体のChatのMessageのDecoのCSS設定
+//   const cssChatMsgDeco = useRecoilValue(cssChatMsgDecoState);
+//   const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+
+//   // 全体のSubのChatのCSS設定
+//   const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);
+//   const setSubCssChatMsgState = useSetRecoilState(cssSubChatMsgState);
+
+//   // 全体のSubのChatのCSS設定
+//   const cssChatMsgTitleDeco = useRecoilValue(cssChatMsgTitleDecoState);
+//   const setCssChatMsgTitleDecoState = useSetRecoilState(
+//     cssChatMsgTitleDecoState
+//   );
+
+//   // 編集するCSSを選択するときに使用するID
+//   const editCssTargetId = useRecoilValue(editCssTargetIdState);
+//   const setEditCssTargetId = useSetRecoilState(editCssTargetIdState);
+//   const id = targetId;
+//   let recoilState = null;
+//   id === "cssBackground" && (recoilState = cssBackground);
+//   id === "cssTopbar" && (recoilState = cssTopbar);
+//   id === "cssTopbarDeco" && (recoilState = cssTopbarDeco);
+//   id === "cssChatMsg" && (recoilState = cssChatMsg);
+//   id === "cssChatMsgDeco" && (recoilState = cssChatMsgDeco);
+//   id === "cssSubChatMsg" && (recoilState = cssSubChatMsg);
+//   id === "cssChatMsgTitleDeco" && (recoilState = cssChatMsgTitleDeco);
+
+//   const cssJson = toJSON(recoilState).attributes;
+
+//   return cssJson;
+// };

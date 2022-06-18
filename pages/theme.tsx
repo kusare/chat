@@ -14,7 +14,7 @@ import {
   setCssImg,
   useImgMsgs,
 } from "../components/ThemeFirebase";
-import { CssImg } from "../components/ThemeParts";
+import { BgSizeSlider, CssImg } from "../components/ThemeParts";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   cssBackgroundState,
@@ -199,40 +199,6 @@ const Page: NextPage = () => {
   ));
 
   /**
-███████╗██╗     ██╗██████╗ ███████╗██████╗ 
-██╔════╝██║     ██║██╔══██╗██╔════╝██╔══██╗
-███████╗██║     ██║██║  ██║█████╗  ██████╔╝
-╚════██║██║     ██║██║  ██║██╔══╝  ██╔══██╗
-███████║███████╗██║██████╔╝███████╗██║  ██║
-╚══════╝╚══════╝╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
-                                           
- */
-
-  function backgroundSizeText(value: number | number[]) {
-    return `${value}px`;
-  }
-
-  const [backgroundSize, setBackgroundSize] = React.useState<number[]>([50]);
-
-  const handleSlider = (event: Event, newValue: number | number[]) => {
-    // editCssTargetId に応じて切り替え
-    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
-    // JSONのCSSに追加
-    cssJson[`background-size`] = backgroundSizeText(backgroundSize);
-    // setCssJson(cssJson);
-    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
-    setCssEdited(
-      toCSS({
-        attributes: { ...cssJson },
-      })
-    );
-    // slide
-    setBackgroundSize(newValue as number[]);
-    // 全体のCSS設定を更新
-    updateOverAllCss(cssEdited);
-  };
-
-  /**
 ██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
 ██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
 ██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
@@ -316,14 +282,17 @@ const Page: NextPage = () => {
             <h3>Image</h3>
             <Grid item>
               <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
-              <h4>background-size</h4>
-              <Slider
-                getAriaLabel={() => "background-size range"}
-                value={backgroundSize}
-                onChange={handleSlider}
-                valueLabelDisplay="auto"
-                valueLabelFormat={backgroundSizeText}
-              />
+
+              {/* 
+                ██████╗  ██████╗     ███████╗██╗███████╗███████╗
+                ██╔══██╗██╔════╝     ██╔════╝██║╚══███╔╝██╔════╝
+                ██████╔╝██║  ███╗    ███████╗██║  ███╔╝ █████╗  
+                ██╔══██╗██║   ██║    ╚════██║██║ ███╔╝  ██╔══╝  
+                ██████╔╝╚██████╔╝    ███████║██║███████╗███████╗
+                ╚═════╝  ╚═════╝     ╚══════╝╚═╝╚══════╝╚══════╝
+                                                 */}
+
+              <BgSizeSlider></BgSizeSlider>
 
               {/* 
               ██╗███╗   ███╗ █████╗  ██████╗ ███████╗    ██████╗ ████████╗███╗   ██╗
