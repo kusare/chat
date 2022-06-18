@@ -633,7 +633,6 @@ export const SubChatMsgRecipiLayout: React.FC<{
           ${cssSubChatMsg}
         `}
       >
-        <p>{cssSubChatMsg?.toString()}</p>
         <span>
           {props.msg.profilePicUrl && (
             <div
