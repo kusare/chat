@@ -1,6 +1,7 @@
 import { ChatMsg, CssMsg } from "./types";
 import { Timestamp } from "firebase/firestore";
 
+//TODO rename dummyChatMsg
 export const dummyMsg: ChatMsg = {
   id: "dummy id",
   date: new Date(),

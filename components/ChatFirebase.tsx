@@ -52,6 +52,7 @@ import {
   cssChatMsgTitleDecoState,
 } from "../recoil/States";
 import { ChatMsg, ChatMsgState } from "../types";
+import { dummyMsg } from "../dummy";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -194,17 +195,7 @@ export const useGetChatSubMsgs = (docId: string) => {
   // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
   // const chatSubMsgs = useRecoilValue(subChatMsgsState);
 
-  const [subChatMsgs, setSubChatMsgs] = useState([
-    {
-      id: "",
-      date: Timestamp.fromDate(new Date()).toDate(),
-      name: "",
-      chatTxt: "",
-      title: "",
-      profilePicUrl: "",
-      imageUrl: "",
-    },
-  ]);
+  const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
   const LIMIT = 3;
 
   // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
@@ -227,6 +218,7 @@ export const useGetChatSubMsgs = (docId: string) => {
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
+        //TODO 関数に置き換える
         const message = change.data();
         addedMsgs.push({
           id: change.id,

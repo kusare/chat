@@ -10,30 +10,20 @@ import { Timestamp } from "firebase/firestore";
                             
  */
 
-//TODO delete msg type
-// export type Msg = {
-// id: string;
-// date: Date;
-// name: string;
-// text?: string;
-// chatTxt: string;
-// title: string;
-// profilePicUrl: string;
-// imageUrl: string;
-// };
-
-// export type MsgState = Msg | null;
-
-export type ChatMsg = {
+export type Msg = {
   id: string;
   date: Date;
   name: string;
   text?: string;
-  chatTxt: string;
-  title: string;
   profilePicUrl: string;
-  imageUrl: string;
+  title: string;
 };
+
+export type ChatMsg = {
+  chatTxt: string;
+  imageUrl?: string;
+} & Msg;
+
 export type ChatMsgState = ChatMsg | null;
 
 export type ImgMsg = {
