@@ -51,6 +51,7 @@ import {
   ImgMsg,
   ImgMsgState,
   ThemeUiTargetId,
+  CssMsgArg,
 } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -475,17 +476,6 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
 ███████║███████╗   ██║   
 ╚══════╝╚══════╝   ╚═╝   
  */
-
-// TODO move to types.ts
-type CssMsgArg = {
-  cssBackground: string;
-  cssTopbar: string;
-  cssTopbarDeco: string;
-  cssChatMsg: string;
-  cssChatMsgDeco: string;
-  cssSubChatMsg: string;
-  cssChatMsgTitleDeco: string;
-};
 
 // Saves a new message to Cloud Firestore.
 export const setCssMsg = async (arg: CssMsgArg) => {
