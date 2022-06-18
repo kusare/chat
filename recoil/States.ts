@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { Timestamp } from "firebase/firestore";
 import {
-  MsgState,
+  ChatMsgState,
   CssMsgState,
   ThemeUiTargetId,
   ChatRadioBtnId,
@@ -95,12 +95,12 @@ export const cssChatMsgTitleDecoState = atom({
 ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                             
  */
-export const msgsState = atom<MsgState[]>({
+export const msgsState = atom<ChatMsgState[]>({
   key: "msgsState",
   default: [dummyMsg],
 });
 
-export const subChatMsgsState = atom<MsgState[]>({
+export const subChatMsgsState = atom<ChatMsgState[]>({
   key: "subChatMsgsState",
   default: [dummyMsg],
 });

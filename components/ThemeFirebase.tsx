@@ -44,8 +44,6 @@ import {
   cssSubChatMsgState,
 } from "../recoil/States";
 import {
-  ChatMsgState,
-  ChatMsg,
   CssMsgState,
   CssMsg,
   ImgMsg,
