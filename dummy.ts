@@ -21,6 +21,8 @@ export const dummyCssMsg: CssMsg = {
   cssTopbarDeco: "",
   cssChatMsg: "",
   cssChatMsgDeco: "",
+  cssSubChatMsg: "",
+  cssChatMsgTitleDeco: "",
   profilePicUrl: "",
   imageUrl: "",
 };
