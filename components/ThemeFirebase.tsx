@@ -41,6 +41,7 @@ import {
   cssChatMsgDecoState,
   editCssTargetIdState,
   cssChatMsgTitleDecoState,
+  cssSubChatMsgState,
 } from "../recoil/States";
 import {
   ChatMsgState,
@@ -439,16 +440,15 @@ export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
  *
  */
 export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
-  // 全体の背景のCSS設定はcssBackgroundStateから
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
-  // 全体のtopbarのCSS設定
   const setCssTopbarState = useSetRecoilState(cssTopbarState);
-  // 全体のtopbarのCSS設定
   const setCssTopbarDecoState = useSetRecoilState(cssTopbarDecoState);
-  // 全体のChatのMessageのCSS設定
   const setCssChatMsgState = useSetRecoilState(cssChatMsgState);
-  // 全体のChatのMessageのDecoのCSS設定
   const setCssChatMsgDecoState = useSetRecoilState(cssChatMsgDecoState);
+  const setCssSubChatMsgState = useSetRecoilState(cssSubChatMsgState);
+  const setCssChatMsgTitleDecoState = useSetRecoilState(
+    cssChatMsgTitleDecoState
+  );
 
   // TODO　どのようにrecoilに反映されてるか確認
   const updateWholeCss = () => {
@@ -457,6 +457,8 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
     setCssTopbarDecoState(props.msg.cssTopbarDeco);
     setCssChatMsgState(props.msg.cssChatMsg);
     setCssChatMsgDecoState(props.msg.cssChatMsgDeco);
+    setCssSubChatMsgState(props.msg.cssSubChatMsg);
+    setCssChatMsgTitleDecoState(props.msg.cssChatMsgTitleDeco);
   };
   return (
     <>
