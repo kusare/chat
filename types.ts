@@ -16,7 +16,7 @@ export type Msg = {
   name: string;
   text?: string;
   profilePicUrl: string;
-  title: string;
+  title?: string;
 };
 
 export type ChatMsg = {
@@ -27,13 +27,8 @@ export type ChatMsg = {
 export type ChatMsgState = ChatMsg | null;
 
 export type ImgMsg = {
-  id: string;
-  timestamp: Timestamp;
-  name: string;
-  text?: string;
-  profilePicUrl: string;
   imageUrl: string;
-};
+} & Msg;
 export type ImgMsgState = ImgMsg | null;
 
 export type CssMsgArg = {

@@ -185,7 +185,7 @@ export const useGetCssMsgs = (id: string) => {
 /**
  *
  */
-export const useImgMsgs = (id: string) => {
+export const useGetImgMsgs = (id: string) => {
   const [imgMsgs, setImgMsgs] = useState<ImgMsgState[]>([]);
   /**
 ██╗     ██╗███╗   ███╗██╗████████╗
@@ -205,7 +205,7 @@ export const useImgMsgs = (id: string) => {
     const recentMessagesQuery = query(
       // collection(getFirestore(), "cssMsgs"),
       collection(getFirestore(), id),
-      orderBy("timestamp", "desc"),
+      orderBy("date", "desc"),
       limit(LIMIT)
     );
     // Start listening to the query.
@@ -215,7 +215,7 @@ export const useImgMsgs = (id: string) => {
         const message = change.data();
         addedMsgs.push({
           id: change.id,
-          timestamp: message.timestamp,
+          date: message.date,
           name: message.name,
           profilePicUrl: message.profilePicUrl,
           imageUrl: message.imageUrl,
@@ -499,7 +499,7 @@ export const setCssMsg = async (arg: CssMsgArg) => {
 
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
-export const setCssImg = async (event: any, id: string) => {
+export const setCssImgMsg = async (event: any, id: string) => {
   event.preventDefault();
   let file = event.target.files[0];
 
@@ -510,7 +510,7 @@ export const setCssImg = async (event: any, id: string) => {
       name: getUserName(),
       imageUrl: LOADING_IMAGE_URL,
       profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
+      date: Timestamp.fromDate(new Date()).toDate(),
     });
 
     // 2 - Upload the image to Cloud Storage.

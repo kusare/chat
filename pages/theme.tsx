@@ -11,8 +11,8 @@ import {
   GetCssMsg,
   useGetCssMsgs,
   SetCssTextToAtomBtn,
-  setCssImg,
-  useImgMsgs,
+  setCssImgMsg,
+  useGetImgMsgs,
 } from "../components/ThemeFirebase";
 import { BgSizeSlider, CssImg } from "../components/ThemeParts";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
@@ -30,9 +30,6 @@ import {
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignore
 import { toCSS, toJSON } from "cssjson";
-import Slider from "@mui/material/Slider";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { CustomDrawer } from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ChatRadioBtnId, ThemeUiTargetId } from "../types";
@@ -186,7 +183,7 @@ const Page: NextPage = () => {
                                                                                    
  */
 
-  const imgMsgs = useImgMsgs("cssImgMsgs").map((msg, index) => (
+  const imgMsgs = useGetImgMsgs("css-img-msgs").map((msg, index) => (
     <div key={index.toString() + "div"}>
       {msg && (
         <CssImg
@@ -281,7 +278,11 @@ const Page: NextPage = () => {
                                         */}
             <h3>Image</h3>
             <Grid item>
-              <Input type="file" onChange={(e) => setCssImg(e, "cssImgMsgs")} />
+              <Input
+                type="file"
+                // rename css-img-msgs
+                onChange={(e) => setCssImgMsg(e, "css-img-msgs")}
+              />
 
               {/* 
                 ██████╗  ██████╗     ███████╗██╗███████╗███████╗
