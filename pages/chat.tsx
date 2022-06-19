@@ -115,8 +115,10 @@ const Page: NextPage = () => {
                   value={chatTxt}
                   rows={4}
                   onChange={handleChange}
+                  fullWidth
                 />
-                {/* 
+              </Stack>
+              {/* 
                 ███████╗███████╗████████╗
                 ██╔════╝██╔════╝╚══██╔══╝
                 ███████╗█████╗     ██║   
@@ -125,10 +127,9 @@ const Page: NextPage = () => {
                 ╚══════╝╚══════╝   ╚═╝
                    */}
 
-                <Button onClick={() => setChatMsg(chatTxt, title)}>
-                  Set Msg
-                </Button>
-              </Stack>
+              <Button onClick={() => setChatMsg(chatTxt, title)}>
+                Set Msg
+              </Button>
             </FormControl>
             <Input type="file" onChange={setImgMsg} />
             {/*
