@@ -7,10 +7,10 @@ import {
   ProfilePic,
   UserName,
   setChatMsg,
-  ChatMsgEle,
   useGetMsgs,
   useGetChatSubMsgs,
   setImgMsg,
+  ChatMsgNormalEle,
   ChatMsgRecipiLayout,
   SubChatMsgRecipiLayout,
 } from "../components/ChatFirebase";
@@ -43,7 +43,7 @@ export function ChatMsgs() {
   const chatMsgs = useGetMsgs();
 
   const normal = chatMsgs.map((msg, index) => (
-    <ChatMsgEle key={msg?.id.toString() + index.toString()} msg={msg} />
+    <ChatMsgNormalEle key={msg?.id.toString() + index.toString()} msg={msg} />
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={msg?.id.toString() + index.toString()} msg={msg}>

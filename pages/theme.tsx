@@ -33,7 +33,10 @@ import { toCSS, toJSON } from "cssjson";
 import { CustomDrawer } from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ChatRadioBtnId, ThemeUiTargetId } from "../types";
-import { ChatMsgEle, ChatMsgRecipiLayout } from "../components/ChatFirebase";
+import {
+  ChatMsgNormalEle,
+  ChatMsgRecipiLayout,
+} from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { ChatLayoutChips, EditCssTargetIdChips } from "../components/Chips";
 import { SubChatMsgEle } from "./chat";
@@ -262,7 +265,7 @@ const Page: NextPage = () => {
                 ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
                                                                                     */}
             <ChatLayoutChips></ChatLayoutChips>
-            {chatRadioBtnId === "Normal" && <ChatMsgEle msg={dummyMsg} />}
+            {chatRadioBtnId === "Normal" && <ChatMsgNormalEle msg={dummyMsg} />}
             {chatRadioBtnId === "Recipe" && (
               <ChatMsgRecipiLayout msg={dummyMsg}>
                 <SubChatMsgEle docId={dummyMsg?.id.toString()} />

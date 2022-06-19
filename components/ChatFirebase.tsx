@@ -388,7 +388,7 @@ export const UserName: React.FC = () => {
  * Chat Message Normal Layout
  */
 // TODO Rename to ChatMsgNormalLayout
-export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
+export const ChatMsgNormalEle: React.FC<{ msg: ChatMsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
 
