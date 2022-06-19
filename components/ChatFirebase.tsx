@@ -35,7 +35,14 @@ import React, { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { timeStamp } from "console";
-import { Box, Stack, Button, TextField, Avatar } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Button,
+  TextField,
+  Avatar,
+  FormControl,
+} from "@mui/material";
 import { css } from "@emotion/react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -397,24 +404,22 @@ export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
           ${cssChatMsgDeco}
         `}
       >{`planned cssChatMsgDeco`}</div>
-      <Stack
-        spacing={2}
-        direction="row"
+      <div
         css={css`
           ${cssChatMsg}
         `}
       >
-        <Box>
-          {props.msg.profilePicUrl && (
-            <Avatar
-              alt="profilePic"
-              src={props.msg.profilePicUrl}
-              sx={{ width: 48, height: 48 }}
-            />
-          )}
-        </Box>
+        <Stack spacing={2} direction="row">
+          <Box>
+            {props.msg.profilePicUrl && (
+              <Avatar
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+                sx={{ width: 48, height: 48 }}
+              />
+            )}
+          </Box>
 
-        <Box>
           <Stack spacing={2} direction="row">
             {props.msg.name && <div>{props.msg.name}</div>}
             {props.msg.date && <time>{props.msg.date.toString()}</time>}
@@ -427,14 +432,24 @@ export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
             ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
              ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
                                                                 */}
+          {/* <FormControl fullWidth sx={{ m: 1 }}>
           <TextField
+            fullWidth
             multiline
             placeholder="No Comment"
             maxRows={4}
             value={props.msg.chatTxt}
           />
-        </Box>
-      </Stack>
+        </FormControl> */}
+        </Stack>
+        <p
+          css={css`
+            overflow-wrap: break-word;
+          `}
+        >
+          {props.msg.chatTxt}
+        </p>
+      </div>
       <div>
         {props.msg.imageUrl && (
           // eslint-disable-next-line @next/next/no-img-element
