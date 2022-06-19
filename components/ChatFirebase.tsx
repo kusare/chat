@@ -561,14 +561,14 @@ export const ChatMsgRecipiLayout: React.FC<{
               ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
                ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
                                                                 */}
-              <TextField
-                multiline
-                placeholder="No Comment"
-                maxRows={4}
-                value={props.msg.chatTxt}
-              />
             </Box>
           </Stack>
+          <TextField
+            multiline
+            fullWidth
+            variant="standard"
+            value={props.msg.chatTxt}
+          />
         </div>
         <div>
           {props.msg.imageUrl && (
@@ -652,7 +652,12 @@ export const SubChatMsgRecipiLayout: React.FC<{
                 src={props.msg.profilePicUrl}
                 sx={{ width: 24, height: 24 }}
               />
-              <p>{props.msg.chatTxt}</p>
+              <TextField
+                multiline
+                fullWidth
+                variant="standard"
+                value={props.msg.chatTxt}
+              />
             </div>
           )}
         </span>
