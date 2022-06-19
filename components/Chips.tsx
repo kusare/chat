@@ -32,7 +32,7 @@ export const ChatLayoutChips = () => {
 
   return (
     <>
-      <h5>Chat layout</h5>
+      <h5>Chat Style</h5>
       <Chip
         avatar={
           <Avatar src="https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c"></Avatar>

@@ -35,13 +35,19 @@ import React, { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { timeStamp } from "console";
-import { Box, Stack, Button, TextField, Avatar } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Button,
+  TextField,
+  Avatar,
+  FormControl,
+} from "@mui/material";
 import { css } from "@emotion/react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import { Msg, MsgState } from "../types";
 import {
   msgsState,
   subChatMsgsState,
@@ -52,6 +58,8 @@ import {
   cssChatMsgDecoState,
   cssChatMsgTitleDecoState,
 } from "../recoil/States";
+import { ChatMsg, ChatMsgState } from "../types";
+import { dummyMsg } from "../dummy";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -165,7 +173,7 @@ export const useGetMsgs = () => {
     );
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
-      let addedMsgs: Msg[] = [];
+      let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
         const message = change.data();
         addedMsgs.push({
@@ -194,17 +202,7 @@ export const useGetChatSubMsgs = (docId: string) => {
   // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
   // const chatSubMsgs = useRecoilValue(subChatMsgsState);
 
-  const [subChatMsgs, setSubChatMsgs] = useState([
-    {
-      id: "",
-      date: Timestamp.fromDate(new Date()).toDate(),
-      name: "",
-      chatTxt: "",
-      title: "",
-      profilePicUrl: "",
-      imageUrl: "",
-    },
-  ]);
+  const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
   const LIMIT = 3;
 
   // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
@@ -225,8 +223,9 @@ export const useGetChatSubMsgs = (docId: string) => {
     );
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
-      let addedMsgs: Msg[] = [];
+      let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
+        //TODO 関数に置き換える
         const message = change.data();
         addedMsgs.push({
           id: change.id,
@@ -389,7 +388,7 @@ export const UserName: React.FC = () => {
  * Chat Message Normal Layout
  */
 // TODO Rename to ChatMsgNormalLayout
-export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
+export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
 
@@ -405,24 +404,22 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
           ${cssChatMsgDeco}
         `}
       >{`planned cssChatMsgDeco`}</div>
-      <Stack
-        spacing={2}
-        direction="row"
+      <div
         css={css`
           ${cssChatMsg}
         `}
       >
-        <Box>
-          {props.msg.profilePicUrl && (
-            <Avatar
-              alt="profilePic"
-              src={props.msg.profilePicUrl}
-              sx={{ width: 48, height: 48 }}
-            />
-          )}
-        </Box>
+        <Stack spacing={2} direction="row">
+          <Box>
+            {props.msg.profilePicUrl && (
+              <Avatar
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+                sx={{ width: 48, height: 48 }}
+              />
+            )}
+          </Box>
 
-        <Box>
           <Stack spacing={2} direction="row">
             {props.msg.name && <div>{props.msg.name}</div>}
             {props.msg.date && <time>{props.msg.date.toString()}</time>}
@@ -435,14 +432,24 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
             ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
              ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
                                                                 */}
+          {/* <FormControl fullWidth sx={{ m: 1 }}>
           <TextField
+            fullWidth
             multiline
             placeholder="No Comment"
             maxRows={4}
             value={props.msg.chatTxt}
           />
-        </Box>
-      </Stack>
+        </FormControl> */}
+        </Stack>
+        <p
+          css={css`
+            overflow-wrap: break-word;
+          `}
+        >
+          {props.msg.chatTxt}
+        </p>
+      </div>
       <div>
         {props.msg.imageUrl && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -464,7 +471,7 @@ export const ChatMsgEle: React.FC<{ msg: MsgState }> = (props) => {
  */
 //TODO move to ThemeParts.tsx
 export const ChatMsgRecipiLayout: React.FC<{
-  msg: MsgState;
+  msg: ChatMsgState;
   children: React.ReactNode;
 }> = (props) => {
   // 全体のChatのMessageのCSS設定
@@ -619,7 +626,7 @@ export const ChatMsgRecipiLayout: React.FC<{
 };
 
 export const SubChatMsgRecipiLayout: React.FC<{
-  msg: MsgState;
+  msg: ChatMsgState;
 }> = (props) => {
   // CSS設定
   const cssSubChatMsg = useRecoilValue(cssSubChatMsgState);

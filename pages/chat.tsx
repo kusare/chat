@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Box, Stack, Button, TextField } from "@mui/material";
+import { Box, Stack, Button, TextField, FormControl } from "@mui/material";
 import {
   signIn,
   signOutUser,
@@ -101,7 +101,7 @@ const Page: NextPage = () => {
       <CustomDrawer>
         <Grid container direction="row">
           <Grid item xs={12} md={6} alignItems="center">
-            <Box>
+            <FormControl fullWidth sx={{ m: 1 }}>
               <TextField
                 label="Title"
                 value={title}
@@ -129,7 +129,7 @@ const Page: NextPage = () => {
                   Set Msg
                 </Button>
               </Stack>
-            </Box>
+            </FormControl>
             <Input type="file" onChange={setImgMsg} />
             {/*
             ██████╗  █████╗ ██████╗ ██╗ ██████╗ 

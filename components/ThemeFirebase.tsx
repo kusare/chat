@@ -44,13 +44,12 @@ import {
   cssSubChatMsgState,
 } from "../recoil/States";
 import {
-  ChatMsgState,
-  ChatMsg,
   CssMsgState,
   CssMsg,
   ImgMsg,
   ImgMsgState,
   ThemeUiTargetId,
+  CssMsgArg,
 } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -186,7 +185,7 @@ export const useGetCssMsgs = (id: string) => {
 /**
  *
  */
-export const useImgMsgs = (id: string) => {
+export const useGetImgMsgs = (id: string) => {
   const [imgMsgs, setImgMsgs] = useState<ImgMsgState[]>([]);
   /**
 ██╗     ██╗███╗   ███╗██╗████████╗
@@ -206,21 +205,35 @@ export const useImgMsgs = (id: string) => {
     const recentMessagesQuery = query(
       // collection(getFirestore(), "cssMsgs"),
       collection(getFirestore(), id),
-      orderBy("timestamp", "desc"),
+      orderBy("date", "desc"),
       limit(LIMIT)
     );
+    const test = (msg: any) => {
+      const data = msg.data();
+      const value = {
+        id: msg.id,
+        date: data.date,
+        name: data.name,
+        profilePicUrl: data.profilePicUrl,
+        imageUrl: data.imageUrl,
+      };
+      return value;
+    };
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ImgMsg[] = [];
       snapshot.docs.map((change) => {
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          timestamp: message.timestamp,
-          name: message.name,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        //   const message = change.data();
+        //   addedMsgs.push({
+        //     id: change.id,
+        //     date: message.date,
+        //     name: message.name,
+        //     profilePicUrl: message.profilePicUrl,
+        //     imageUrl: message.imageUrl,
+        //   });
+        // }
+        const value = test(change);
+        addedMsgs.push(value);
       }, []);
       setImgMsgs(addedMsgs);
       return unsub;
@@ -264,7 +277,7 @@ export const useImgMsgs = (id: string) => {
 /**
  * message
  */
-export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
+export const CssMsgEle: React.FC<{ msg: CssMsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {
@@ -476,17 +489,6 @@ export const SetCssTextToAtomBtn = (props: { msg: CssMsg }) => {
 ╚══════╝╚══════╝   ╚═╝   
  */
 
-// TODO move to types.ts
-type CssMsgArg = {
-  cssBackground: string;
-  cssTopbar: string;
-  cssTopbarDeco: string;
-  cssChatMsg: string;
-  cssChatMsgDeco: string;
-  cssSubChatMsg: string;
-  cssChatMsgTitleDeco: string;
-};
-
 // Saves a new message to Cloud Firestore.
 export const setCssMsg = async (arg: CssMsgArg) => {
   const cssMsgForAdd: CssMsg = {
@@ -511,7 +513,7 @@ export const setCssMsg = async (arg: CssMsgArg) => {
 
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
-export const setCssImg = async (event: any, id: string) => {
+export const setCssImgMsg = async (event: any, id: string) => {
   event.preventDefault();
   let file = event.target.files[0];
 
@@ -522,7 +524,7 @@ export const setCssImg = async (event: any, id: string) => {
       name: getUserName(),
       imageUrl: LOADING_IMAGE_URL,
       profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
+      date: Timestamp.fromDate(new Date()).toDate(),
     });
 
     // 2 - Upload the image to Cloud Storage.

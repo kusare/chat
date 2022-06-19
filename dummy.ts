@@ -1,9 +1,10 @@
-import { Msg, CssMsg } from "./types";
+import { ChatMsg, CssMsg } from "./types";
 import { Timestamp } from "firebase/firestore";
 
-export const dummyMsg: Msg = {
+//TODO rename dummyChatMsg
+export const dummyMsg: ChatMsg = {
   id: "dummy id",
-  date: new Date(),
+  date: Timestamp.fromDate(new Date()).toDate(),
   name: "dummy name",
   text: "dummy text",
   title: "dummy title",

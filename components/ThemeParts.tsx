@@ -55,14 +55,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import {
-  ChatMsgState,
-  ChatMsg,
-  CssMsgState,
-  CssMsg,
-  ImgMsg,
-  ImgMsgState,
-} from "../types";
+import { CssMsgState, CssMsg, ImgMsg, ImgMsgState } from "../types";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
