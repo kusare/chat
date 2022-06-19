@@ -208,18 +208,32 @@ export const useGetImgMsgs = (id: string) => {
       orderBy("date", "desc"),
       limit(LIMIT)
     );
+    const test = (msg: any) => {
+      const data = msg.data();
+      const value = {
+        id: msg.id,
+        date: data.date,
+        name: data.name,
+        profilePicUrl: data.profilePicUrl,
+        imageUrl: data.imageUrl,
+      };
+      return value;
+    };
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ImgMsg[] = [];
       snapshot.docs.map((change) => {
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          date: message.date,
-          name: message.name,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        //   const message = change.data();
+        //   addedMsgs.push({
+        //     id: change.id,
+        //     date: message.date,
+        //     name: message.name,
+        //     profilePicUrl: message.profilePicUrl,
+        //     imageUrl: message.imageUrl,
+        //   });
+        // }
+        const value = test(change);
+        addedMsgs.push(value);
       }, []);
       setImgMsgs(addedMsgs);
       return unsub;
@@ -263,7 +277,7 @@ export const useGetImgMsgs = (id: string) => {
 /**
  * message
  */
-export const GetCssMsg: React.FC<{ msg: CssMsgState }> = (props) => {
+export const CssMsgEle: React.FC<{ msg: CssMsgState }> = (props) => {
   const [time, setTime] = useState("");
 
   useEffect(() => {

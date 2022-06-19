@@ -8,7 +8,7 @@ import { Input } from "@mui/material";
 import Head from "next/head";
 import { Global, css } from "@emotion/react";
 import {
-  GetCssMsg,
+  CssMsgEle,
   useGetCssMsgs,
   SetCssTextToAtomBtn,
   setCssImgMsg,
@@ -225,10 +225,10 @@ const Page: NextPage = () => {
               <>
                 {msg && (
                   <div key={index.toString() + "div"}>
-                    <GetCssMsg
+                    <CssMsgEle
                       key={msg?.id?.toString() + index.toString() + "msg"}
                       msg={msg}
-                    ></GetCssMsg>
+                    ></CssMsgEle>
                     <SetCssTextToAtomBtn
                       key={msg?.id?.toString() + index.toString() + "css"}
                       msg={msg}
