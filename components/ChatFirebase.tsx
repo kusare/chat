@@ -442,13 +442,13 @@ export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
           />
         </FormControl> */}
         </Stack>
-        <p
-          css={css`
-            overflow-wrap: break-word;
-          `}
-        >
-          {props.msg.chatTxt}
-        </p>
+
+        <TextField
+          multiline
+          fullWidth
+          variant="standard"
+          value={props.msg.chatTxt}
+        />
       </div>
       <div>
         {props.msg.imageUrl && (
