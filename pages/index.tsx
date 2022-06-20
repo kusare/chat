@@ -8,8 +8,6 @@ import {
   SwipeableTemporaryDrawer,
   CustomDrawer,
 } from "../components/GlobalParts";
-import { chatRadioBtnIdState } from "../recoil/States";
-import { SwipeableDrawer } from "@mui/material";
 import { useGetWindowSize } from "../utils/get-window-size";
 
 const Home: NextPage = () => {
