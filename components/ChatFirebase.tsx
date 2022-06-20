@@ -424,23 +424,6 @@ export const ChatMsgNormalEle: React.FC<{ msg: ChatMsgState }> = (props) => {
             {props.msg.name && <div>{props.msg.name}</div>}
             {props.msg.date && <time>{props.msg.date.toString()}</time>}
           </Stack>
-          {/* 
-             ██████╗██╗  ██╗ █████╗ ████████╗    ████████╗██╗  ██╗████████╗
-            ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ╚══██╔══╝╚██╗██╔╝╚══██╔══╝
-            ██║     ███████║███████║   ██║          ██║    ╚███╔╝    ██║   
-            ██║     ██╔══██║██╔══██║   ██║          ██║    ██╔██╗    ██║   
-            ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
-             ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
-                                                                */}
-          {/* <FormControl fullWidth sx={{ m: 1 }}>
-          <TextField
-            fullWidth
-            multiline
-            placeholder="No Comment"
-            maxRows={4}
-            value={props.msg.chatTxt}
-          />
-        </FormControl> */}
         </Stack>
 
         <TextField
@@ -604,6 +587,15 @@ export const ChatMsgRecipiLayout: React.FC<{
           ███████║███████╗   ██║   
           ╚══════╝╚══════╝   ╚═╝   
                                     */}
+
+          <TextField
+            fullWidth
+            multiline
+            placeholder="No Comment"
+            maxRows={4}
+            value={chatTxt}
+            onChange={handleMsgInput}
+          />
           <IconButton
             aria-label="edit"
             onClick={() =>
@@ -612,13 +604,6 @@ export const ChatMsgRecipiLayout: React.FC<{
           >
             <EditIcon />
           </IconButton>
-          <TextField
-            multiline
-            placeholder="No Comment"
-            maxRows={4}
-            value={chatTxt}
-            onChange={handleMsgInput}
-          />
         </div>
       </div>
     </>
