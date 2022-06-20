@@ -188,12 +188,12 @@ export const useGetMsgs = () => {
   return chatMsgs;
 };
 
-export const useGetChatSubMsgs = (docId: string) => {
+export const useGetChatSubMsgs = (docId: string, getLimit: number = 3) => {
   //TODO ほかにいい方法がないかな
   const id = docId || "dummyId";
 
   const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
-  const LIMIT = 3;
+  const LIMIT = getLimit;
 
   // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
   // ██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝

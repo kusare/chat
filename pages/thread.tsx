@@ -54,10 +54,11 @@ export function ChatMsgs() {
   );
 }
 
-//TODO docIdではなくmsgを取り込むようにする
-export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
-  const { docId } = props;
-  const subChatMsgs = useGetChatSubMsgs(docId);
+export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
+  props
+) => {
+  const { docId, getLimit } = props;
+  const subChatMsgs = useGetChatSubMsgs(docId, getLimit);
   const msg = subChatMsgs.map((msg, index) => (
     <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
   ));
@@ -125,7 +126,7 @@ export const UseChatContent: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <h1>{query.id}</h1>
-          <SubChatMsgEle docId={query.id} />
+          <SubChatMsgEle docId={query.id} getLimit={1000} />
         </Grid>
       </Grid>
     </>
