@@ -10,6 +10,21 @@ import {
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
 
+export const UseIndexContent: React.FC = () => {
+  const { height, width } = useGetWindowSize();
+  return (
+    <>
+      <h1>Index</h1>
+      <div>
+        height:{height} width:{width}
+      </div>
+      <div>{`phone width <= 599px`}</div>
+      <div>{`tablet 600px < width < 959px`}</div>
+      <div>{`desktop width >= 960px`}</div>
+    </>
+  );
+};
+
 const Home: NextPage = () => {
   const { height, width } = useGetWindowSize();
   const cssText = useRecoilValue(cssBackgroundState);
@@ -30,19 +45,13 @@ const Home: NextPage = () => {
 
       {width <= 599 && (
         <SwipeableTemporaryDrawer>
-          <p>home</p>
-          <div>
-            height:{height} width:{width}
-          </div>
-          <div>{`phone width <= 599px`}</div>
-          <div>{`tablet 600px < width < 959px`}</div>
-          <div>{`desktop width >= 960px`}</div>
+          <UseIndexContent></UseIndexContent>
         </SwipeableTemporaryDrawer>
       )}
 
       {599 < width && (
         <CustomDrawer>
-          <p>home</p>
+          <UseIndexContent></UseIndexContent>
         </CustomDrawer>
       )}
     </div>
