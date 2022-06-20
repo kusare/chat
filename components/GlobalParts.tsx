@@ -43,13 +43,19 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
+import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 
 const SideListUp: React.FC<{
   open: Boolean;
 }> = (props) => {
   const { open } = props;
   const list = [
-    { linkKey: "thread", href: "/thread", text: "Thread", icon: <ChatIcon /> },
+    {
+      linkKey: "thread",
+      href: "/thread",
+      text: "Thread",
+      icon: <ForumTwoToneIcon />,
+    },
     { linkKey: "chat", href: "/chat", text: "Chat", icon: <ChatIcon /> },
     { linkKey: "theme", href: "/theme", text: "Theme", icon: <PaletteIcon /> },
     {
