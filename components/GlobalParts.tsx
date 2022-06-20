@@ -527,6 +527,13 @@ export const SwipeableTemporaryDrawer: React.FC<{
         </Link>
         <ProfilePic></ProfilePic>
       </Toolbar>
+      <p
+        css={css`
+          ${cssTopbarDeco}
+        `}
+      >
+        {`cssTopbarDeco`}
+      </p>
       <SwipeableDrawer
         anchor="left"
         open={open}
