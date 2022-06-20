@@ -124,8 +124,8 @@ export const UseChatContent: React.FC = () => {
           <ChatMsgs />
         </Grid>
         <Grid item xs={12} md={6}>
-          Planned site
-          <h1>{query.name}</h1>
+          <h1>{query.id}</h1>
+          <SubChatMsgEle docId={query.id} />
         </Grid>
       </Grid>
     </>

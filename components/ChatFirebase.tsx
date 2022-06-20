@@ -60,6 +60,7 @@ import {
 } from "../recoil/States";
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
+import Link from "next/link";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -483,13 +484,15 @@ export const ChatMsgRecipiLayout: React.FC<{
             ${cssChatMsg}
           `}
         >
-          <h2
-            css={css`
-              text-align: center;
-            `}
-          >
-            {props.msg.title}
-          </h2>
+          <Link href={`/thread/?id=${props.msg.id}`}>
+            <h2
+              css={css`
+                text-align: center;
+              `}
+            >
+              {props.msg.title}
+            </h2>
+          </Link>
           {/*               
               ████████╗██╗████████╗██╗     ███████╗    ██████╗ ███████╗ ██████╗ ██████╗ 
               ╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝    ██╔══██╗██╔════╝██╔════╝██╔═══██╗
