@@ -388,7 +388,7 @@ export const UserName: React.FC = () => {
  * Chat Message Normal Layout
  */
 // TODO Rename to ChatMsgNormalLayout
-export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
+export const ChatMsgNormalEle: React.FC<{ msg: ChatMsgState }> = (props) => {
   // 全体のChatのMessageのCSS設定
   const cssChatMsg = useRecoilValue(cssChatMsgState);
 
@@ -442,13 +442,13 @@ export const ChatMsgEle: React.FC<{ msg: ChatMsgState }> = (props) => {
           />
         </FormControl> */}
         </Stack>
-        <p
-          css={css`
-            overflow-wrap: break-word;
-          `}
-        >
-          {props.msg.chatTxt}
-        </p>
+
+        <TextField
+          multiline
+          fullWidth
+          variant="standard"
+          value={props.msg.chatTxt}
+        />
       </div>
       <div>
         {props.msg.imageUrl && (
@@ -561,14 +561,14 @@ export const ChatMsgRecipiLayout: React.FC<{
               ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
                ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
                                                                 */}
-              <TextField
-                multiline
-                placeholder="No Comment"
-                maxRows={4}
-                value={props.msg.chatTxt}
-              />
             </Box>
           </Stack>
+          <TextField
+            multiline
+            fullWidth
+            variant="standard"
+            value={props.msg.chatTxt}
+          />
         </div>
         <div>
           {props.msg.imageUrl && (
@@ -652,7 +652,12 @@ export const SubChatMsgRecipiLayout: React.FC<{
                 src={props.msg.profilePicUrl}
                 sx={{ width: 24, height: 24 }}
               />
-              <p>{props.msg.chatTxt}</p>
+              <TextField
+                multiline
+                fullWidth
+                variant="standard"
+                value={props.msg.chatTxt}
+              />
             </div>
           )}
         </span>

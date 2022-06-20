@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, SwipeableDrawer } from "@mui/material";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
@@ -34,6 +34,10 @@ import SettingsInputAntennaIcon from "@mui/icons-material/SettingsInputAntenna";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import TimerIcon from "@mui/icons-material/Timer";
 import MusicNoteOutlinedIcon from "@mui/icons-material/MusicNoteOutlined";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import { useRouter } from "next/router";
+import AppBar from "@mui/material/AppBar";
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   props
@@ -197,6 +201,14 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
             </IconButton>
           </DrawerHeader>
           <Divider />
+          {/*           
+          ██████╗ ██╗ ██████╗ ██╗  ██╗████████╗    ███████╗██╗██████╗ ███████╗
+          ██╔══██╗██║██╔════╝ ██║  ██║╚══██╔══╝    ██╔════╝██║██╔══██╗██╔════╝
+          ██████╔╝██║██║  ███╗███████║   ██║       ███████╗██║██║  ██║█████╗  
+          ██╔══██╗██║██║   ██║██╔══██║   ██║       ╚════██║██║██║  ██║██╔══╝  
+          ██║  ██║██║╚██████╔╝██║  ██║   ██║       ███████║██║██████╔╝███████╗
+          ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚══════╝
+                                                                     */}
           <List>
             <ListItem disablePadding sx={{ display: "block" }}>
               <Link
@@ -429,3 +441,364 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
     </div>
   );
 };
+
+export default function SwipeableTemporaryDrawer() {
+  /**
+██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
+██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
+██████╔╝█████╗  ██║     ██║   ██║██║██║     
+██╔══██╗██╔══╝  ██║     ██║   ██║██║██║     
+██║  ██║███████╗╚██████╗╚██████╔╝██║███████╗
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
+                                            
+ */
+
+  // 全体のtopbarのCSS設定
+  const cssTopbar = useRecoilValue(cssTopbarState);
+  const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
+
+  /**
+██████╗ ██████╗  █████╗ ██╗    ██╗███████╗██████╗ 
+██╔══██╗██╔══██╗██╔══██╗██║    ██║██╔════╝██╔══██╗
+██║  ██║██████╔╝███████║██║ █╗ ██║█████╗  ██████╔╝
+██║  ██║██╔══██╗██╔══██║██║███╗██║██╔══╝  ██╔══██╗
+██████╔╝██║  ██║██║  ██║╚███╔███╔╝███████╗██║  ██║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝
+                                                  
+ */
+  // const drawerWidth = 0;
+
+  // interface AppBarProps extends MuiAppBarProps {
+  //   open?: boolean;
+  // }
+
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
+
+  // const AppBar = styled(MuiAppBar, {
+  //   shouldForwardProp: (prop) => prop !== "open",
+  // })<AppBarProps>(({ theme, open }) => ({
+  //   zIndex: theme.zIndex.drawer + 1,
+  //   ...(open && {}),
+  // }));
+
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <div>
+      <AppBar position="static">
+        <Toolbar
+          css={css`
+            ${cssTopbar}
+          `}
+        >
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <Link
+            noWrap
+            key={"root"}
+            // variant="body2"
+            href={"/"}
+            // sx={{ p: 1, flexShrink: 0 }}
+            underline="none"
+          >
+            <p>Hamu House</p>
+          </Link>
+          <ProfilePic></ProfilePic>
+        </Toolbar>
+      </AppBar>
+      <SwipeableDrawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => {}}
+      >
+        <Toolbar
+          css={css`
+            ${cssTopbar}
+          `}
+        >
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setOpen(false)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Link
+            noWrap
+            key={"chat"}
+            // variant="body2"
+            href={"/"}
+            // sx={{ p: 1, flexShrink: 0 }}
+            underline="none"
+          >
+            <p>Hamu House</p>
+          </Link>
+          <ProfilePic></ProfilePic>
+
+          {/* <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: "none" }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton> */}
+        </Toolbar>
+        <div>
+          <Box textAlign="center" p={2}>
+            {/*           
+          ██████╗ ██╗ ██████╗ ██╗  ██╗████████╗    ███████╗██╗██████╗ ███████╗
+          ██╔══██╗██║██╔════╝ ██║  ██║╚══██╔══╝    ██╔════╝██║██╔══██╗██╔════╝
+          ██████╔╝██║██║  ███╗███████║   ██║       ███████╗██║██║  ██║█████╗  
+          ██╔══██╗██║██║   ██║██╔══██║   ██║       ╚════██║██║██║  ██║██╔══╝  
+          ██║  ██║██║╚██████╔╝██║  ██║   ██║       ███████║██║██████╔╝███████╗
+          ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚══════╝
+                                                                     */}
+            <List>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"chat"}
+                  // variant="body2"
+                  href={"/chat"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <ChatIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Chat"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"theme"}
+                  // variant="body2"
+                  href={"/theme"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <PaletteIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Theme"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"reader"}
+                  // variant="body2"
+                  href={"/reader"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <SettingsInputAntennaIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"RSS Reader"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"money"}
+                  // variant="body2"
+                  href={"/money"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <CreditCardIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Money"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"timer"}
+                  // variant="body2"
+                  href={"/timer"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <TimerIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Timer"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"sound"}
+                  // variant="body2"
+                  href={"/sound"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <MusicNoteOutlinedIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"Sound"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            </List>
+            <Divider />
+            <List>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <Link
+                  // color="inherit"
+                  noWrap
+                  key={"github"}
+                  // variant="body2"
+                  href={"https://github.com/kusare/chat"}
+                  // sx={{ p: 1, flexShrink: 0 }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <GitHubIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={"GitHub"}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            </List>
+          </Box>
+          <Divider />
+        </div>
+      </SwipeableDrawer>
+    </div>
+  );
+}

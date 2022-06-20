@@ -7,10 +7,10 @@ import {
   ProfilePic,
   UserName,
   setChatMsg,
-  ChatMsgEle,
   useGetMsgs,
   useGetChatSubMsgs,
   setImgMsg,
+  ChatMsgNormalEle,
   ChatMsgRecipiLayout,
   SubChatMsgRecipiLayout,
 } from "../components/ChatFirebase";
@@ -43,7 +43,7 @@ export function ChatMsgs() {
   const chatMsgs = useGetMsgs();
 
   const normal = chatMsgs.map((msg, index) => (
-    <ChatMsgEle key={msg?.id.toString() + index.toString()} msg={msg} />
+    <ChatMsgNormalEle key={msg?.id.toString() + index.toString()} msg={msg} />
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={msg?.id.toString() + index.toString()} msg={msg}>
@@ -115,8 +115,10 @@ const Page: NextPage = () => {
                   value={chatTxt}
                   rows={4}
                   onChange={handleChange}
+                  fullWidth
                 />
-                {/* 
+              </Stack>
+              {/* 
                 ███████╗███████╗████████╗
                 ██╔════╝██╔════╝╚══██╔══╝
                 ███████╗█████╗     ██║   
@@ -125,10 +127,9 @@ const Page: NextPage = () => {
                 ╚══════╝╚══════╝   ╚═╝
                    */}
 
-                <Button onClick={() => setChatMsg(chatTxt, title)}>
-                  Set Msg
-                </Button>
-              </Stack>
+              <Button onClick={() => setChatMsg(chatTxt, title)}>
+                Set Msg
+              </Button>
             </FormControl>
             <Input type="file" onChange={setImgMsg} />
             {/*
