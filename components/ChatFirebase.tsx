@@ -155,7 +155,7 @@ const chatMsgForAdd = (change: any) => {
   };
 };
 
-export const useGetMsgs = () => {
+export const useGetChatMsgs = () => {
   const setChatMsgs = useSetRecoilState(msgsState);
   const chatMsgs = useRecoilValue(msgsState);
   const LIMIT = 12;

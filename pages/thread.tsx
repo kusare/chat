@@ -7,7 +7,7 @@ import {
   ProfilePic,
   UserName,
   setChatMsg,
-  useGetMsgs,
+  useGetChatMsgs,
   useGetChatSubMsgs,
   setImgMsg,
   ChatMsgNormalEle,
@@ -34,7 +34,7 @@ export function ChatMsgs() {
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
   const msgId = chatRadioBtnId;
 
-  const chatMsgs = useGetMsgs();
+  const chatMsgs = useGetChatMsgs();
 
   const normal = chatMsgs.map((msg, index) => (
     <ChatMsgNormalEle key={index.toString()} msg={msg} />
