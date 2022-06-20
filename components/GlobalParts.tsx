@@ -37,6 +37,7 @@ import MusicNoteOutlinedIcon from "@mui/icons-material/MusicNoteOutlined";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useRouter } from "next/router";
+import AppBar from "@mui/material/AppBar";
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   props
@@ -455,11 +456,6 @@ export default function SwipeableTemporaryDrawer() {
   // 全体のtopbarのCSS設定
   const cssTopbar = useRecoilValue(cssTopbarState);
   const cssTopbarDeco = useRecoilValue(cssTopbarDecoState);
-  const drawerWidth = 240;
-
-  interface AppBarProps extends MuiAppBarProps {
-    open?: boolean;
-  }
 
   /**
 ██████╗ ██████╗  █████╗ ██╗    ██╗███████╗██████╗ 
@@ -470,60 +466,74 @@ export default function SwipeableTemporaryDrawer() {
 ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝
                                                   
  */
+  // const drawerWidth = 0;
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  // interface AppBarProps extends MuiAppBarProps {
+  //   open?: boolean;
+  // }
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })<AppBarProps>(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
+
+  // const AppBar = styled(MuiAppBar, {
+  //   shouldForwardProp: (prop) => prop !== "open",
+  // })<AppBarProps>(({ theme, open }) => ({
+  //   zIndex: theme.zIndex.drawer + 1,
+  //   ...(open && {}),
+  // }));
 
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div>
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="open drawer"
-        onClick={() => setOpen(true)}
-      >
-        <MenuIcon />
-      </IconButton>
-
-      <AppBar position="fixed" open={open} color="transparent" elevation={0}>
+      <AppBar position="static">
         <Toolbar
           css={css`
             ${cssTopbar}
           `}
         >
           <IconButton
+            edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={() => setOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+
+          <Link
+            noWrap
+            key={"root"}
+            // variant="body2"
+            href={"/"}
+            // sx={{ p: 1, flexShrink: 0 }}
+            underline="none"
+          >
+            <p>Hamu House</p>
+          </Link>
+          <ProfilePic></ProfilePic>
+        </Toolbar>
+      </AppBar>
+      <SwipeableDrawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
+        onOpen={() => {}}
+      >
+        <Toolbar
+          css={css`
+            ${cssTopbar}
+          `}
+        >
+          <IconButton
             edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setOpen(false)}
           >
             <MenuIcon />
           </IconButton>
@@ -538,22 +548,20 @@ export default function SwipeableTemporaryDrawer() {
             <p>Hamu House</p>
           </Link>
           <ProfilePic></ProfilePic>
-        </Toolbar>
-        <p
-          css={css`
-            ${cssTopbarDeco}
-          `}
-        >
-          {`cssTopbarDeco`}
-        </p>
-      </AppBar>
 
-      <SwipeableDrawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        onOpen={() => {}}
-      >
+          {/* <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: "none" }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton> */}
+        </Toolbar>
         <div>
           <Box textAlign="center" p={2}>
             {/*           
