@@ -6,19 +6,19 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { chatRadioBtnIdState } from "../recoil/States";
 import posts from "../.contents/posts.json";
-import { PostList } from "../components/PostList";
+import { CustomPostList, PostList } from "../components/PostList";
 import { PostItem } from "../types";
 import {
   SwipeableTemporaryDrawer,
   CustomDrawer,
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
+import { getPosts } from "../utils/custom-posts";
 
 export const UseReaderContent: React.FC = () => {
   return (
     <>
-      <p>reader</p>
-      <PostList items={posts as PostItem[]} />
+      <CustomPostList items={posts as PostItem[]} />
     </>
   );
 };
@@ -49,6 +49,7 @@ const Page: NextPage = () => {
 
       {599 < width && (
         <CustomDrawer>
+          <button onClick={getPosts}>get posts</button>
           <UseReaderContent></UseReaderContent>
         </CustomDrawer>
       )}
