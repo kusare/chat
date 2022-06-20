@@ -78,7 +78,7 @@ export const UseChatContent: React.FC = () => {
     <>
       <Grid container direction="row">
         <Grid item xs={12} md={6} alignItems="center">
-          <FormControl fullWidth sx={{ m: 1 }}>
+          <FormControl fullWidth>
             <TextField
               label="Title"
               value={title}
