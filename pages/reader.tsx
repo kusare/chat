@@ -13,6 +13,7 @@ import {
   CustomDrawer,
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
+import { getPosts } from "../utils/custom-posts";
 
 export const UseReaderContent: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const Page: NextPage = () => {
 
       {599 < width && (
         <CustomDrawer>
+          <button onClick={getPosts}>get posts</button>
           <UseReaderContent></UseReaderContent>
         </CustomDrawer>
       )}
