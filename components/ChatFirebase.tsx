@@ -60,6 +60,7 @@ import {
 } from "../recoil/States";
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
+import Link from "next/link";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -71,18 +72,6 @@ export const userNameState = atom<string>({
   key: "userNameState", // unique ID (with respect to other atoms/selectors)
   default: "NO NAME", // default value (aka initial value)
 });
-
-// export const msgState = atom<MsgState>({
-//   key: "msgState",
-//   default: {
-//     id: "",
-//     date: Timestamp.fromDate(new Date()).toDate(),
-//     name: "",
-//     text: "",
-//     profilePicUrl: "",
-//     imageUrl: "",
-//   },
-// });
 
 /**
 ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗
@@ -153,6 +142,19 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 // TODO for chat or img
+const chatMsgForAdd = (change: any) => {
+  const msg = change.data();
+  return {
+    id: change.id,
+    date: msg.date,
+    name: msg.name,
+    chatTxt: msg.chatTxt,
+    title: msg.title,
+    profilePicUrl: msg.profilePicUrl,
+    imageUrl: msg.imageUrl,
+  };
+};
+
 export const useGetMsgs = () => {
   const setChatMsgs = useSetRecoilState(msgsState);
   const chatMsgs = useRecoilValue(msgsState);
@@ -175,16 +177,7 @@ export const useGetMsgs = () => {
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          date: message.date,
-          name: message.name,
-          chatTxt: message.chatTxt,
-          title: message.title,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        addedMsgs.push(chatMsgForAdd(change));
       }, []);
       setChatMsgs(addedMsgs);
       return unsub;
@@ -192,15 +185,12 @@ export const useGetMsgs = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return chatMsgs;
 };
 
 export const useGetChatSubMsgs = (docId: string) => {
   //TODO ほかにいい方法がないかな
   const id = docId || "dummyId";
-  // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
-  // const chatSubMsgs = useRecoilValue(subChatMsgsState);
 
   const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
   const LIMIT = 3;
@@ -225,23 +215,12 @@ export const useGetChatSubMsgs = (docId: string) => {
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
-        //TODO 関数に置き換える
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          date: message.date,
-          name: message.name,
-          chatTxt: message.chatTxt,
-          title: message.title,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        addedMsgs.push(chatMsgForAdd(change));
       }, []);
       setSubChatMsgs(addedMsgs);
-      // setMsgs(addedMsgs);
       return unsub;
     });
-  }, [docId]);
+  }, [docId, id]);
 
   return subChatMsgs;
 };
@@ -491,13 +470,15 @@ export const ChatMsgRecipiLayout: React.FC<{
             ${cssChatMsg}
           `}
         >
-          <h2
-            css={css`
-              text-align: center;
-            `}
-          >
-            {props.msg.title}
-          </h2>
+          <Link href={`/thread/?id=${props.msg.id}`}>
+            <h2
+              css={css`
+                text-align: center;
+              `}
+            >
+              {props.msg.title}
+            </h2>
+          </Link>
           {/*               
               ████████╗██╗████████╗██╗     ███████╗    ██████╗ ███████╗ ██████╗ ██████╗ 
               ╚══██╔══╝██║╚══██╔══╝██║     ██╔════╝    ██╔══██╗██╔════╝██╔════╝██╔═══██╗

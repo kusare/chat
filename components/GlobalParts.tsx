@@ -29,7 +29,12 @@ import ChatIcon from "@mui/icons-material/Chat";
 import Link from "@mui/material/Link";
 import PaletteIcon from "@mui/icons-material/Palette";
 import { cssTopbarState, cssTopbarDecoState } from "../recoil/States";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  atom,
+  useGetRecoilValueInfo_UNSTABLE,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import SettingsInputAntennaIcon from "@mui/icons-material/SettingsInputAntenna";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import TimerIcon from "@mui/icons-material/Timer";
@@ -38,6 +43,107 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
+import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
+
+const SideListUp: React.FC<{
+  open: Boolean;
+}> = (props) => {
+  const { open } = props;
+  const list = [
+    {
+      linkKey: "thread",
+      href: "/thread",
+      text: "Thread",
+      icon: <ForumTwoToneIcon />,
+    },
+    { linkKey: "chat", href: "/chat", text: "Chat", icon: <ChatIcon /> },
+    { linkKey: "theme", href: "/theme", text: "Theme", icon: <PaletteIcon /> },
+    {
+      linkKey: "reader",
+      href: "/reader",
+      text: "RSS Reader",
+      icon: <SettingsInputAntennaIcon />,
+    },
+    {
+      linkKey: "money",
+      href: "/money",
+      text: "Money",
+      icon: <CreditCardIcon />,
+    },
+    {
+      linkKey: "timer",
+      href: "/timer",
+      text: "Timer",
+      icon: <TimerIcon />,
+    },
+    {
+      linkKey: "sound",
+      href: "/sound",
+      text: "Sound",
+      icon: <MusicNoteOutlinedIcon />,
+    },
+  ];
+
+  const content = list.map((value, index) => (
+    <SideList
+      key={index}
+      open={open}
+      linkKey={value.linkKey}
+      href={value.href}
+      text={value.text}
+      icon={value.icon}
+    ></SideList>
+  ));
+  return <>{content}</>;
+};
+
+const SideList: React.FC<{
+  open: Boolean;
+  linkKey: string;
+  href: string;
+  text: string;
+  icon: any;
+}> = (props) => {
+  const { open, linkKey, href, text, icon } = props;
+
+  return (
+    <>
+      <ListItem disablePadding sx={{ display: "block" }}>
+        <Link
+          noWrap
+          // key={"chat"}
+          key={linkKey}
+          // href={"/chat"}
+          href={href}
+          // sx={{ p: 1, flexShrink: 0 }}
+        >
+          <ListItemButton
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              {icon}
+            </ListItemIcon>
+            <ListItemText
+              // primary={"Chat"}
+              primary={text}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+        </Link>
+      </ListItem>
+    </>
+  );
+};
 
 export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
   props
@@ -210,192 +316,7 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
           ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚══════╝
                                                                      */}
           <List>
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"chat"}
-                // variant="body2"
-                href={"/chat"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <ChatIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Chat"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"theme"}
-                // variant="body2"
-                href={"/theme"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <PaletteIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Theme"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: "block" }}>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"reader"}
-                // variant="body2"
-                href={"/reader"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <SettingsInputAntennaIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"RSS Reader"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"money"}
-                // variant="body2"
-                href={"/money"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <CreditCardIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Money"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"timer"}
-                // variant="body2"
-                href={"/timer"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <TimerIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Timer"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-              <Link
-                // color="inherit"
-                noWrap
-                key={"sound"}
-                // variant="body2"
-                href={"/sound"}
-                // sx={{ p: 1, flexShrink: 0 }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <MusicNoteOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Sound"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
+            <SideListUp open={open}></SideListUp>
           </List>
           <Divider />
           <List>
@@ -589,192 +510,7 @@ export const SwipeableTemporaryDrawer: React.FC<{
           ╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═╝╚═════╝ ╚══════╝
                                                                      */}
             <List>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"chat"}
-                  // variant="body2"
-                  href={"/chat"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <ChatIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"Chat"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"theme"}
-                  // variant="body2"
-                  href={"/theme"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <PaletteIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"Theme"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
-              <ListItem disablePadding sx={{ display: "block" }}>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"reader"}
-                  // variant="body2"
-                  href={"/reader"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <SettingsInputAntennaIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"RSS Reader"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"money"}
-                  // variant="body2"
-                  href={"/money"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <CreditCardIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"Money"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"timer"}
-                  // variant="body2"
-                  href={"/timer"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <TimerIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"Timer"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-                <Link
-                  // color="inherit"
-                  noWrap
-                  key={"sound"}
-                  // variant="body2"
-                  href={"/sound"}
-                  // sx={{ p: 1, flexShrink: 0 }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <MusicNoteOutlinedIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={"Sound"}
-                      sx={{ opacity: open ? 1 : 0 }}
-                    />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
+              <SideListUp open={open}></SideListUp>
             </List>
             <Divider />
             <List>
