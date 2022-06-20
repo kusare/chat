@@ -73,18 +73,6 @@ export const userNameState = atom<string>({
   default: "NO NAME", // default value (aka initial value)
 });
 
-// export const msgState = atom<MsgState>({
-//   key: "msgState",
-//   default: {
-//     id: "",
-//     date: Timestamp.fromDate(new Date()).toDate(),
-//     name: "",
-//     text: "",
-//     profilePicUrl: "",
-//     imageUrl: "",
-//   },
-// });
-
 /**
 ██╗███╗   ██╗██╗████████╗██╗ █████╗ ██╗     ██╗███████╗███████╗
 ██║████╗  ██║██║╚══██╔══╝██║██╔══██╗██║     ██║╚══███╔╝██╔════╝
@@ -203,8 +191,6 @@ export const useGetMsgs = () => {
 export const useGetChatSubMsgs = (docId: string) => {
   //TODO ほかにいい方法がないかな
   const id = docId || "dummyId";
-  // const setChatSubMsgs = useSetRecoilState(subChatMsgsState);
-  // const chatSubMsgs = useRecoilValue(subChatMsgsState);
 
   const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
   const LIMIT = 3;
