@@ -228,23 +228,12 @@ export const useGetChatSubMsgs = (docId: string) => {
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
-        //TODO 関数に置き換える
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          date: message.date,
-          name: message.name,
-          chatTxt: message.chatTxt,
-          title: message.title,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        addedMsgs.push(chatMsgForAdd(change));
       }, []);
       setSubChatMsgs(addedMsgs);
-      // setMsgs(addedMsgs);
       return unsub;
     });
-  }, [docId]);
+  }, [docId, id]);
 
   return subChatMsgs;
 };
