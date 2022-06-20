@@ -83,6 +83,13 @@ export type ThemeUiTargetId =
 
 export type ChatRadioBtnId = "Normal" | "Recipe";
 
+export type CssChipIds = {
+  id: string;
+  label: string;
+  avaterUrl: string;
+  css: string;
+};
+
 /**
 ██████╗ ██╗   ██╗██╗██╗     ██████╗ ███████╗██████╗ 
 ██╔══██╗██║   ██║██║██║     ██╔══██╗██╔════╝██╔══██╗

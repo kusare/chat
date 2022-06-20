@@ -28,17 +28,6 @@ import {
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
 
-//TODO docIdではなくmsgを取り込むようにする
-export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
-  const { docId } = props;
-  const subChatMsgs = useGetChatSubMsgs(docId);
-  const msg = subChatMsgs.map((msg, index) => (
-    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-  ));
-
-  return <>{msg}</>;
-};
-
 export function ChatMsgs() {
   //msgIdに応じて表示を切り替える
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
@@ -47,11 +36,11 @@ export function ChatMsgs() {
   const chatMsgs = useGetMsgs();
 
   const normal = chatMsgs.map((msg, index) => (
-    <ChatMsgNormalEle key={msg?.id.toString() + index.toString()} msg={msg} />
+    <ChatMsgNormalEle key={index.toString()} msg={msg} />
   ));
   const recipe = chatMsgs.map((msg, index) => (
-    <ChatMsgRecipiLayout key={msg?.id.toString() + index.toString()} msg={msg}>
-      <SubChatMsgEle docId={msg?.id.toString()} />
+    <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
+      <SubChatMsgEle docId={index.toString()} />
     </ChatMsgRecipiLayout>
   ));
 
@@ -62,6 +51,17 @@ export function ChatMsgs() {
     </>
   );
 }
+
+//TODO docIdではなくmsgを取り込むようにする
+export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
+  const { docId } = props;
+  const subChatMsgs = useGetChatSubMsgs(docId);
+  const msg = subChatMsgs.map((msg, index) => (
+    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+  ));
+
+  return <>{msg}</>;
+};
 
 export const UseChatContent: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -108,12 +108,13 @@ export const UseChatContent: React.FC = () => {
           </FormControl>
           <Input type="file" onChange={setImgMsg} />
           {/*
-            ██████╗  █████╗ ██████╗ ██╗ ██████╗ 
-            ██╔══██╗██╔══██╗██╔══██╗██║██╔═══██╗
-            ██████╔╝███████║██║  ██║██║██║   ██║
-            ██╔══██╗██╔══██║██║  ██║██║██║   ██║
-            ██║  ██║██║  ██║██████╔╝██║╚██████╔╝
-            ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝ ╚═════╝ 
+ ██████╗██╗  ██╗██╗██████╗ ███████╗
+██╔════╝██║  ██║██║██╔══██╗██╔════╝
+██║     ███████║██║██████╔╝███████╗
+██║     ██╔══██║██║██╔═══╝ ╚════██║
+╚██████╗██║  ██║██║██║     ███████║
+ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝
+                                   
  */}
 
           <ChatLayoutChips></ChatLayoutChips>
