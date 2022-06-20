@@ -141,6 +141,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssBackground" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssBackground}
               rows={4}
@@ -151,6 +152,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssTopbar" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssTopbar}
               rows={4}
@@ -161,6 +163,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssTopbarDeco" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssTopbarDeco}
               rows={4}
@@ -171,6 +174,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssChatMsg" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssChatMsg}
               rows={4}
@@ -181,6 +185,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssChatMsgDeco" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssChatMsgDeco}
               rows={4}
@@ -191,6 +196,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssSubChatMsg" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssSubChatMsg}
               rows={4}
@@ -201,6 +207,7 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
         {props.id === "cssChatMsgTitleDeco" && (
           <>
             <TextField
+              fullWidth
               multiline
               value={cssChatMsgTitleDeco}
               rows={4}
@@ -208,22 +215,22 @@ export const EditThemeCss: React.FC<{ id: ThemeUiTargetId }> = (props) => {
             />
           </>
         )}
-        <Button
-          onClick={() =>
-            setCssMsg({
-              cssBackground: cssBackground,
-              cssTopbar: cssTopbar,
-              cssTopbarDeco: cssTopbarDeco,
-              cssChatMsg: cssChatMsg,
-              cssChatMsgDeco: cssChatMsgDeco,
-              cssSubChatMsg: cssSubChatMsg,
-              cssChatMsgTitleDeco: cssChatMsgTitleDeco,
-            })
-          }
-        >
-          Set Msg
-        </Button>
       </Stack>
+      <Button
+        onClick={() =>
+          setCssMsg({
+            cssBackground: cssBackground,
+            cssTopbar: cssTopbar,
+            cssTopbarDeco: cssTopbarDeco,
+            cssChatMsg: cssChatMsg,
+            cssChatMsgDeco: cssChatMsgDeco,
+            cssSubChatMsg: cssSubChatMsg,
+            cssChatMsgTitleDeco: cssChatMsgTitleDeco,
+          })
+        }
+      >
+        Set Msg
+      </Button>
     </>
   );
 };
