@@ -435,14 +435,25 @@ export const CustomDrawer: React.FC<{ children: React.ReactNode }> = (
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
+
+          {/* 
+ ██████╗██╗  ██╗██╗██╗     ██████╗ ██████╗ ███████╗███╗   ██╗
+██╔════╝██║  ██║██║██║     ██╔══██╗██╔══██╗██╔════╝████╗  ██║
+██║     ███████║██║██║     ██║  ██║██████╔╝█████╗  ██╔██╗ ██║
+██║     ██╔══██║██║██║     ██║  ██║██╔══██╗██╔══╝  ██║╚██╗██║
+╚██████╗██║  ██║██║███████╗██████╔╝██║  ██║███████╗██║ ╚████║
+ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝
+                                                              */}
+
           {props.children}
         </Box>
       </Box>
     </div>
   );
 };
-
-export default function SwipeableTemporaryDrawer() {
+export const SwipeableTemporaryDrawer: React.FC<{
+  children: React.ReactNode;
+}> = (props) => {
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
@@ -489,35 +500,33 @@ export default function SwipeableTemporaryDrawer() {
 
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar
-          css={css`
-            ${cssTopbar}
-          `}
+    <>
+      <Toolbar
+        css={css`
+          ${cssTopbar}
+        `}
+      >
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => setOpen(true)}
         >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          <MenuIcon />
+        </IconButton>
 
-          <Link
-            noWrap
-            key={"root"}
-            // variant="body2"
-            href={"/"}
-            // sx={{ p: 1, flexShrink: 0 }}
-            underline="none"
-          >
-            <p>Hamu House</p>
-          </Link>
-          <ProfilePic></ProfilePic>
-        </Toolbar>
-      </AppBar>
+        <Link
+          noWrap
+          key={"root"}
+          // variant="body2"
+          href={"/"}
+          // sx={{ p: 1, flexShrink: 0 }}
+          underline="none"
+        >
+          <p>Hamu House</p>
+        </Link>
+        <ProfilePic></ProfilePic>
+      </Toolbar>
       <SwipeableDrawer
         anchor="left"
         open={open}
@@ -799,6 +808,7 @@ export default function SwipeableTemporaryDrawer() {
           <Divider />
         </div>
       </SwipeableDrawer>
-    </div>
+      {props.children}
+    </>
   );
-}
+};
