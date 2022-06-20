@@ -71,51 +71,58 @@ export const EditCssTargetIdChips = () => {
     setEditCssTargetId(id);
   };
 
-  const array: CssChipIds[] = [
+  const cssChipsData: CssChipIds[] = [
     {
-      label: "cssBackground",
+      id: "cssBackground",
+      label: "Background",
       avaterUrl:
         "https://lh3.googleusercontent.com/a-/AOh14GiTn84dF67hp4-VAHWFk2KdjcKnx1nE1SfXlQ2U=s96-c",
       css: "",
     },
     {
-      label: "cssTopbar",
+      id: "cssTopbar",
+      label: "Topbar",
       avaterUrl: "",
       css: "background-color: red;",
     },
     {
-      label: "cssTopbarDeco",
+      id: "cssTopbarDeco",
+      label: "TopbarDeco",
       avaterUrl: "",
       css: "",
     },
     {
-      label: "cssChatMsg",
+      id: "cssChatMsg",
+      label: "ChatMsg",
       avaterUrl: "",
       css: "",
     },
     {
-      label: "cssChatMsgDeco",
+      id: "cssChatMsgDeco",
+      label: "ChatMsgDeco",
       avaterUrl: "",
       css: "",
     },
     {
-      label: "cssSubChatMsg",
+      id: "cssSubChatMsg",
+      label: "SubChatMsg",
       avaterUrl: "",
       css: "",
     },
     {
-      label: "cssChatMsgTitleDeco",
+      id: "cssChatMsgTitleDeco",
+      label: "ChatMsgTitleDeco",
       avaterUrl: "",
       css: "",
     },
   ];
 
-  const ele = array.map((value, index) => {
+  const ele = cssChipsData.map((value, index) => {
     return (
       <Chip
         key={index}
         avatar={<Avatar src={value.avaterUrl}></Avatar>}
-        onClick={() => handleEditCssTargetId(value.label)}
+        onClick={() => handleEditCssTargetId(value.id)}
         label={value.label}
         css={css`
           ${value.css}
