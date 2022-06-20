@@ -11,6 +11,7 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { IconButton, ListItem } from "@mui/material";
 import { Global, css } from "@emotion/react";
+import { CssChipIds } from "../types";
 
 /**
  ██████╗██╗  ██╗ █████╗ ████████╗
@@ -70,7 +71,7 @@ export const EditCssTargetIdChips = () => {
     setEditCssTargetId(id);
   };
 
-  const array = [
+  const array: CssChipIds[] = [
     {
       label: "cssBackground",
       avaterUrl:
