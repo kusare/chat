@@ -27,6 +27,7 @@ import {
   CustomDrawer,
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
+import { useRouter } from "next/router";
 
 export function ChatMsgs() {
   //msgIdに応じて表示を切り替える
@@ -64,6 +65,7 @@ export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
 };
 
 export const UseChatContent: React.FC = () => {
+  const { query } = useRouter();
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -122,6 +124,7 @@ export const UseChatContent: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           Planned site
+          <h1>{query.name}</h1>
         </Grid>
       </Grid>
     </>
