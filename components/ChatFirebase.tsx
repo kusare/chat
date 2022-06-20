@@ -153,6 +153,19 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 // TODO for chat or img
+const chatMsgForAdd = (change: any) => {
+  const msg = change.data();
+  return {
+    id: change.id,
+    date: msg.date,
+    name: msg.name,
+    chatTxt: msg.chatTxt,
+    title: msg.title,
+    profilePicUrl: msg.profilePicUrl,
+    imageUrl: msg.imageUrl,
+  };
+};
+
 export const useGetMsgs = () => {
   const setChatMsgs = useSetRecoilState(msgsState);
   const chatMsgs = useRecoilValue(msgsState);
@@ -175,16 +188,7 @@ export const useGetMsgs = () => {
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
-        const message = change.data();
-        addedMsgs.push({
-          id: change.id,
-          date: message.date,
-          name: message.name,
-          chatTxt: message.chatTxt,
-          title: message.title,
-          profilePicUrl: message.profilePicUrl,
-          imageUrl: message.imageUrl,
-        });
+        addedMsgs.push(chatMsgForAdd(change));
       }, []);
       setChatMsgs(addedMsgs);
       return unsub;
@@ -192,7 +196,6 @@ export const useGetMsgs = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return chatMsgs;
 };
 
