@@ -9,6 +9,7 @@ import {
   getMemberPath,
   getMemberById,
 } from "../utils/helper";
+import { Stack } from "@mui/material";
 
 dayjs.extend(relativeTime);
 
@@ -74,6 +75,75 @@ export const PostList: React.FC<{ items: PostItem[] }> = (props) => {
       <div className="post-list">
         {props.items.slice(0, displayItemsCount).map((item, i) => (
           <PostLink key={`post-item-${i}`} item={item} />
+        ))}
+      </div>
+      {canLoadMore && (
+        <div className="post-list-load">
+          <button
+            onClick={() => setDisplayItemsCount(displayItemsCount + 32)}
+            className="post-list-load__button"
+          >
+            LOAD MORE
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
+
+const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
+  const { authorId, title, isoDate, link, dateMiliSeconds } = props.item;
+  const member = getMemberById(authorId);
+  if (!member) return null;
+
+  const { hostname, origin } = new URL(link);
+
+  return (
+    <article className="post-link">
+      <a href={link} className="post-link__main-link">
+        <Stack spacing={1} direction="row">
+          <h3 className="post-link__title">{title}</h3>
+        </Stack>
+      </a>
+      <Link href={getMemberPath(member.id)} passHref>
+        <Stack spacing={1} direction="row">
+          {hostname && (
+            <>
+              <img
+                src={getFaviconSrcFromOrigin(origin)}
+                width={14}
+                height={14}
+                className="post-link__site-favicon"
+                alt={hostname}
+              />
+              {hostname}
+            </>
+          )}
+          <div>{member.name}</div>
+          <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
+        </Stack>
+      </Link>
+      {dateMiliSeconds && dateMiliSeconds > Date.now() - 86400000 * 3 && (
+        <div className="post-link__new-label">NEW</div>
+      )}
+    </article>
+  );
+};
+
+export const CustomPostList: React.FC<{ items: PostItem[] }> = (props) => {
+  const [displayItemsCount, setDisplayItemsCount] = useState<number>(32);
+  const totalItemsCount = props.items?.length || 0;
+  const canLoadMore = totalItemsCount - displayItemsCount > 0;
+
+  if (!totalItemsCount) {
+    return <div className="post-list-empty">No posts yet</div>;
+  }
+
+  return (
+    <>
+      <div className="post-list">
+        {props.items.slice(0, displayItemsCount).map((item, i) => (
+          <CustomPostLink key={`post-item-${i}`} item={item} />
         ))}
       </div>
       {canLoadMore && (
