@@ -30,7 +30,10 @@ import {
 import { SketchPicker, ColorResult } from "react-color";
 // @ts-ignore
 import { toCSS, toJSON } from "cssjson";
-import { CustomDrawer } from "../components/GlobalParts";
+import {
+  CustomDrawer,
+  SwipeableTemporaryDrawer,
+} from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ChatRadioBtnId, ThemeUiTargetId } from "../types";
 import {
@@ -39,9 +42,10 @@ import {
 } from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { ChatLayoutChips, EditCssTargetIdChips } from "../components/Chips";
-import { SubChatMsgEle } from "./chat";
+import { SubChatMsgEle, UseChatContent } from "./chat";
+import { useGetWindowSize } from "../utils/get-window-size";
 
-const Page: NextPage = () => {
+export const UseThemeContent: React.FC = () => {
   /**
 ██████╗ ███████╗ ██████╗ ██████╗ ██╗██╗     
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗██║██║     
@@ -51,7 +55,6 @@ const Page: NextPage = () => {
 ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝╚══════╝
                                             
  */
-
   // 全体の背景のCSS設定はcssBackgroundStateから
   const cssBackground = useRecoilValue(cssBackgroundState);
   const setCssBackgroundState = useSetRecoilState(cssBackgroundState);
@@ -89,15 +92,10 @@ const Page: NextPage = () => {
   //msgIdに応じてサンプルのメッセージ表示を切り替える
   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
 
-  /**
-███████╗████████╗ █████╗ ████████╗███████╗
-██╔════╝╚══██╔══╝██╔══██╗╚══██╔══╝██╔════╝
-███████╗   ██║   ███████║   ██║   █████╗  
-╚════██║   ██║   ██╔══██║   ██║   ██╔══╝  
-███████║   ██║   ██║  ██║   ██║   ███████╗
-╚══════╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-                                          
- */
+  // for colorPicker setting (background-color)
+  const [colorPicked, setColorPicked] = useState(
+    toJSON(dummyCss).attributes.background
+  );
 
   // (css) Json to CSS
   const [cssEdited, setCssEdited] = useState(
@@ -106,11 +104,43 @@ const Page: NextPage = () => {
     })
   );
 
-  // for colorPicker setting (background-color)
-  // TODO background 以外に
-  const [colorPicked, setColorPicked] = useState(
-    toJSON(dummyCss).attributes.background
-  );
+  // when color picked
+  const handleColorPicked = (color: ColorResult) => {
+    // "ff0500" + "80"の形式になるように
+    const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
+    // editCssTargetId に応じて切り替え
+    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
+    // JSONのCSSに追加
+    cssJson[`background-color`] = hexCode;
+    // setCssJson(cssJson);
+    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
+    setCssEdited(
+      toCSS({
+        attributes: { ...cssJson },
+      })
+    );
+    // ColorPickerの設定を更新
+    setColorPicked(hexCode);
+    // 全体のCSS設定を更新
+    updateOverAllCss(cssEdited);
+  };
+
+  // 🎨 COLOR PICKER
+  // Alpha値を16進数に変換する処理
+  const decimalToHex = (alpha: number) =>
+    alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
+
+  const imgMsgs = useGetImgMsgs("css-img-msgs").map((msg, index) => (
+    <div key={index.toString()}>
+      {msg && (
+        <CssImg
+          // msg?.id.toString() cannot delete
+          key={index.toString()}
+          msg={msg}
+        ></CssImg>
+      )}
+    </div>
+  ));
 
   const editCssTargetIdToCssJson = (targetId: ThemeUiTargetId) => {
     const id = targetId;
@@ -140,73 +170,106 @@ const Page: NextPage = () => {
     id === "cssChatMsgTitleDeco" && setCssChatMsgTitleDecoState(css);
   };
 
-  /**
- ██████╗ ██████╗ ██╗      ██████╗ ██████╗     ██████╗ ██╗ ██████╗██╗  ██╗███████╗██████╗ 
-██╔════╝██╔═══██╗██║     ██╔═══██╗██╔══██╗    ██╔══██╗██║██╔════╝██║ ██╔╝██╔════╝██╔══██╗
-██║     ██║   ██║██║     ██║   ██║██████╔╝    ██████╔╝██║██║     █████╔╝ █████╗  ██████╔╝
-██║     ██║   ██║██║     ██║   ██║██╔══██╗    ██╔═══╝ ██║██║     ██╔═██╗ ██╔══╝  ██╔══██╗
-╚██████╗╚██████╔╝███████╗╚██████╔╝██║  ██║    ██║     ██║╚██████╗██║  ██╗███████╗██║  ██║
- ╚═════╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-                                                                                         
- */
+  return (
+    <>
+      <Grid container direction="row">
+        <Grid item xs={12} md={6} alignItems="center">
+          {useGetCssMsgs("cssMsgs").map((msg, index) => (
+            <>
+              {msg && (
+                <div key={index.toString() + "div"}>
+                  <CssMsgEle
+                    key={index.toString() + "msg"}
+                    msg={msg}
+                  ></CssMsgEle>
+                  <SetCssTextToAtomBtn
+                    key={index.toString() + "css"}
+                    msg={msg}
+                  />
+                </div>
+              )}
+            </>
+          ))}
+        </Grid>
 
-  // 🎨 COLOR PICKER
-  // Alpha値を16進数に変換する処理
-  const decimalToHex = (alpha: number) =>
-    alpha === 0 ? "00" : Math.round(255 * alpha).toString(16);
+        <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
+          {/* 
+          ███████╗██████╗ ██╗████████╗     ██████╗███████╗███████╗
+          ██╔════╝██╔══██╗██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝
+          █████╗  ██║  ██║██║   ██║       ██║     ███████╗███████╗
+          ██╔══╝  ██║  ██║██║   ██║       ██║     ╚════██║╚════██║
+          ███████╗██████╔╝██║   ██║       ╚██████╗███████║███████║
+          ╚══════╝╚═════╝ ╚═╝   ╚═╝        ╚═════╝╚══════╝╚══════╝
+                                                        
 
-  // when color picked
-  const handleColorPicked = (color: ColorResult) => {
-    // "ff0500" + "80"の形式になるように
-    const hexCode = `${color.hex}${decimalToHex(color.rgb.a || 0)}`;
-    // editCssTargetId に応じて切り替え
-    let cssJson = editCssTargetIdToCssJson(editCssTargetId);
-    // JSONのCSSに追加
-    cssJson[`background-color`] = hexCode;
-    // setCssJson(cssJson);
-    // 追加したJSONをCSSに変換して(cssEdited) stateに追加
-    setCssEdited(
-      toCSS({
-        attributes: { ...cssJson },
-      })
-    );
-    // ColorPickerの設定を更新
-    setColorPicked(hexCode);
-    // 全体のCSS設定を更新
-    updateOverAllCss(cssEdited);
-  };
+             */}
+          <EditCssTargetIdChips></EditCssTargetIdChips>
+          <EditThemeCss id={editCssTargetId}></EditThemeCss>
 
-  /**
- ██████╗███████╗███████╗    ██╗███╗   ███╗ ██████╗     ███╗   ███╗███████╗ ██████╗ 
-██╔════╝██╔════╝██╔════╝    ██║████╗ ████║██╔════╝     ████╗ ████║██╔════╝██╔════╝ 
-██║     ███████╗███████╗    ██║██╔████╔██║██║  ███╗    ██╔████╔██║███████╗██║  ███╗
-██║     ╚════██║╚════██║    ██║██║╚██╔╝██║██║   ██║    ██║╚██╔╝██║╚════██║██║   ██║
-╚██████╗███████║███████║    ██║██║ ╚═╝ ██║╚██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
- ╚═════╝╚══════╝╚══════╝    ╚═╝╚═╝     ╚═╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
-                                                                                   
- */
+          {/* 
+                ███████╗ █████╗ ███╗   ███╗██████╗ ██╗     ███████╗    ███╗   ███╗███████╗ ██████╗ 
+                ██╔════╝██╔══██╗████╗ ████║██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝██╔════╝ 
+                ███████╗███████║██╔████╔██║██████╔╝██║     █████╗      ██╔████╔██║███████╗██║  ███╗
+                ╚════██║██╔══██║██║╚██╔╝██║██╔═══╝ ██║     ██╔══╝      ██║╚██╔╝██║╚════██║██║   ██║
+                ███████║██║  ██║██║ ╚═╝ ██║██║     ███████╗███████╗    ██║ ╚═╝ ██║███████║╚██████╔╝
+                ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
+                                                                                    */}
+          <ChatLayoutChips></ChatLayoutChips>
+          {chatRadioBtnId === "Normal" && <ChatMsgNormalEle msg={dummyMsg} />}
+          {chatRadioBtnId === "Recipe" && (
+            <ChatMsgRecipiLayout msg={dummyMsg}>
+              <SubChatMsgEle docId={dummyMsg?.id.toString()} />
+            </ChatMsgRecipiLayout>
+          )}
+          {/* 
+              ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
+              ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
+              ██║██╔████╔██║███████║██║  ███╗█████╗  
+              ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
+              ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
+              ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+                                        */}
+          <h3>Image</h3>
+          <Grid item>
+            <Input
+              type="file"
+              // rename css-img-msgs
+              onChange={(e) => setCssImgMsg(e, "css-img-msgs")}
+            />
 
-  const imgMsgs = useGetImgMsgs("css-img-msgs").map((msg, index) => (
-    <div key={index.toString() + "div"}>
-      {msg && (
-        <CssImg
-          // msg?.id.toString() cannot delete
-          key={msg?.id?.toString() + index.toString() + "msg"}
-          msg={msg}
-        ></CssImg>
-      )}
-    </div>
-  ));
+            {/* 
+                ██████╗  ██████╗     ███████╗██╗███████╗███████╗
+                ██╔══██╗██╔════╝     ██╔════╝██║╚══███╔╝██╔════╝
+                ██████╔╝██║  ███╗    ███████╗██║  ███╔╝ █████╗  
+                ██╔══██╗██║   ██║    ╚════██║██║ ███╔╝  ██╔══╝  
+                ██████╔╝╚██████╔╝    ███████║██║███████╗███████╗
+                ╚═════╝  ╚═════╝     ╚══════╝╚═╝╚══════╝╚══════╝
+                                                 */}
 
-  /**
-██████╗ ███████╗████████╗██╗   ██╗██████╗ ███╗   ██╗
-██╔══██╗██╔════╝╚══██╔══╝██║   ██║██╔══██╗████╗  ██║
-██████╔╝█████╗     ██║   ██║   ██║██████╔╝██╔██╗ ██║
-██╔══██╗██╔══╝     ██║   ██║   ██║██╔══██╗██║╚██╗██║
-██║  ██║███████╗   ██║   ╚██████╔╝██║  ██║██║ ╚████║
-╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝
-                                                    
- */
+            <BgSizeSlider></BgSizeSlider>
+
+            {/* 
+              ██╗███╗   ███╗ █████╗  ██████╗ ███████╗    ██████╗ ████████╗███╗   ██╗
+              ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝    ██╔══██╗╚══██╔══╝████╗  ██║
+              ██║██╔████╔██║███████║██║  ███╗█████╗      ██████╔╝   ██║   ██╔██╗ ██║
+              ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝      ██╔══██╗   ██║   ██║╚██╗██║
+              ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗    ██████╔╝   ██║   ██║ ╚████║
+              ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═════╝    ╚═╝   ╚═╝  ╚═══╝
+                                                                       */}
+            <h4>Image</h4>
+            {imgMsgs}
+            <h4>Color</h4>
+            <SketchPicker color={colorPicked} onChange={handleColorPicked} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+const Page: NextPage = () => {
+  const cssBackground = useRecoilValue(cssBackgroundState);
+  const { height, width } = useGetWindowSize();
   return (
     <>
       <Global
@@ -221,99 +284,18 @@ const Page: NextPage = () => {
         <meta name="description" content="Generated by create next app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CustomDrawer>
-        <Grid container direction="row">
-          <Grid item xs={12} md={6} alignItems="center">
-            {useGetCssMsgs("cssMsgs").map((msg, index) => (
-              <>
-                {msg && (
-                  <div key={index.toString() + "div"}>
-                    <CssMsgEle
-                      key={msg?.id?.toString() + index.toString() + "msg"}
-                      msg={msg}
-                    ></CssMsgEle>
-                    <SetCssTextToAtomBtn
-                      key={msg?.id?.toString() + index.toString() + "css"}
-                      msg={msg}
-                    />
-                  </div>
-                )}
-              </>
-            ))}
-          </Grid>
 
-          <Grid item xs={12} md={6} style={{ minHeight: "100vh" }}>
-            {/* 
-          ███████╗██████╗ ██╗████████╗     ██████╗███████╗███████╗
-          ██╔════╝██╔══██╗██║╚══██╔══╝    ██╔════╝██╔════╝██╔════╝
-          █████╗  ██║  ██║██║   ██║       ██║     ███████╗███████╗
-          ██╔══╝  ██║  ██║██║   ██║       ██║     ╚════██║╚════██║
-          ███████╗██████╔╝██║   ██║       ╚██████╗███████║███████║
-          ╚══════╝╚═════╝ ╚═╝   ╚═╝        ╚═════╝╚══════╝╚══════╝
-                                                        
+      {width <= 599 && (
+        <SwipeableTemporaryDrawer>
+          <UseThemeContent></UseThemeContent>
+        </SwipeableTemporaryDrawer>
+      )}
 
-             */}
-            <EditCssTargetIdChips></EditCssTargetIdChips>
-            <EditThemeCss id={editCssTargetId}></EditThemeCss>
-
-            {/* 
-                ███████╗ █████╗ ███╗   ███╗██████╗ ██╗     ███████╗    ███╗   ███╗███████╗ ██████╗ 
-                ██╔════╝██╔══██╗████╗ ████║██╔══██╗██║     ██╔════╝    ████╗ ████║██╔════╝██╔════╝ 
-                ███████╗███████║██╔████╔██║██████╔╝██║     █████╗      ██╔████╔██║███████╗██║  ███╗
-                ╚════██║██╔══██║██║╚██╔╝██║██╔═══╝ ██║     ██╔══╝      ██║╚██╔╝██║╚════██║██║   ██║
-                ███████║██║  ██║██║ ╚═╝ ██║██║     ███████╗███████╗    ██║ ╚═╝ ██║███████║╚██████╔╝
-                ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝    ╚═╝     ╚═╝╚══════╝ ╚═════╝ 
-                                                                                    */}
-            <ChatLayoutChips></ChatLayoutChips>
-            {chatRadioBtnId === "Normal" && <ChatMsgNormalEle msg={dummyMsg} />}
-            {chatRadioBtnId === "Recipe" && (
-              <ChatMsgRecipiLayout msg={dummyMsg}>
-                <SubChatMsgEle docId={dummyMsg?.id.toString()} />
-              </ChatMsgRecipiLayout>
-            )}
-            {/* 
-              ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
-              ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
-              ██║██╔████╔██║███████║██║  ███╗█████╗  
-              ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  
-              ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
-              ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
-                                        */}
-            <h3>Image</h3>
-            <Grid item>
-              <Input
-                type="file"
-                // rename css-img-msgs
-                onChange={(e) => setCssImgMsg(e, "css-img-msgs")}
-              />
-
-              {/* 
-                ██████╗  ██████╗     ███████╗██╗███████╗███████╗
-                ██╔══██╗██╔════╝     ██╔════╝██║╚══███╔╝██╔════╝
-                ██████╔╝██║  ███╗    ███████╗██║  ███╔╝ █████╗  
-                ██╔══██╗██║   ██║    ╚════██║██║ ███╔╝  ██╔══╝  
-                ██████╔╝╚██████╔╝    ███████║██║███████╗███████╗
-                ╚═════╝  ╚═════╝     ╚══════╝╚═╝╚══════╝╚══════╝
-                                                 */}
-
-              <BgSizeSlider></BgSizeSlider>
-
-              {/* 
-              ██╗███╗   ███╗ █████╗  ██████╗ ███████╗    ██████╗ ████████╗███╗   ██╗
-              ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝    ██╔══██╗╚══██╔══╝████╗  ██║
-              ██║██╔████╔██║███████║██║  ███╗█████╗      ██████╔╝   ██║   ██╔██╗ ██║
-              ██║██║╚██╔╝██║██╔══██║██║   ██║██╔══╝      ██╔══██╗   ██║   ██║╚██╗██║
-              ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗    ██████╔╝   ██║   ██║ ╚████║
-              ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═════╝    ╚═╝   ╚═╝  ╚═══╝
-                                                                       */}
-              <h4>Image</h4>
-              {imgMsgs}
-              <h4>Color</h4>
-              <SketchPicker color={colorPicked} onChange={handleColorPicked} />
-            </Grid>
-          </Grid>
-        </Grid>
-      </CustomDrawer>
+      {599 < width && (
+        <CustomDrawer>
+          <UseThemeContent></UseThemeContent>
+        </CustomDrawer>
+      )}
     </>
   );
 };
