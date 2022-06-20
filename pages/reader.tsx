@@ -6,6 +6,9 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { CustomDrawer } from "../components/GlobalParts";
 import { chatRadioBtnIdState } from "../recoil/States";
+import posts from "../.contents/posts.json";
+import { PostList } from "../components/PostList";
+import { PostItem } from "../types";
 
 const Page: NextPage = () => {
   const cssText = useRecoilValue(cssBackgroundState);
@@ -25,6 +28,7 @@ const Page: NextPage = () => {
       </Head>
       <CustomDrawer>
         <p>reader</p>
+        <PostList items={posts as PostItem[]} />
       </CustomDrawer>
     </div>
   );
