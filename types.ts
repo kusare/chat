@@ -103,7 +103,7 @@ export type CssChipIds = {
 export type Member = {
   id: string;
   name: string;
-  avatarSrc: string;
+  avatarSrc?: string;
   role?: string;
   bio?: string;
   sources?: string[];
@@ -122,4 +122,5 @@ export type PostItem = {
   contentSnippet?: string;
   isoDate?: string;
   dateMiliSeconds: number;
+  encoded: string;
 };
