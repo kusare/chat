@@ -9,7 +9,12 @@ import {
   getMemberPath,
   getMemberById,
 } from "../utils/helper";
-import { Stack } from "@mui/material";
+import {
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+  Stack,
+} from "@mui/material";
 // @ts-ignore
 import DomParser from "dom-parser";
 
@@ -114,27 +119,46 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
   return (
     <article className="post-link">
       <a href={link} className="post-link__main-link">
-        <img src={imgUrl} />
+        <img
+          width="auto"
+          height="200"
+          src={imgUrl}
+          // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+          alt={member.name}
+          loading="lazy"
+        />
+
+        {title}
         <Stack spacing={1} direction="row">
-          <h3 className="post-link__title">{title}</h3>
+          <img
+            src={getFaviconSrcFromOrigin(origin)}
+            width={14}
+            height={14}
+            className="post-link__site-favicon"
+            alt={hostname}
+          />
+          {hostname} {member.name}
+          <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
         </Stack>
+        {/* <Stack spacing={1} direction="row">
+          <img src={imgUrl} />
+          <h3 className="post-link__title">{title}</h3>
+          {hostname && (
+            <>
+              <img
+                src={getFaviconSrcFromOrigin(origin)}
+                width={14}
+                height={14}
+                className="post-link__site-favicon"
+                alt={hostname}
+              />
+              {hostname}
+            </>
+          )}
+          <div>{member.name}</div>
+          <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
+        </Stack> */}
       </a>
-      <Stack spacing={1} direction="row">
-        {hostname && (
-          <>
-            <img
-              src={getFaviconSrcFromOrigin(origin)}
-              width={14}
-              height={14}
-              className="post-link__site-favicon"
-              alt={hostname}
-            />
-            {hostname}
-          </>
-        )}
-        <div>{member.name}</div>
-        <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
-      </Stack>
     </article>
   );
 };
