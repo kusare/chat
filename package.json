@@ -95,7 +95,7 @@
     "@types/css-generator": "^1.0.2",
     "@types/fs-extra": "^9.0.13",
     "@types/hammerjs": "^2.0.41",
-    "@types/node": "latest",
+    "@types/node": "^17.0.23",
     "@types/react": "^18.0.14",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "18.0.3",

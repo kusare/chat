@@ -2,6 +2,15 @@ import { useState } from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
 
 import { PostItem } from "../types";
 import {
@@ -118,47 +127,40 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
 
   return (
     <article className="post-link">
-      <a href={link} className="post-link__main-link">
-        <img
+      <Card sx={{ display: "flex" }}>
+        <CardMedia
+          component="img"
+          sx={{ width: 151 }}
+          image={imgUrl}
+          alt="Live from space album cover"
+        />
+        <a href={link}>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <CardContent sx={{ flex: "1 0 auto" }}>
+              {/* <img
           width="auto"
           height="200"
           src={imgUrl}
           // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
           alt={member.name}
           loading="lazy"
-        />
+        /> */}
 
-        {title}
-        <Stack spacing={1} direction="row">
-          <img
-            src={getFaviconSrcFromOrigin(origin)}
-            width={14}
-            height={14}
-            className="post-link__site-favicon"
-            alt={hostname}
-          />
-          {hostname} {member.name}
-          <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
-        </Stack>
-        {/* <Stack spacing={1} direction="row">
-          <img src={imgUrl} />
-          <h3 className="post-link__title">{title}</h3>
-          {hostname && (
-            <>
+              <h4>{title}</h4>
+            </CardContent>
+            <Stack spacing={1} direction="row">
               <img
                 src={getFaviconSrcFromOrigin(origin)}
                 width={14}
                 height={14}
-                className="post-link__site-favicon"
                 alt={hostname}
               />
-              {hostname}
-            </>
-          )}
-          <div>{member.name}</div>
-          <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
-        </Stack> */}
-      </a>
+              {hostname} {member.name}
+              <time dateTime={isoDate}>{dayjs(isoDate).fromNow()}</time>
+            </Stack>
+          </Box>
+        </a>
+      </Card>
     </article>
   );
 };
