@@ -9,6 +9,8 @@ type FeedItem = {
   contentSnippet?: string;
   isoDate?: string;
   dateMiliSeconds: number;
+  media: string;
+  encoded: string;
 };
 
 function isValidUrl(str: string): boolean {
@@ -20,7 +22,15 @@ function isValidUrl(str: string): boolean {
   }
 }
 
-const parser = new Parser();
+const parser = new Parser({
+  customFields: {
+    item: [
+      ["media:content", "media"],
+      ["content:encoded", "encoded"],
+    ],
+  },
+});
+
 let allPostItems: PostItem[] = [];
 
 async function fetchFeedItems(url: string) {
@@ -29,13 +39,14 @@ async function fetchFeedItems(url: string) {
 
   // return item which has title and link
   return feed.items
-    .map(({ title, contentSnippet, link, isoDate }) => {
+    .map(({ title, contentSnippet, link, isoDate, content, encoded }) => {
       return {
         title,
         contentSnippet: contentSnippet?.replace(/\n/g, ""),
         link,
         isoDate,
         dateMiliSeconds: isoDate ? new Date(isoDate).getTime() : 0,
+        encoded,
       };
     })
     .filter(

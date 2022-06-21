@@ -6,7 +6,7 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import { cssBackgroundState } from "../recoil/States";
 import { chatRadioBtnIdState } from "../recoil/States";
 import posts from "../.contents/posts.json";
-import { CustomPostList, PostList } from "../components/PostList";
+import { CustomPostList } from "../components/PostList";
 import { PostItem } from "../types";
 import {
   SwipeableTemporaryDrawer,
