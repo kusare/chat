@@ -29,7 +29,6 @@ export const members: Member[] = [
       "http://blog.livedoor.jp/dqnplus/index.rdf",
       "http://blog.esuteru.com/index.rdf",
       "http://blog.livedoor.jp/rbkyn844/index.rdf",
-      "http://blog.livedoor.jp/nanjstu/index.rdf",
       "https://hamusoku.com/index.rdf",
       "http://news4vip.livedoor.biz/index.rdf",
     ],
