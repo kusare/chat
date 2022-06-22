@@ -41,6 +41,7 @@ export const SearchByAlgolia = () => {
       <InstantSearch indexName={indexName} searchClient={searchClient}>
         <SearchBox />
         <Hits hitComponent={Hit} />
+        <PoweredBy />
       </InstantSearch>
     </>
   );
