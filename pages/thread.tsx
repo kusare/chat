@@ -57,18 +57,6 @@ import { ChatMsgs } from "./chat";
 //   );
 // }
 
-// export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
-//   props
-// ) => {
-//   const { docId, getLimit } = props;
-//   const subChatMsgs = useGetChatSubMsgs(docId, getLimit);
-//   const msg = subChatMsgs.map((msg, index) => (
-//     <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-//   ));
-
-//   return <>{msg}</>;
-// };
-
 export const UseChatContent: React.FC = () => {
   const { query } = useRouter();
   const [title, setTitle] = useState("");
@@ -101,7 +89,7 @@ export const UseChatContent: React.FC = () => {
         <Grid item xs={12} md={6}>
           <h1>{query.id}</h1>
           <ThreadTopMsgById docId={query.id}>
-            <SubChatMsgEle docId={query.id} />
+            <SubChatMsgEle docId={query.id} getLimit={1000} />
           </ThreadTopMsgById>
         </Grid>
       </Grid>
