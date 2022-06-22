@@ -128,12 +128,14 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
   return (
     <article className="post-link">
       <Card sx={{ display: "flex" }}>
-        <CardMedia
-          component="img"
-          sx={{ width: 151 }}
-          image={imgUrl}
-          alt="Live from space album cover"
-        />
+        {imgUrl !== "" && (
+          <CardMedia
+            component="img"
+            sx={{ width: 151 }}
+            image={imgUrl}
+            alt="Live from space album cover"
+          />
+        )}
         <a href={link}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
