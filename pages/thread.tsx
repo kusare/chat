@@ -28,43 +28,46 @@ import {
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
 import { useRouter } from "next/router";
+import { ThreadTopMsg, ThreadTopMsgById } from "../components/ThreadParts";
+import { SubChatMsgEle } from "./chat";
+import { ChatMsgs } from "./chat";
 
-export function ChatMsgs() {
-  //msgIdに応じて表示を切り替える
-  const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
-  const msgId = chatRadioBtnId;
+// export function ChatMsgs() {
+//   //msgIdに応じて表示を切り替える
+//   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
+//   const msgId = chatRadioBtnId;
 
-  const chatMsgs = useGetChatMsgs();
+//   const chatMsgs = useGetChatMsgs();
 
-  const normal = chatMsgs.map((msg, index) => (
-    <ChatMsgNormalEle key={index.toString()} msg={msg} />
-  ));
-  const recipe = chatMsgs.map((msg, index) => (
-    <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
-      <p>{msg?.id}</p>
-      <SubChatMsgEle key={index.toString()} docId={msg?.id} />
-    </ChatMsgRecipiLayout>
-  ));
+//   const normal = chatMsgs.map((msg, index) => (
+//     <ChatMsgNormalEle key={index.toString()} msg={msg} />
+//   ));
+//   const recipe = chatMsgs.map((msg, index) => (
+//     <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
+//       <p>{msg?.id}</p>
+//       <SubChatMsgEle key={index.toString()} docId={msg?.id} />
+//     </ChatMsgRecipiLayout>
+//   ));
 
-  return (
-    <>
-      {msgId === "Normal" && normal}
-      {msgId === "Recipe" && recipe}
-    </>
-  );
-}
+//   return (
+//     <>
+//       {msgId === "Normal" && normal}
+//       {msgId === "Recipe" && recipe}
+//     </>
+//   );
+// }
 
-export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
-  props
-) => {
-  const { docId, getLimit } = props;
-  const subChatMsgs = useGetChatSubMsgs(docId, getLimit);
-  const msg = subChatMsgs.map((msg, index) => (
-    <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-  ));
+// export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
+//   props
+// ) => {
+//   const { docId, getLimit } = props;
+//   const subChatMsgs = useGetChatSubMsgs(docId, getLimit);
+//   const msg = subChatMsgs.map((msg, index) => (
+//     <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
+//   ));
 
-  return <>{msg}</>;
-};
+//   return <>{msg}</>;
+// };
 
 export const UseChatContent: React.FC = () => {
   const { query } = useRouter();
@@ -97,7 +100,9 @@ export const UseChatContent: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <h1>{query.id}</h1>
-          <SubChatMsgEle docId={query.id} getLimit={1000} />
+          <ThreadTopMsgById docId={query.id}>
+            <SubChatMsgEle docId={query.id} />
+          </ThreadTopMsgById>
         </Grid>
       </Grid>
     </>

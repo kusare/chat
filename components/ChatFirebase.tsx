@@ -142,7 +142,7 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 // TODO for chat or img
-const chatMsgForAdd = (change: any) => {
+export const chatMsgForAdd = (change: any) => {
   const msg = change.data();
   return {
     id: change.id,
