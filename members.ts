@@ -31,6 +31,16 @@ export const members: Member[] = [
       "http://blog.livedoor.jp/rbkyn844/index.rdf",
       "https://hamusoku.com/index.rdf",
       "http://news4vip.livedoor.biz/index.rdf",
+      "http://himasoku.com/index.rdf",
+      "http://crx7601.com/index.rdf",
+      "https://taikankyohou.com/index.rdf",
+      "http://totalwar.doorblog.jp/index.rdf",
     ],
   },
+  // {
+  //   id: "wordpress",
+  //   name: "wordpress",
+  //   avatarSrc: "",
+  //   sources: ["https://jumpmatome2ch.biz/feed", "https://www.moeasia.net/feed"],
+  // },
 ];
