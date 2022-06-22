@@ -65,7 +65,7 @@ export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
   return <>{msg}</>;
 };
 
-export const UseChatContent: React.FC = () => {
+export const ChatContent: React.FC = () => {
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -159,13 +159,13 @@ const Page: NextPage = () => {
       </Head>
       {width <= 599 && (
         <SwipeableTemporaryDrawer>
-          <UseChatContent />
+          <ChatContent />
         </SwipeableTemporaryDrawer>
       )}
 
       {599 < width && (
         <CustomDrawer>
-          <UseChatContent />
+          <ChatContent />
         </CustomDrawer>
       )}
     </>
