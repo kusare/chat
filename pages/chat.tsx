@@ -40,7 +40,7 @@ export function ChatMsgs() {
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
-      <SubChatMsgEle docId={index.toString()} />
+      <SubChatMsgEle docId={msg?.id.toString()} />
     </ChatMsgRecipiLayout>
   ));
 
