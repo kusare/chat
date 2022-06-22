@@ -57,7 +57,7 @@ import { ChatMsgs } from "./chat";
 //   );
 // }
 
-export const UseChatContent: React.FC = () => {
+export const UseThreadContent: React.FC = () => {
   const { query } = useRouter();
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,16 +73,6 @@ export const UseChatContent: React.FC = () => {
     <>
       <Grid container direction="row">
         <Grid item xs={12} md={6} alignItems="center">
-          {/*
- ██████╗██╗  ██╗██╗██████╗ ███████╗
-██╔════╝██║  ██║██║██╔══██╗██╔════╝
-██║     ███████║██║██████╔╝███████╗
-██║     ██╔══██║██║██╔═══╝ ╚════██║
-╚██████╗██║  ██║██║██║     ███████║
- ╚═════╝╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝
-                                   
- */}
-
           <ChatLayoutChips></ChatLayoutChips>
           <ChatMsgs />
         </Grid>
@@ -126,13 +116,13 @@ const Page: NextPage = () => {
       </Head>
       {width <= 599 && (
         <SwipeableTemporaryDrawer>
-          <UseChatContent />
+          <UseThreadContent />
         </SwipeableTemporaryDrawer>
       )}
 
       {599 < width && (
         <CustomDrawer>
-          <UseChatContent />
+          <UseThreadContent />
         </CustomDrawer>
       )}
     </>
