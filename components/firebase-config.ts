@@ -1,3 +1,6 @@
+import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
 /**
  * Firebase project configuration
  */
@@ -30,3 +33,12 @@ export const getFirebaseConfig = () => {
  * Firebase project configuration
  */
 export const firebaseAppConfig = getFirebaseConfig();
+
+/**
+ * Firebase Initialize
+ */
+export const firebaseApp: FirebaseApp = !getApps().length
+  ? initializeApp(firebaseAppConfig)
+  : getApp();
+
+export const db = getFirestore(firebaseApp);
