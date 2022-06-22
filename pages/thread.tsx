@@ -82,35 +82,6 @@ export const UseChatContent: React.FC = () => {
     <>
       <Grid container direction="row">
         <Grid item xs={12} md={6} alignItems="center">
-          <FormControl fullWidth>
-            <TextField
-              label="Title"
-              value={title}
-              rows={4}
-              onChange={handleTitle}
-            />
-            <Stack spacing={2} direction="row">
-              <TextField
-                label="Comment"
-                multiline
-                value={chatTxt}
-                rows={4}
-                onChange={handleChange}
-                fullWidth
-              />
-            </Stack>
-            {/* 
-                ███████╗███████╗████████╗
-                ██╔════╝██╔════╝╚══██╔══╝
-                ███████╗█████╗     ██║   
-                ╚════██║██╔══╝     ██║   
-                ███████║███████╗   ██║   
-                ╚══════╝╚══════╝   ╚═╝
-                   */}
-
-            <Button onClick={() => setChatMsg(chatTxt, title)}>Set Msg</Button>
-          </FormControl>
-          <Input type="file" onChange={setImgMsg} />
           {/*
  ██████╗██╗  ██╗██╗██████╗ ███████╗
 ██╔════╝██║  ██║██║██╔══██╗██╔════╝
