@@ -44,6 +44,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SideListUp: React.FC<{
   open: Boolean;
@@ -81,6 +82,12 @@ const SideListUp: React.FC<{
       href: "/sound",
       text: "Sound",
       icon: <MusicNoteOutlinedIcon />,
+    },
+    {
+      linkKey: "search",
+      href: "/search",
+      text: "Search",
+      icon: <SearchIcon />,
     },
   ];
 
