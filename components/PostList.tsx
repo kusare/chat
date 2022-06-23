@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 // @ts-ignore
 import DomParser from "dom-parser";
+import InfiniteScroll from "react-infinite-scroller";
 
 dayjs.extend(relativeTime);
 
@@ -188,19 +189,36 @@ export const CustomPostList: React.FC<{ items: PostItem[] }> = (props) => {
 
   return (
     <>
-      <div className="post-list">
+      {/* <div className="post-list">
         {props.items.slice(0, displayItemsCount).map((item, i) => (
           <CustomPostLink key={`post-item-${i}`} item={item} />
         ))}
-      </div>
+      </div> */}
       {canLoadMore && (
         <div className="post-list-load">
-          <button
+          {/* <button
             onClick={() => setDisplayItemsCount(displayItemsCount + 32)}
             className="post-list-load__button"
           >
             LOAD MORE
-          </button>
+          </button> */}
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={() => setDisplayItemsCount(displayItemsCount + 32)}
+            hasMore={canLoadMore}
+            initialLoad={false}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+          >
+            <div className="post-list">
+              {props.items.slice(0, displayItemsCount).map((item, i) => (
+                <CustomPostLink key={`post-item-${i}`} item={item} />
+              ))}
+            </div>
+          </InfiniteScroll>
         </div>
       )}
     </>
