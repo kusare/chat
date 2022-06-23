@@ -117,9 +117,19 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
 
   const rawParser = new DomParser();
   const doms = rawParser.parseFromString(encoded);
-  const test = doms
-    .getElementsByTagName("img")[0]
-    ?.attributes.filter((dom: { name: string }) => dom.name === "src");
+
+  let test = null;
+
+  try {
+    test = doms
+      .getElementsByTagName("img")[0]
+      ?.attributes.filter((dom: { name: string }) => dom.name === "src");
+  } catch (error) {
+    console.error(error);
+    // expected output: ReferenceError: nonExistentFunction is not defined
+    // Note - error messages will vary depending on browser
+  }
+
   let imgUrl = "";
   if (test) imgUrl = test[0].value;
 

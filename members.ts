@@ -37,10 +37,10 @@ export const members: Member[] = [
       "http://totalwar.doorblog.jp/index.rdf",
     ],
   },
-  // {
-  //   id: "wordpress",
-  //   name: "wordpress",
-  //   avatarSrc: "",
-  //   sources: ["https://jumpmatome2ch.biz/feed", "https://www.moeasia.net/feed"],
-  // },
+  {
+    id: "wordpress",
+    name: "wordpress",
+    avatarSrc: "",
+    sources: ["https://jumpmatome2ch.biz/feed", "https://www.moeasia.net/feed"],
+  },
 ];
