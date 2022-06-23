@@ -26,6 +26,7 @@ import {
 } from "@mui/material";
 // @ts-ignore
 import DomParser from "dom-parser";
+import InfiniteScroll from "react-infinite-scroller";
 
 dayjs.extend(relativeTime);
 
@@ -117,9 +118,19 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
 
   const rawParser = new DomParser();
   const doms = rawParser.parseFromString(encoded);
-  const test = doms
-    .getElementsByTagName("img")[0]
-    ?.attributes.filter((dom: { name: string }) => dom.name === "src");
+
+  let test = null;
+
+  try {
+    test = doms
+      .getElementsByTagName("img")[0]
+      ?.attributes.filter((dom: { name: string }) => dom.name === "src");
+  } catch (error) {
+    console.error(error);
+    // expected output: ReferenceError: nonExistentFunction is not defined
+    // Note - error messages will vary depending on browser
+  }
+
   let imgUrl = "";
   if (test) imgUrl = test[0].value;
 
@@ -128,12 +139,14 @@ const CustomPostLink: React.FC<{ item: PostItem }> = (props) => {
   return (
     <article className="post-link">
       <Card sx={{ display: "flex" }}>
-        <CardMedia
-          component="img"
-          sx={{ width: 151 }}
-          image={imgUrl}
-          alt="Live from space album cover"
-        />
+        {imgUrl !== "" && (
+          <CardMedia
+            component="img"
+            sx={{ width: 151 }}
+            image={imgUrl}
+            alt="Live from space album cover"
+          />
+        )}
         <a href={link}>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <CardContent sx={{ flex: "1 0 auto" }}>
@@ -176,19 +189,36 @@ export const CustomPostList: React.FC<{ items: PostItem[] }> = (props) => {
 
   return (
     <>
-      <div className="post-list">
+      {/* <div className="post-list">
         {props.items.slice(0, displayItemsCount).map((item, i) => (
           <CustomPostLink key={`post-item-${i}`} item={item} />
         ))}
-      </div>
+      </div> */}
       {canLoadMore && (
         <div className="post-list-load">
-          <button
+          {/* <button
             onClick={() => setDisplayItemsCount(displayItemsCount + 32)}
             className="post-list-load__button"
           >
             LOAD MORE
-          </button>
+          </button> */}
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={() => setDisplayItemsCount(displayItemsCount + 32)}
+            hasMore={canLoadMore}
+            initialLoad={false}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+          >
+            <div className="post-list">
+              {props.items.slice(0, displayItemsCount).map((item, i) => (
+                <CustomPostLink key={`post-item-${i}`} item={item} />
+              ))}
+            </div>
+          </InfiniteScroll>
         </div>
       )}
     </>

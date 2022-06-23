@@ -61,6 +61,7 @@ import {
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
 import Link from "next/link";
+import { firebaseApp, db } from "./firebase-config";
 
 // TODO move to recoil/States
 export const profilePicUrlState = atom<string>({
@@ -85,13 +86,6 @@ export const userNameState = atom<string>({
  * dayjs.extend(relativeTime);
  */
 dayjs.extend(relativeTime);
-
-/**
- * Firebase Initialize
- */
-export const firebaseApp: FirebaseApp = !getApps().length
-  ? initializeApp(firebaseAppConfig)
-  : getApp();
 
 /**
  * Signs-in
@@ -142,7 +136,7 @@ export const getUserName = (): string => {
  * Loads chat messages history and listens for upcoming ones.
  */
 // TODO for chat or img
-const chatMsgForAdd = (change: any) => {
+export const chatMsgForAdd = (change: any) => {
   const msg = change.data();
   return {
     id: change.id,

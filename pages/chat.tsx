@@ -40,7 +40,7 @@ export function ChatMsgs() {
   ));
   const recipe = chatMsgs.map((msg, index) => (
     <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
-      <SubChatMsgEle docId={index.toString()} />
+      <SubChatMsgEle docId={msg?.id.toString()} />
     </ChatMsgRecipiLayout>
   ));
 
@@ -53,9 +53,11 @@ export function ChatMsgs() {
 }
 
 //TODO docIdではなくmsgを取り込むようにする
-export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
-  const { docId } = props;
-  const subChatMsgs = useGetChatSubMsgs(docId);
+export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
+  props
+) => {
+  const { docId, getLimit } = props;
+  const subChatMsgs = useGetChatSubMsgs(docId, getLimit);
   const msg = subChatMsgs.map((msg, index) => (
     <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
   ));
@@ -63,7 +65,7 @@ export const SubChatMsgEle: React.FC<{ docId: any }> = (props) => {
   return <>{msg}</>;
 };
 
-export const UseChatContent: React.FC = () => {
+export const ChatContent: React.FC = () => {
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -157,13 +159,13 @@ const Page: NextPage = () => {
       </Head>
       {width <= 599 && (
         <SwipeableTemporaryDrawer>
-          <UseChatContent />
+          <ChatContent />
         </SwipeableTemporaryDrawer>
       )}
 
       {599 < width && (
         <CustomDrawer>
-          <UseChatContent />
+          <ChatContent />
         </CustomDrawer>
       )}
     </>

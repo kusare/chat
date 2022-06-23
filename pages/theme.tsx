@@ -42,7 +42,7 @@ import {
 } from "../components/ChatFirebase";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { ChatLayoutChips, EditCssTargetIdChips } from "../components/Chips";
-import { SubChatMsgEle, UseChatContent } from "./chat";
+import { SubChatMsgEle } from "./chat";
 import { useGetWindowSize } from "../utils/get-window-size";
 
 export const UseThemeContent: React.FC = () => {
