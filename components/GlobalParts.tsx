@@ -45,6 +45,7 @@ import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import SearchIcon from "@mui/icons-material/Search";
+import SensorDoorTwoToneIcon from "@mui/icons-material/SensorDoorTwoTone";
 
 const SideListUp: React.FC<{
   open: Boolean;
@@ -88,6 +89,12 @@ const SideListUp: React.FC<{
       href: "/search",
       text: "Search",
       icon: <SearchIcon />,
+    },
+    {
+      linkKey: "room",
+      href: "/room",
+      text: "Room",
+      icon: <SensorDoorTwoToneIcon />,
     },
   ];
 
