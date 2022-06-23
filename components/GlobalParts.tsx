@@ -46,6 +46,7 @@ import AppBar from "@mui/material/AppBar";
 import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import SearchIcon from "@mui/icons-material/Search";
 import SensorDoorTwoToneIcon from "@mui/icons-material/SensorDoorTwoTone";
+import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
 
 const SideListUp: React.FC<{
   open: Boolean;
@@ -95,6 +96,12 @@ const SideListUp: React.FC<{
       href: "/room",
       text: "Room",
       icon: <SensorDoorTwoToneIcon />,
+    },
+    {
+      linkKey: "ranking",
+      href: "/ranking",
+      text: "Ranking",
+      icon: <EmojiEventsTwoToneIcon />,
     },
   ];
 
