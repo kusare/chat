@@ -14,10 +14,10 @@ import {
 } from "../components/GlobalParts";
 import { useGetWindowSize } from "../utils/get-window-size";
 
-export const UseShareContent: React.FC = () => {
+export const UseBlogContent: React.FC = () => {
   return (
     <>
-      <p>game</p>
+      <p>blog</p>
     </>
   );
 };
@@ -42,13 +42,13 @@ const Page: NextPage = () => {
 
       {width <= 599 && (
         <SwipeableTemporaryDrawer>
-          <UseShareContent></UseShareContent>
+          <UseBlogContent></UseBlogContent>
         </SwipeableTemporaryDrawer>
       )}
 
       {599 < width && (
         <CustomDrawer>
-          <UseShareContent></UseShareContent>
+          <UseBlogContent></UseBlogContent>
         </CustomDrawer>
       )}
     </>
