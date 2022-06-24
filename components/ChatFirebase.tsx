@@ -651,7 +651,10 @@ export const setChatMsg = async (chatTxt: any, title: any) => {
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   try {
-    await addDoc(collection(getFirestore(), "chat-msgs"), {
+    const newDocRef = doc(collection(db, "chat-msgs"));
+
+    await setDoc(newDocRef, {
+      firebaseId: newDocRef.id,
       name: getUserName(),
       chatTxt: chatTxt,
       title: title,
