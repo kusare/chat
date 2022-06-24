@@ -644,23 +644,35 @@ export const SubChatMsgRecipiLayout: React.FC<{
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
                                  
  */
+const CHAT_MSG_COL_NAME = "chat-msgs";
 
-// TODO Rename to setChatMsg
-export const setChatMsg = async (chatTxt: any, title: any) => {
+const chatMsg = (chat: { newDocRef: any; chatTxt: string; title: string }) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
-  try {
-    const newDocRef = doc(collection(db, "chat-msgs"));
+  const { newDocRef, chatTxt, title } = chat;
+  return {
+    firebaseId: newDocRef.id,
+    name: getUserName(),
+    chatTxt: chatTxt,
+    title: title,
+    profilePicUrl: getProfilePicUrl(),
+    date: date.toString(),
+  };
+};
 
-    await setDoc(newDocRef, {
-      firebaseId: newDocRef.id,
-      name: getUserName(),
-      chatTxt: chatTxt,
-      title: title,
-      profilePicUrl: getProfilePicUrl(),
-      date: date.toString(),
-    });
+// TODO Rename to setChatMsg
+export const setChatMsg = async (chatTxt: any, title: any) => {
+  try {
+    const newDocRef = doc(collection(db, CHAT_MSG_COL_NAME));
+    await setDoc(
+      newDocRef,
+      chatMsg({
+        newDocRef: newDocRef,
+        chatTxt: chatTxt,
+        title: title,
+      })
+    );
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }
