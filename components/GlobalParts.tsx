@@ -47,6 +47,8 @@ import ForumTwoToneIcon from "@mui/icons-material/ForumTwoTone";
 import SearchIcon from "@mui/icons-material/Search";
 import SensorDoorTwoToneIcon from "@mui/icons-material/SensorDoorTwoTone";
 import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
+import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
+import ScienceTwoToneIcon from "@mui/icons-material/ScienceTwoTone";
 
 const SideListUp: React.FC<{
   open: Boolean;
@@ -102,6 +104,18 @@ const SideListUp: React.FC<{
       href: "/ranking",
       text: "Ranking",
       icon: <EmojiEventsTwoToneIcon />,
+    },
+    {
+      linkKey: "share",
+      href: "/share",
+      text: "Share",
+      icon: <ShareTwoToneIcon />,
+    },
+    {
+      linkKey: "test",
+      href: "/test",
+      text: "Test",
+      icon: <ScienceTwoToneIcon />,
     },
   ];
 
