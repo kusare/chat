@@ -23,7 +23,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
-import { ProfilePic } from "./ChatFirebase";
+import { ProfilePic } from "./ChatParts";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ChatIcon from "@mui/icons-material/Chat";
 import Link from "@mui/material/Link";

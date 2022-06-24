@@ -61,7 +61,7 @@ import {
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
 import Link from "next/link";
-import { chatMsgForAdd, setSubChatMsg } from "./ChatFirebase";
+import { chatMsgForAdd, setSubChatMsg } from "./ChatParts";
 
 export const ThreadTopMsgById: React.FC<{
   docId: any;
