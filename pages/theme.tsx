@@ -36,10 +36,7 @@ import {
 } from "../components/GlobalParts";
 import { EditThemeCss } from "../components/ThemeParts";
 import { ChatRadioBtnId, ThemeUiTargetId } from "../types";
-import {
-  ChatMsgNormalEle,
-  ChatMsgRecipiLayout,
-} from "../components/ChatFirebase";
+import { ChatMsgNormalEle, ChatMsgRecipiLayout } from "../components/ChatParts";
 import { dummyMsg, dummyCss, dummyJson } from "../dummy";
 import { ChatLayoutChips, EditCssTargetIdChips } from "../components/Chips";
 import { SubChatMsgEle } from "./chat";

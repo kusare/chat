@@ -13,7 +13,7 @@ import {
   ChatMsgNormalEle,
   ChatMsgRecipiLayout,
   SubChatMsgRecipiLayout,
-} from "../components/ChatFirebase";
+} from "../components/ChatParts";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";

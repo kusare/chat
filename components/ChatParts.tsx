@@ -644,20 +644,36 @@ export const SubChatMsgRecipiLayout: React.FC<{
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
                                  
  */
+const CHAT_MSG_COL_NAME = "chat-msgs";
+const SUB_CHAT_MSG_COL_NAME = "sub-chat-msgs";
 
-// TODO Rename to setChatMsg
-export const setChatMsg = async (chatTxt: any, title: any) => {
+const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
+  const { docRef, chatTxt, title } = chat;
+  return {
+    firebaseId: docRef.id,
+    name: getUserName(),
+    chatTxt: chatTxt,
+    title: title,
+    profilePicUrl: getProfilePicUrl(),
+    date: date.toString(),
+  };
+};
+
+// TODO Rename to setChatMsg
+export const setChatMsg = async (chatTxt: any, title: any) => {
   try {
-    await addDoc(collection(getFirestore(), "chat-msgs"), {
-      name: getUserName(),
-      chatTxt: chatTxt,
-      title: title,
-      profilePicUrl: getProfilePicUrl(),
-      date: date.toString(),
-    });
+    const docRef = doc(collection(db, CHAT_MSG_COL_NAME));
+    await setDoc(
+      docRef,
+      chatMsg({
+        docRef: docRef,
+        chatTxt: chatTxt,
+        title: title,
+      })
+    );
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }
@@ -668,15 +684,19 @@ export const setSubChatMsg = async (chatTxt: string, docId: string) => {
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   const db = getFirestore();
-  const docRef = doc(db, "chat-msgs", docId);
-  const colRef = collection(docRef, "sub-chat-msgs");
+  const docRef = doc(db, CHAT_MSG_COL_NAME, docId);
+  const colRef = collection(docRef, SUB_CHAT_MSG_COL_NAME);
+  const subDocRef = doc(colRef);
+  console.log(subDocRef.id);
   try {
-    await addDoc(colRef, {
-      name: getUserName(),
-      chatTxt: chatTxt,
-      profilePicUrl: getProfilePicUrl(),
-      date: date.toString(),
-    });
+    await setDoc(
+      subDocRef,
+      chatMsg({
+        docRef: subDocRef,
+        chatTxt: chatTxt,
+        title: "",
+      })
+    );
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }
