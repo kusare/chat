@@ -645,14 +645,15 @@ export const SubChatMsgRecipiLayout: React.FC<{
                                  
  */
 const CHAT_MSG_COL_NAME = "chat-msgs";
+const SUB_CHAT_MSG_COL_NAME = "sub-chat-msgs";
 
-const chatMsg = (chat: { newDocRef: any; chatTxt: string; title: string }) => {
+const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
-  const { newDocRef, chatTxt, title } = chat;
+  const { docRef, chatTxt, title } = chat;
   return {
-    firebaseId: newDocRef.id,
+    firebaseId: docRef.id,
     name: getUserName(),
     chatTxt: chatTxt,
     title: title,
@@ -664,11 +665,11 @@ const chatMsg = (chat: { newDocRef: any; chatTxt: string; title: string }) => {
 // TODO Rename to setChatMsg
 export const setChatMsg = async (chatTxt: any, title: any) => {
   try {
-    const newDocRef = doc(collection(db, CHAT_MSG_COL_NAME));
+    const docRef = doc(collection(db, CHAT_MSG_COL_NAME));
     await setDoc(
-      newDocRef,
+      docRef,
       chatMsg({
-        newDocRef: newDocRef,
+        docRef: docRef,
         chatTxt: chatTxt,
         title: title,
       })
@@ -683,15 +684,19 @@ export const setSubChatMsg = async (chatTxt: string, docId: string) => {
     "YYYY/MM/DD ddd HH:mm:ss"
   );
   const db = getFirestore();
-  const docRef = doc(db, "chat-msgs", docId);
-  const colRef = collection(docRef, "sub-chat-msgs");
+  const docRef = doc(db, CHAT_MSG_COL_NAME, docId);
+  const colRef = collection(docRef, SUB_CHAT_MSG_COL_NAME);
+  const subDocRef = doc(colRef);
+  console.log(subDocRef.id);
   try {
-    await addDoc(colRef, {
-      name: getUserName(),
-      chatTxt: chatTxt,
-      profilePicUrl: getProfilePicUrl(),
-      date: date.toString(),
-    });
+    await setDoc(
+      subDocRef,
+      chatMsg({
+        docRef: subDocRef,
+        chatTxt: chatTxt,
+        title: "",
+      })
+    );
   } catch (error) {
     console.error("Error writing new message to Firebase Database", error);
   }
