@@ -1,19 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Box, Stack, Button, TextField, FormControl } from "@mui/material";
-import {
-  signIn,
-  signOutUser,
-  ProfilePic,
-  UserName,
-  setChatMsg,
-  useGetChatMsgs,
-  useGetChatSubMsgs,
-  setImgMsg,
-  ChatMsgNormalEle,
-  ChatMsgRecipiLayout,
-  SubChatMsgRecipiLayout,
-} from "../components/ChatFirebase";
 import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
@@ -31,31 +17,6 @@ import { useRouter } from "next/router";
 import { ThreadTopMsg, ThreadTopMsgById } from "../components/ThreadParts";
 import { SubChatMsgEle } from "./chat";
 import { ChatMsgs } from "./chat";
-
-// export function ChatMsgs() {
-//   //msgIdに応じて表示を切り替える
-//   const chatRadioBtnId = useRecoilValue(chatRadioBtnIdState);
-//   const msgId = chatRadioBtnId;
-
-//   const chatMsgs = useGetChatMsgs();
-
-//   const normal = chatMsgs.map((msg, index) => (
-//     <ChatMsgNormalEle key={index.toString()} msg={msg} />
-//   ));
-//   const recipe = chatMsgs.map((msg, index) => (
-//     <ChatMsgRecipiLayout key={index.toString()} msg={msg}>
-//       <p>{msg?.id}</p>
-//       <SubChatMsgEle key={index.toString()} docId={msg?.id} />
-//     </ChatMsgRecipiLayout>
-//   ));
-
-//   return (
-//     <>
-//       {msgId === "Normal" && normal}
-//       {msgId === "Recipe" && recipe}
-//     </>
-//   );
-// }
 
 export const UseThreadContent: React.FC = () => {
   const { query } = useRouter();
