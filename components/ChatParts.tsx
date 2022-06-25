@@ -647,7 +647,6 @@ const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
   };
 };
 
-// TODO Rename to setChatMsg
 export const setChatMsg = async (chatTxt: any, title: any) => {
   try {
     const docRef = doc(collection(db, CHAT_MSG_COL_NAME));
