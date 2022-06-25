@@ -135,7 +135,6 @@ export const getUserName = (): string => {
 /**
  * Loads chat messages history and listens for upcoming ones.
  */
-// TODO for chat or img
 export const chatMsgForAdd = (change: any) => {
   const msg = change.data();
   return {
@@ -154,16 +153,9 @@ export const useGetChatMsgs = () => {
   const chatMsgs = useRecoilValue(msgsState);
   const LIMIT = 12;
 
-  //  ██████╗██╗  ██╗ █████╗ ████████╗    ███╗   ███╗███████╗ ██████╗
-  // ██╔════╝██║  ██║██╔══██╗╚══██╔══╝    ████╗ ████║██╔════╝██╔════╝
-  // ██║     ███████║███████║   ██║       ██╔████╔██║███████╗██║  ███╗
-  // ██║     ██╔══██║██╔══██║   ██║       ██║╚██╔╝██║╚════██║██║   ██║
-  // ╚██████╗██║  ██║██║  ██║   ██║       ██║ ╚═╝ ██║███████║╚██████╔╝
-  //  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝       ╚═╝     ╚═╝╚══════╝ ╚═════╝
-
   useEffect(() => {
     const recentMessagesQuery = query(
-      collection(getFirestore(), "chat-msgs"),
+      collection(getFirestore(), CHAT_MSG_COL_NAME),
       orderBy("date", "desc"),
       limit(LIMIT)
     );
@@ -189,17 +181,10 @@ export const useGetChatSubMsgs = (docId: string, getLimit: number = 3) => {
   const [subChatMsgs, setSubChatMsgs] = useState([dummyMsg]);
   const LIMIT = getLimit;
 
-  // ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗
-  // ██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝
-  // ███████╗██║   ██║██████╔╝    ██╔████╔██║███████╗██║  ███╗
-  // ╚════██║██║   ██║██╔══██╗    ██║╚██╔╝██║╚════██║██║   ██║
-  // ███████║╚██████╔╝██████╔╝    ██║ ╚═╝ ██║███████║╚██████╔╝
-  // ╚══════╝ ╚═════╝ ╚═════╝     ╚═╝     ╚═╝╚══════╝ ╚═════╝
-
   useEffect(() => {
     const db = getFirestore();
-    const docRef = doc(collection(db, "chat-msgs"), id);
-    const colRef = collection(docRef, "sub-chat-msgs");
+    const docRef = doc(collection(db, CHAT_MSG_COL_NAME), id);
+    const colRef = collection(docRef, SUB_CHAT_MSG_COL_NAME);
     const recentMessagesQuery = query(
       colRef,
       orderBy("date", "desc"),
@@ -644,8 +629,8 @@ export const SubChatMsgRecipiLayout: React.FC<{
  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
                                  
  */
-const CHAT_MSG_COL_NAME = "chat-msgs";
-const SUB_CHAT_MSG_COL_NAME = "sub-chat-msgs";
+export const CHAT_MSG_COL_NAME = "chat-msgs";
+export const SUB_CHAT_MSG_COL_NAME = "sub-chat-msgs";
 
 const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
