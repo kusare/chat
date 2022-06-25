@@ -61,7 +61,12 @@ import {
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
 import Link from "next/link";
-import { chatMsgForAdd, setSubChatMsg } from "./ChatParts";
+import {
+  chatMsgForAdd,
+  setSubChatMsg,
+  CHAT_MSG_COL_NAME,
+  SUB_CHAT_MSG_COL_NAME,
+} from "./ChatParts";
 
 export const ThreadTopMsgById: React.FC<{
   docId: any;
@@ -69,9 +74,6 @@ export const ThreadTopMsgById: React.FC<{
 }> = (props) => {
   const { docId, children } = props;
   const topMsg = useGetThreadTopMsgById(docId);
-  // const msg = subChatMsgs.map((msg, index) => (
-  //   <SubChatMsgRecipiLayout key={msg?.id + index.toString()} msg={msg} />
-  // ));
 
   return (
     <>
@@ -88,8 +90,8 @@ export const useGetThreadTopMsgById = (docId: string) => {
 
   useEffect(() => {
     const db = getFirestore();
-    const docRef = doc(collection(db, "chat-msgs"), id);
-    const colRef = collection(docRef, "sub-chat-msgs");
+    const docRef = doc(collection(db, CHAT_MSG_COL_NAME), id);
+    const colRef = collection(docRef, SUB_CHAT_MSG_COL_NAME);
     const recentMessagesQuery = query(colRef, orderBy("date", "desc"));
     // Start listening to the query.
     const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
