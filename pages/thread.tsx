@@ -33,12 +33,12 @@ export const UseThreadContent: React.FC = () => {
   return (
     <>
       <Grid container direction="row">
-        <Grid item xs={12} md={6} alignItems="center">
+        {/* <Grid item xs={12} md={6} alignItems="center">
           <ChatLayoutChips></ChatLayoutChips>
           <ChatMsgs />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={6}>
-          <h1>{query.id}</h1>
+          {/* <h1>{query.id}</h1> */}
           <ThreadTopMsgById docId={query.id}>
             <SubChatMsgEle docId={query.id} getLimit={1000} />
           </ThreadTopMsgById>

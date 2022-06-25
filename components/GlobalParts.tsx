@@ -57,12 +57,12 @@ const SideListUp: React.FC<{
 }> = (props) => {
   const { open } = props;
   const list = [
-    {
-      linkKey: "thread",
-      href: "/thread",
-      text: "Thread",
-      icon: <ForumTwoToneIcon />,
-    },
+    // {
+    //   linkKey: "thread",
+    //   href: "/thread",
+    //   text: "Thread",
+    //   icon: <ForumTwoToneIcon />,
+    // },
     { linkKey: "chat", href: "/chat", text: "Chat", icon: <ChatIcon /> },
     { linkKey: "theme", href: "/theme", text: "Theme", icon: <PaletteIcon /> },
     {
