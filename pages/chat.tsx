@@ -9,7 +9,7 @@ import {
   setChatMsg,
   useGetChatMsgs,
   useGetChatSubMsgs,
-  setImgMsg,
+  UseSetImgMsg,
   ChatMsgNormalEle,
   ChatMsgRecipiLayout,
   SubChatMsgRecipiLayout,
@@ -18,8 +18,13 @@ import Grid from "@mui/material/Grid";
 import { Input } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import { Global, css } from "@emotion/react";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import { cssBackgroundState } from "../recoil/States";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
+import { cssBackgroundState, imgFireStorageUrlsState } from "../recoil/States";
 import { ChatLayoutChips } from "../components/Chips";
 import { chatRadioBtnIdState } from "../recoil/States";
 import {
@@ -66,6 +71,8 @@ export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
 };
 
 export const ChatContent: React.FC = () => {
+  const [imgUrls, setImgUrls] = useRecoilState(imgFireStorageUrlsState);
+
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -74,6 +81,15 @@ export const ChatContent: React.FC = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChatTxt(event.target.value);
+  };
+
+  const InputImg = () => {
+    return (
+      <>
+        {/* <Input type="file" onChange={useSetImgMsg} /> */}
+        <UseSetImgMsg></UseSetImgMsg>
+      </>
+    );
   };
 
   return (
@@ -108,7 +124,8 @@ export const ChatContent: React.FC = () => {
 
             <Button onClick={() => setChatMsg(chatTxt, title)}>Set Msg</Button>
           </FormControl>
-          <Input type="file" onChange={setImgMsg} />
+          <InputImg></InputImg>
+          <p>{imgUrls.imageUrl.toString()}</p>
           {/*
  ██████╗██╗  ██╗██╗██████╗ ███████╗
 ██╔════╝██║  ██║██║██╔══██╗██╔════╝

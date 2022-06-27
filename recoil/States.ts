@@ -5,6 +5,7 @@ import {
   CssMsgState,
   ThemeUiTargetId,
   ChatRadioBtnId,
+  ImgFireStorageUrl,
 } from "../types";
 import { recoilPersist } from "recoil-persist";
 import { dummyMsg, dummyCssMsg } from "../dummy";
@@ -120,5 +121,21 @@ export const editCssTargetIdState = atom<ThemeUiTargetId>({
 export const chatRadioBtnIdState = atom<ChatRadioBtnId>({
   key: "chatRadioBtnIdState",
   default: "Normal",
+  effects_UNSTABLE: [persistAtom],
+});
+
+// ██╗███╗   ███╗ ██████╗
+// ██║████╗ ████║██╔════╝
+// ██║██╔████╔██║██║  ███╗
+// ██║██║╚██╔╝██║██║   ██║
+// ██║██║ ╚═╝ ██║╚██████╔╝
+// ╚═╝╚═╝     ╚═╝ ╚═════╝
+
+export const imgFireStorageUrlsState = atom<ImgFireStorageUrl>({
+  key: "imgFireStorageUrlsState",
+  default: {
+    imageUrl: "",
+    storageUri: "",
+  },
   effects_UNSTABLE: [persistAtom],
 });
