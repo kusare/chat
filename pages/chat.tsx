@@ -79,7 +79,7 @@ export const ChatContent: React.FC = () => {
   };
   const [chatTxt, setChatTxt] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTxtChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChatTxt(event.target.value);
   };
 
@@ -109,7 +109,7 @@ export const ChatContent: React.FC = () => {
                 multiline
                 value={chatTxt}
                 rows={4}
-                onChange={handleChange}
+                onChange={handleTxtChange}
                 fullWidth
               />
             </Stack>
