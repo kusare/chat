@@ -30,7 +30,12 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { atom, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import React, { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -42,6 +47,7 @@ import {
   TextField,
   Avatar,
   FormControl,
+  Input,
 } from "@mui/material";
 import { css } from "@emotion/react";
 import Menu from "@mui/material/Menu";
@@ -57,6 +63,7 @@ import {
   cssSubChatMsgState,
   cssChatMsgDecoState,
   cssChatMsgTitleDecoState,
+  imgFireStorageUrlsState,
 } from "../recoil/States";
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
@@ -686,41 +693,61 @@ export const setSubChatMsg = async (chatTxt: string, docId: string) => {
   }
 };
 
+export const CSS_IMG_MSGS_NAME = "css-img-msgs";
+
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
-export const setImgMsg = async (event: any) => {
-  event.preventDefault();
-  let file = event.target.files[0];
+export const UseSetImgMsg = () => {
+  const [imgUrls, setImgUrls] = useRecoilState(imgFireStorageUrlsState);
 
-  let LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
-  try {
-    // 1 - We add a message with a loading icon that will get updated with the shared image.
-    const messageRef = await addDoc(collection(getFirestore(), "messages"), {
-      name: getUserName(),
-      imageUrl: LOADING_IMAGE_URL,
-      profilePicUrl: getProfilePicUrl(),
-      timestamp: serverTimestamp(),
-    });
+  const handleInput = async (event: any) => {
+    event.preventDefault();
+    let file = event.target.files[0];
 
-    // 2 - Upload the image to Cloud Storage.
-    const filePath = `${getAuth().currentUser?.uid}/${messageRef.id}/${
-      file.name
-    }`;
-    const newImageRef = ref(getStorage(), filePath);
-    const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+    let LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif?a";
+    try {
+      // 1 - We add a message with a loading icon that will get updated with the shared image.
+      const messageRef = await addDoc(
+        collection(getFirestore(), CSS_IMG_MSGS_NAME),
+        {
+          name: getUserName(),
+          imageUrl: LOADING_IMAGE_URL,
+          profilePicUrl: getProfilePicUrl(),
+          timestamp: serverTimestamp(),
+        }
+      );
 
-    // 3 - Generate a public URL for the file.
-    const publicImageUrl = await getDownloadURL(newImageRef);
+      // 2 - Upload the image to Cloud Storage.
+      const filePath = `${getAuth().currentUser?.uid}/${messageRef.id}/${
+        file.name
+      }`;
+      const newImageRef = ref(getStorage(), filePath);
+      const fileSnapshot = await uploadBytesResumable(newImageRef, file);
 
-    // 4 - Update the chat message placeholder with the image's URL.
-    await updateDoc(messageRef, {
-      imageUrl: publicImageUrl,
-      storageUri: fileSnapshot.metadata.fullPath,
-    });
-  } catch (error) {
-    console.error(
-      "There was an error uploading a file to Cloud Storage:",
-      error
-    );
-  }
+      // 3 - Generate a public URL for the file.
+      const publicImageUrl = await getDownloadURL(newImageRef);
+
+      // 4 - Update the chat message placeholder with the image's URL.
+      await updateDoc(messageRef, {
+        imageUrl: publicImageUrl,
+        storageUri: fileSnapshot.metadata.fullPath,
+      });
+
+      // recoil に保存
+      setImgUrls({
+        imageUrl: publicImageUrl,
+        storageUri: fileSnapshot.metadata.fullPath,
+      });
+    } catch (error) {
+      console.error(
+        "There was an error uploading a file to Cloud Storage:",
+        error
+      );
+    }
+  };
+  return (
+    <>
+      <Input type="file" onChange={handleInput} />
+    </>
+  );
 };

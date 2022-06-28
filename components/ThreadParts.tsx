@@ -23,6 +23,7 @@ import {
   doc,
   serverTimestamp,
   Timestamp,
+  where,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -92,9 +93,13 @@ export const useGetThreadTopMsgById = (docId: string) => {
     const db = getFirestore();
     const docRef = doc(collection(db, CHAT_MSG_COL_NAME), id);
     const colRef = collection(docRef, SUB_CHAT_MSG_COL_NAME);
-    const recentMessagesQuery = query(colRef, orderBy("date", "desc"));
+    const topMsgQuery = query(
+      collection(db, CHAT_MSG_COL_NAME),
+      where("firebaseId", "==", id)
+    );
+    // const recentMessagesQuery = query(colRef, orderBy("date", "desc"));
     // Start listening to the query.
-    const unsub: Unsubscribe = onSnapshot(recentMessagesQuery, (snapshot) => {
+    const unsub: Unsubscribe = onSnapshot(topMsgQuery, (snapshot) => {
       let addedMsgs: ChatMsg[] = [];
       snapshot.docs.map((change) => {
         addedMsgs.push(chatMsgForAdd(change));
