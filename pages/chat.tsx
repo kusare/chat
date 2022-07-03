@@ -24,7 +24,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import { cssBackgroundState, imgFireStorageUrlsState } from "../recoil/States";
+import { cssBackgroundState, imgFireStorageUrlState } from "../recoil/States";
 import { ChatLayoutChips } from "../components/Chips";
 import { chatRadioBtnIdState } from "../recoil/States";
 import {
@@ -71,7 +71,7 @@ export const SubChatMsgEle: React.FC<{ docId: any; getLimit?: number }> = (
 };
 
 export const ChatContent: React.FC = () => {
-  const [imgUrls, setImgUrls] = useRecoilState(imgFireStorageUrlsState);
+  const [imgUrl, setImgUrl] = useRecoilState(imgFireStorageUrlState);
 
   const [title, setTitle] = useState("");
   const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,10 +122,13 @@ export const ChatContent: React.FC = () => {
                 ╚══════╝╚══════╝   ╚═╝
                    */}
 
-            <Button onClick={() => setChatMsg(chatTxt, title)}>Set Msg</Button>
+            <Button onClick={() => setChatMsg(chatTxt, title, imgUrl)}>
+              Set Msg
+            </Button>
           </FormControl>
           <InputImg></InputImg>
-          <p>{imgUrls.imageUrl.toString()}</p>
+          <p>{imgUrl.imageUrl.toString()}</p>
+          <img src={imgUrl.imageUrl.toString()} />
           {/*
  ██████╗██╗  ██╗██╗██████╗ ███████╗
 ██╔════╝██║  ██║██║██╔══██╗██╔════╝
