@@ -63,7 +63,7 @@ import {
   cssSubChatMsgState,
   cssChatMsgDecoState,
   cssChatMsgTitleDecoState,
-  imgFireStorageUrlsState,
+  imgFireStorageUrlState,
 } from "../recoil/States";
 import { ChatMsg, ChatMsgState } from "../types";
 import { dummyMsg } from "../dummy";
@@ -639,11 +639,16 @@ export const SubChatMsgRecipiLayout: React.FC<{
 export const CHAT_MSG_COL_NAME = "chat-msgs";
 export const SUB_CHAT_MSG_COL_NAME = "sub-chat-msgs";
 
-const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
+const chatMsg = (chat: {
+  docRef: any;
+  chatTxt: string;
+  title: string;
+  imgUrl: string;
+}) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
   );
-  const { docRef, chatTxt, title } = chat;
+  const { docRef, chatTxt, title, imgUrl } = chat;
   return {
     firebaseId: docRef.id,
     name: getUserName(),
@@ -651,10 +656,11 @@ const chatMsg = (chat: { docRef: any; chatTxt: string; title: string }) => {
     title: title,
     profilePicUrl: getProfilePicUrl(),
     date: date.toString(),
+    imgUrl: imgUrl,
   };
 };
 
-export const setChatMsg = async (chatTxt: any, title: any) => {
+export const setChatMsg = async (chatTxt: any, title: any, imgUrl: any) => {
   try {
     const docRef = doc(collection(db, CHAT_MSG_COL_NAME));
     await setDoc(
@@ -663,6 +669,7 @@ export const setChatMsg = async (chatTxt: any, title: any) => {
         docRef: docRef,
         chatTxt: chatTxt,
         title: title,
+        imgUrl: imgUrl,
       })
     );
   } catch (error) {
@@ -686,6 +693,7 @@ export const setSubChatMsg = async (chatTxt: string, docId: string) => {
         docRef: subDocRef,
         chatTxt: chatTxt,
         title: "",
+        imgUrl: "",
       })
     );
   } catch (error) {
@@ -698,7 +706,7 @@ export const CSS_IMG_MSGS_NAME = "css-img-msgs";
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 export const UseSetImgMsg = () => {
-  const [imgUrls, setImgUrls] = useRecoilState(imgFireStorageUrlsState);
+  const [imgUrl, setImgUrl] = useRecoilState(imgFireStorageUrlState);
 
   const handleInput = async (event: any) => {
     event.preventDefault();
@@ -734,7 +742,7 @@ export const UseSetImgMsg = () => {
       });
 
       // recoil に保存
-      setImgUrls({
+      setImgUrl({
         imageUrl: publicImageUrl,
         storageUri: fileSnapshot.metadata.fullPath,
       });

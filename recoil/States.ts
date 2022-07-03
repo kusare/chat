@@ -131,8 +131,8 @@ export const chatRadioBtnIdState = atom<ChatRadioBtnId>({
 // ██║██║ ╚═╝ ██║╚██████╔╝
 // ╚═╝╚═╝     ╚═╝ ╚═════╝
 
-export const imgFireStorageUrlsState = atom<ImgFireStorageUrl>({
-  key: "imgFireStorageUrlsState",
+export const imgFireStorageUrlState = atom<ImgFireStorageUrl>({
+  key: "imgFireStorageUrlState",
   default: {
     imageUrl: "",
     storageUri: "",
