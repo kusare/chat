@@ -480,6 +480,7 @@ export const ChatMsgRecipiLayout: React.FC<{
           >
             title deco
           </p>
+
           <Stack
             spacing={2}
             direction="row"
@@ -487,16 +488,25 @@ export const ChatMsgRecipiLayout: React.FC<{
               margin-top: 50px;
             `}
           >
-            <Box>
-              {props.msg.profilePicUrl && (
-                <Avatar
-                  alt="profilePic"
-                  src={props.msg.profilePicUrl}
-                  sx={{ width: 48, height: 48 }}
+            <div>
+              {props.msg.imageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={props.msg.imageUrl}
+                  alt="no image"
+                  css={css(`
+          max-width: 100%;
+        `)}
                 />
               )}
-            </Box>
-
+            </div>
+            {props.msg.profilePicUrl && (
+              <Avatar
+                alt="profilePic"
+                src={props.msg.profilePicUrl}
+                sx={{ width: 48, height: 48 }}
+              />
+            )}
             <Box>
               <Stack spacing={2} direction="row">
                 {props.msg.name && <div>{props.msg.name}</div>}
@@ -511,27 +521,16 @@ export const ChatMsgRecipiLayout: React.FC<{
               ╚██████╗██║  ██║██║  ██║   ██║          ██║   ██╔╝ ██╗   ██║   
                ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝          ╚═╝   ╚═╝  ╚═╝   ╚═╝   
                                                                 */}
+              <TextField
+                multiline
+                fullWidth
+                variant="standard"
+                value={props.msg.chatTxt}
+              />
             </Box>
           </Stack>
-          <TextField
-            multiline
-            fullWidth
-            variant="standard"
-            value={props.msg.chatTxt}
-          />
         </div>
-        <div>
-          {props.msg.imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={props.msg.imageUrl}
-              alt="no image"
-              css={css(`
-          max-width: 100%;
-        `)}
-            />
-          )}
-        </div>
+
         {/* 
 ███████╗██╗   ██╗██████╗     ███╗   ███╗███████╗ ██████╗ 
 ██╔════╝██║   ██║██╔══██╗    ████╗ ████║██╔════╝██╔════╝ 
@@ -643,7 +642,7 @@ const chatMsg = (chat: {
   docRef: any;
   chatTxt: string;
   title: string;
-  imgUrl: string;
+  imgUrl: any;
 }) => {
   const date = dayjs(Timestamp.fromDate(new Date()).toDate()).format(
     "YYYY/MM/DD ddd HH:mm:ss"
@@ -656,7 +655,8 @@ const chatMsg = (chat: {
     title: title,
     profilePicUrl: getProfilePicUrl(),
     date: date.toString(),
-    imgUrl: imgUrl,
+    imageUrl: imgUrl.imageUrl,
+    storageUri: imgUrl.storageUri,
   };
 };
 
